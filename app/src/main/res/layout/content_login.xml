@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_login"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        style="@style/BracketMaster.Logo"
+        android:id="@+id/logo"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bracket_master"/>
+
+    <EditText
+        style="@style/BracketMaster.EditText"
+        android:id="@+id/email_field"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logo"
+        android:inputType="textEmailAddress"
+        android:hint="Email"/>
+
+    <EditText
+        style="@style/BracketMaster.EditText"
+        android:id="@+id/password_field"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/email_field"
+        android:inputType="textPassword"
+        android:hint="Password"/>
+
+    <Button
+        style="@style/BracketMaster.Button.Accent"
+        android:id="@+id/login"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/password_field"
+        android:layout_marginTop="16dp"
+        android:text="Log In"/>
+
+    <Button
+        style="@style/BracketMaster.Button.Primary"
+        android:id="@+id/register"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/login"
+        android:text="Register"/>
+
+
+</RelativeLayout>
