@@ -13,6 +13,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+
+import java.util.Map;
+
 public class LoginActivity extends AppCompatActivity {
 
     final static String PREFS_NAME = "BracketMasterPrefs";
@@ -32,6 +37,9 @@ public class LoginActivity extends AppCompatActivity {
 
         checkFirstTimeSetup();
 
+        Firebase.setAndroidContext(this);
+        final Firebase myFirebaseRef = new Firebase("https://scorching-inferno-5646.firebaseio.com/");
+
         mEmailField = (EditText)findViewById(R.id.email_field);
         mPasswordField = (EditText)findViewById(R.id.password_field);
         mLoginButton = (Button)findViewById(R.id.login);
@@ -47,7 +55,52 @@ public class LoginActivity extends AppCompatActivity {
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (someFieldIsEmpty()) {
+                    Snackbar.make(view, "Username or Password is empty.", Snackbar.LENGTH_LONG).setAction("OK", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
+                        }
+                    }).setActionTextColor(getResources().getColor(R.color.colorPrimary)).show();
+                }
+                else {
+                    firebaseCreateUser(view);
+                }
+
+            }
+        });
+    }
+
+    private boolean someFieldIsEmpty() {
+        return TextUtils.isEmpty(mEmailField.getText()) || TextUtils.isEmpty(mPasswordField.getText());
+    }
+
+    public void firebaseCreateUser(final View view) {
+        final Firebase myFirebaseRef = new Firebase("https://scorching-inferno-5646.firebaseio.com/");
+        String email = mEmailField.getText().toString();
+        String pass = mPasswordField.getText().toString();
+
+        myFirebaseRef.createUser(email, pass, new Firebase.ValueResultHandler<Map<String, Object>>() {
+            @Override
+            public void onSuccess(Map<String, Object> stringObjectMap) {
+                Snackbar.make(view, "User created!", Snackbar.LENGTH_LONG).setAction("SWEET!", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                }).setActionTextColor(getResources().getColor(R.color.colorPrimary)).show();
+
+                tryLogin(view);
+            }
+
+            @Override
+            public void onError(FirebaseError firebaseError) {
+                Snackbar.make(view, "Could not create user.", Snackbar.LENGTH_LONG).setAction("OK", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                }).setActionTextColor(getResources().getColor(R.color.colorPrimary)).show();
             }
         });
     }
