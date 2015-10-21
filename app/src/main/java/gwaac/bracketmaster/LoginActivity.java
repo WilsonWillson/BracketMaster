@@ -47,9 +47,10 @@ public class LoginActivity extends AppCompatActivity {
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                createAccount(view);
             }
         });
+
     }
 
     public void checkFirstTimeSetup() {
@@ -96,6 +97,32 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }).setActionTextColor(getResources().getColor(R.color.colorPrimary)).show();
             }
+        }
+    }
+
+    public void createAccount(View view){
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, 0);
+        String email = mEmailField.getText().toString();
+        String password = mPasswordField.getText().toString();
+        if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+            Snackbar.make(view, "Username or Password is empty.", Snackbar.LENGTH_LONG).setAction("OK", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                }
+            }).setActionTextColor(getResources().getColor(R.color.colorPrimary)).show();
+        } else {
+            sharedPreferences.edit().clear();
+            sharedPreferences.edit().putString("user_email", email).apply();
+            sharedPreferences.edit().putString("user_password", password).apply();
+            mUserEmail = sharedPreferences.getString("user_email", "err");
+            mUserPassword = sharedPreferences.getString("user_password", "err");
+            Snackbar.make(view, "Created Account.", Snackbar.LENGTH_LONG).setAction("OK", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                }
+            }).setActionTextColor(getResources().getColor(R.color.colorPrimary)).show();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         }
     }
 
