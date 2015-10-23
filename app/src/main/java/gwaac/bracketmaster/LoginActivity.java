@@ -3,16 +3,15 @@ package gwaac.bracketmaster;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
@@ -22,162 +21,103 @@ public class LoginActivity extends AppCompatActivity {
 
     final static String PREFS_NAME = "BracketMasterPrefs";
 
-    private String mUserEmail;
-    private String mUserPassword;
-
     private EditText mEmailField;
     private EditText mPasswordField;
     private Button mLoginButton;
     private Button mRegisterButton;
+    private Firebase myFirebaseRef;
+    private Notifier notifier;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        checkFirstTimeSetup();
-
         Firebase.setAndroidContext(this);
-        final Firebase myFirebaseRef = new Firebase("https://scorching-inferno-5646.firebaseio.com/");
+        myFirebaseRef = new Firebase("https://scorching-inferno-5646.firebaseio.com/");
 
-        mEmailField = (EditText)findViewById(R.id.email_field);
-        mPasswordField = (EditText)findViewById(R.id.password_field);
-        mLoginButton = (Button)findViewById(R.id.login);
-        mRegisterButton = (Button)findViewById(R.id.register);
+        notifier = new Notifier(this);
+
+        mEmailField = (EditText) findViewById(R.id.email_field);
+        mPasswordField = (EditText) findViewById(R.id.password_field);
+        mLoginButton = (Button) findViewById(R.id.login);
+        mRegisterButton = (Button) findViewById(R.id.register);
 
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tryLogin(view);
+                notifier.setView(view);
+                tryLogin();
             }
         });
 
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (someFieldIsEmpty()) {
-                    Snackbar.make(view, "Username or Password is empty.", Snackbar.LENGTH_LONG).setAction("OK", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                        }
-                    }).setActionTextColor(getResources().getColor(R.color.colorPrimary)).show();
-                }
-                else {
-                    createAccount(view);
-                    //firebaseCreateUser(view);
-                }
-
+                notifier.setView(view);
+                tryCreateAccount();
             }
         });
     }
 
-    private boolean someFieldIsEmpty() {
-        return TextUtils.isEmpty(mEmailField.getText()) || TextUtils.isEmpty(mPasswordField.getText());
+    private void tryCreateAccount() {
+        firebaseCreateUser();
     }
 
-    public void firebaseCreateUser(final View view) {
-        final Firebase myFirebaseRef = new Firebase("https://scorching-inferno-5646.firebaseio.com/");
+    public void firebaseCreateUser() {
         String email = mEmailField.getText().toString();
         String pass = mPasswordField.getText().toString();
 
         myFirebaseRef.createUser(email, pass, new Firebase.ValueResultHandler<Map<String, Object>>() {
             @Override
             public void onSuccess(Map<String, Object> stringObjectMap) {
-                Snackbar.make(view, "User created!", Snackbar.LENGTH_LONG).setAction("SWEET!", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                }).setActionTextColor(getResources().getColor(R.color.colorPrimary)).show();
-
-                tryLogin(view);
+                notifier.alertUserCreated();
+                tryLogin();
             }
 
             @Override
             public void onError(FirebaseError firebaseError) {
-                Snackbar.make(view, "Could not create user.", Snackbar.LENGTH_LONG).setAction("OK", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                }).setActionTextColor(getResources().getColor(R.color.colorPrimary)).show();
+                notifier.alertWithConfirmation(firebaseError.getMessage());
             }
         });
 
     }
 
-    public void checkFirstTimeSetup() {
-        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, 0);
-        if (sharedPreferences.getBoolean("first_launch", true)) {
-            // First launch, save some default prefs
-            Log.v("[checkFirstTimeSetup]", "First Launch!");
-            sharedPreferences.edit().putBoolean("first_launch", false).apply();
-            sharedPreferences.edit().putString("user_email", "admin@bracketmaster.com").apply();
-            sharedPreferences.edit().putString("user_password", "fuckdapolice").apply();
-        } else {
-            mUserEmail = sharedPreferences.getString("user_email", "err");
-            mUserPassword = sharedPreferences.getString("user_password", "err");
-        }
+    private void saveAccount(AuthData authData) {
+        /* This may not be necessary. See returned AuthData object here:
+        https://www.firebase.com/docs/android/guide/login/password.html#section-logging-in
+         */
+        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, 0);
+        preferences.edit().clear();
+        preferences.edit().putString("uid", authData.getUid());
     }
 
-    public void tryLogin(View view) {
-
+    private void firebaseLogin() {
         String email = mEmailField.getText().toString();
-        String password = mPasswordField.getText().toString();
+        String pass = mPasswordField.getText().toString();
 
-        if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-            Snackbar.make(view, "Username or Password is empty.", Snackbar.LENGTH_LONG).setAction("OK", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                }
-            }).setActionTextColor(getResources().getColor(R.color.colorPrimary)).show();
-        } else {
-            if (TextUtils.equals(email, mUserEmail) && TextUtils.equals(password, mUserPassword)) {
-                // Correct Login
-                Snackbar.make(view, "Credentials correct!", Snackbar.LENGTH_LONG).setAction("SWEET!", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                    }
-                }).setActionTextColor(getResources().getColor(R.color.colorPrimary)).show();
-
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-            } else {
-                // Incorrect Login
-                Snackbar.make(view, "Username or Password incorrect.", Snackbar.LENGTH_LONG).setAction("OK", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                    }
-                }).setActionTextColor(getResources().getColor(R.color.colorPrimary)).show();
+        myFirebaseRef.authWithPassword(email, pass, new Firebase.AuthResultHandler() {
+            @Override
+            public void onAuthenticated(AuthData authData) {
+                notifier.alertSuccessfulLogin();
+                saveAccount(authData);
+                segueToMainActivity();
             }
-        }
+
+            @Override
+            public void onAuthenticationError(FirebaseError firebaseError) {
+                notifier.alertWithConfirmation(firebaseError.getMessage());
+            }
+        });
     }
 
-    public void createAccount(View view){
-        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, 0);
-        String email = mEmailField.getText().toString();
-        String password = mPasswordField.getText().toString();
-        if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-            Snackbar.make(view, "Username or Password is empty.", Snackbar.LENGTH_LONG).setAction("OK", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                }
-            }).setActionTextColor(getResources().getColor(R.color.colorPrimary)).show();
-        } else {
-            sharedPreferences.edit().clear();
-            sharedPreferences.edit().putString("user_email", email).apply();
-            sharedPreferences.edit().putString("user_password", password).apply();
-            mUserEmail = sharedPreferences.getString("user_email", "err");
-            mUserPassword = sharedPreferences.getString("user_password", "err");
-            Snackbar.make(view, "Created Account.", Snackbar.LENGTH_LONG).setAction("OK", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                }
-            }).setActionTextColor(getResources().getColor(R.color.colorPrimary)).show();
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        }
+    public void segueToMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void tryLogin() {
+        firebaseLogin();
     }
 
     @Override
