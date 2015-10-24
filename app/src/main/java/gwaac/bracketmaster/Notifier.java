@@ -58,4 +58,6 @@ public class Notifier {
         alertUser(text, "OK");
     }
 
+    @Deprecated
+    public void alertMainActivity() { alertWithConfirmation("This is the main page of the app."); }
 }
