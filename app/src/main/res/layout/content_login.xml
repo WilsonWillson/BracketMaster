@@ -12,47 +12,48 @@
     tools:showIn="@layout/activity_login"
     tools:context=".LoginActivity">
 
-    <ImageView
-        style="@style/BracketMaster.Logo"
-        android:id="@+id/logo"
+    <Button
+        style="@style/BracketMaster.Button.Primary"
+        android:id="@+id/register"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/bracket_master"/>
-
-    <EditText
-        style="@style/BracketMaster.EditText"
-        android:id="@+id/email_field"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/logo"
-        android:inputType="textEmailAddress"
-        android:hint="Email"/>
-
-    <EditText
-        style="@style/BracketMaster.EditText"
-        android:id="@+id/password_field"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/email_field"
-        android:inputType="textPassword"
-        android:hint="Password"/>
+        android:layout_alignParentBottom="true"
+        android:text="Register"/>
 
     <Button
         style="@style/BracketMaster.Button.Accent"
         android:id="@+id/login"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/password_field"
+        android:layout_above="@id/register"
         android:layout_marginTop="16dp"
         android:text="Log In"/>
 
-    <Button
-        style="@style/BracketMaster.Button.Primary"
-        android:id="@+id/register"
+    <EditText
+        style="@style/BracketMaster.EditText"
+        android:id="@+id/password_field"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/login"
-        android:text="Register"/>
+        android:layout_above="@id/login"
+        android:inputType="textPassword"
+        android:hint="Password"/>
 
+    <EditText
+        style="@style/BracketMaster.EditText"
+        android:id="@+id/email_field"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/password_field"
+        android:inputType="textEmailAddress"
+        android:hint="Email"/>
+
+    <ImageView
+        style="@style/BracketMaster.Logo"
+        android:id="@+id/logo"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/email_field"
+        android:src="@drawable/bracket_master"/>
 
 </RelativeLayout>

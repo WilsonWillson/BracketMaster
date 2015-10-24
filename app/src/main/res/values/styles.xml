@@ -36,6 +36,7 @@
     <style name="BracketMaster.EditText">
         <item name="android:textColorHint">@color/colorGrey</item>
         <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:fontFamily">Roboto</item>
         <item name="android:textSize">11pt</item>
         <item name="android:textStyle">bold</item>
         <item name="android:paddingTop">4dp</item>
