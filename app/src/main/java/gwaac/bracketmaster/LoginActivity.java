@@ -25,16 +25,12 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mPasswordField;
     private Button mLoginButton;
     private Button mRegisterButton;
-    private Firebase myFirebaseRef;
     private Notifier notifier;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        Firebase.setAndroidContext(this);
-        myFirebaseRef = new Firebase("https://scorching-inferno-5646.firebaseio.com/");
 
         notifier = new Notifier(this);
 
@@ -68,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = mEmailField.getText().toString();
         String pass = mPasswordField.getText().toString();
 
+        Firebase myFirebaseRef = ((BracketMasterApplication)getApplicationContext()).myFirebaseRef;
         myFirebaseRef.createUser(email, pass, new Firebase.ValueResultHandler<Map<String, Object>>() {
             @Override
             public void onSuccess(Map<String, Object> stringObjectMap) {
@@ -96,6 +93,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = mEmailField.getText().toString();
         String pass = mPasswordField.getText().toString();
 
+        Firebase myFirebaseRef = ((BracketMasterApplication)getApplicationContext()).myFirebaseRef;
         myFirebaseRef.authWithPassword(email, pass, new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData authData) {
@@ -114,6 +112,7 @@ public class LoginActivity extends AppCompatActivity {
     public void segueToMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        this.finish();
     }
 
     public void tryLogin() {
