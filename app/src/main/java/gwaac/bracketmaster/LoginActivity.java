@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = mEmailField.getText().toString();
         String pass = mPasswordField.getText().toString();
 
-        Firebase myFirebaseRef = ((BracketMasterApplication)getApplicationContext()).myFirebaseRef;
+        Firebase myFirebaseRef = ((BracketMasterApplication) getApplicationContext()).myFirebaseRef;
         myFirebaseRef.createUser(email, pass, new Firebase.ValueResultHandler<Map<String, Object>>() {
             @Override
             public void onSuccess(Map<String, Object> stringObjectMap) {
@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = mEmailField.getText().toString();
         String pass = mPasswordField.getText().toString();
 
-        Firebase myFirebaseRef = ((BracketMasterApplication)getApplicationContext()).myFirebaseRef;
+        Firebase myFirebaseRef = ((BracketMasterApplication) getApplicationContext()).myFirebaseRef;
         myFirebaseRef.authWithPassword(email, pass, new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData authData) {

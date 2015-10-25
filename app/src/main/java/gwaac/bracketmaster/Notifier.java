@@ -59,5 +59,7 @@ public class Notifier {
     }
 
     @Deprecated
-    public void alertMainActivity() { alertWithConfirmation("This is the main page of the app."); }
+    public void alertMainActivity() {
+        alertWithConfirmation("This is the main page of the app.");
+    }
 }
