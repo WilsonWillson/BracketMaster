@@ -8,8 +8,8 @@ import android.view.View;
  * Created by Arya on 10/22/15.
  */
 public class Notifier {
-    AppCompatActivity activity;
-    View view;
+    private AppCompatActivity activity;
+    private View view;
 
     public Notifier(AppCompatActivity activity, View view) {
         this.activity = activity;
