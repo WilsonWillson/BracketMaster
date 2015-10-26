@@ -27,7 +27,10 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
-        <activity android:name=".CreationActivity">
+        <activity
+            android:name=".CreationActivity"
+            android:label="Create a tournament"
+            android:parentActivityName=".MainActivity">
 
         </activity>
     </application>

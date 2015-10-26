@@ -17,8 +17,8 @@
         android:id="@+id/tournament_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="Name of Tournament"/>
+        android:inputType="textCapWords|textAutoCorrect"
+        android:hint="Tournament name"/>
 
     <EditText
         style="@style/BracketMaster.EditText"
@@ -26,7 +26,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tournament_name"
-        android:inputType="text"
+        android:inputType="textCapWords|textAutoCorrect"
         android:hint="Game"/>
 
     <EditText
@@ -36,6 +36,7 @@
         android:id="@+id/description"
         android:hint="Description"
         android:layout_below="@+id/game_name"
+        android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
         android:layout_centerHorizontal="true" />
 
     <EditText
@@ -44,11 +45,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/description"
-        android:inputType="time"
-        android:hint="Start Time"/>
+        android:inputType="datetime"
+        android:hint="Start time"/>
 
     <Button
-        style="@style/BracketMaster.Button.Accent"
+        style="@style/BracketMaster.Button.Primary"
         android:id="@+id/create_tournament"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
