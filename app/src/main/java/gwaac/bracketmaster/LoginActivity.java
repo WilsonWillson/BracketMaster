@@ -1,10 +1,9 @@
 package gwaac.bracketmaster;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,8 +17,6 @@ import com.firebase.client.FirebaseError;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
-
-    final static String PREFS_NAME = "BracketMasterPrefs";
 
     private EditText mEmailField;
     private EditText mPasswordField;
@@ -84,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
         /* This may not be necessary. See returned AuthData object here:
         https://www.firebase.com/docs/android/guide/login/password.html#section-logging-in
          */
-        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         preferences.edit().clear();
         preferences.edit().putString("uid", authData.getUid());
     }
@@ -110,8 +107,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void segueToMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
         this.finish();
     }
 
