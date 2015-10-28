@@ -1,14 +1,13 @@
 package gwaac.bracketmaster;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -16,8 +15,13 @@ import com.firebase.client.Firebase;
 
 public class MainActivity extends AppCompatActivity {
 
-    Notifier notifier;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
+    private FloatingActionButton mFab;
+    private FloatingActionButton mFab2;
+    private Notifier mNotifier;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,31 +31,27 @@ public class MainActivity extends AppCompatActivity {
 
         loginIfNeeded();
 
-        notifier = new Notifier(this);
+        mRecyclerView = (RecyclerView)findViewById(R.id.tournament_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new TournamentAdapter(new Tournament(this).getSampleData());
+        mRecyclerView.setAdapter(mAdapter);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        mNotifier = new Notifier(this);
+        mFab = (FloatingActionButton) findViewById(R.id.fab);
+        mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                notifier.setView(view);
-                notifier.alertMainActivity();
+                segueToCreation();
             }
         });
 
-        Button findButton = (Button) findViewById(R.id.find_tournament_button);
-        findButton.setOnClickListener(new View.OnClickListener() {
+        mFab2 = (FloatingActionButton)findViewById(R.id.fab2);
+        mFab2.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
+        mFab2.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                notifier.setView(v);
-                notifier.alertWithConfirmation("Needs implementation.");
-            }
-        });
-
-        Button makeButton = (Button) findViewById(R.id.make_tournament_button);
-        makeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                notifier.setView(v);
+            public void onClick(View view) {
                 segueToCreation();
             }
         });
