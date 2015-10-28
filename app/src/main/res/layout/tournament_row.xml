@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/row_tournament_name"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingLeft="8dp"
+        android:textColor="@color/colorWhite"
+        android:textSize="11pt"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:text="Tournament Name"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="2"
+            android:padding="8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/row_tournament_detail"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:textColor="@color/colorWhite"
+                android:textSize="8pt"
+                android:gravity="center_vertical"
+                android:maxLines="3"
+                android:text="Tournament Details"/>
+
+            <TextView
+                android:id="@+id/row_tournament_owner"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/colorWhite"
+                android:textSize="9pt"
+                android:gravity="center_vertical"
+                android:text="Owner: owner_username"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/row_tournament_image"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:padding="4dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/league_of_legends"/>
+
+    </LinearLayout>
+
+</LinearLayout>

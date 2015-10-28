@@ -11,21 +11,10 @@
     tools:showIn="@layout/activity_main"
     tools:context="gwaac.bracketmaster.MainActivity">
 
-    <Button
-        style="@style/BracketMaster.Button.Accent"
-        android:id="@+id/find_tournament_button"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14pt"
-        android:text="Find Tournament" />
-
-    <Button
-        style="@style/BracketMaster.Button.Primary"
-        android:id="@+id/make_tournament_button"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/find_tournament_button"
-        android:textSize="14pt"
-        android:text="Make Tournament"/>
+    <RecyclerView
+        android:id="@+id/tournament_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"/>
 
 </RelativeLayout>
