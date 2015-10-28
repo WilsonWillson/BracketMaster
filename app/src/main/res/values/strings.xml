@@ -2,4 +2,6 @@
     <string name="app_name">BracketMaster</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_main">BracketMaster</string>
+    <string name="title_activity_search">Find Tournament</string>
+    <string name="title_activity_create">Create Tournament</string>
 </resources>

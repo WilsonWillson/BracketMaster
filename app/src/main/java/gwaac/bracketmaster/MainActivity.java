@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         mFab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                segueToCreation();
+                segueToSearch();
             }
         });
     }
@@ -81,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
         segue(CreationActivity.class);
     }
 
+    private void segueToSearch() {
+        segue(SearchActivity.class);
+    }
     @Override
     public void onBackPressed() {
 
