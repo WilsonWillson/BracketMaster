@@ -39,14 +39,21 @@
         android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
         android:layout_centerHorizontal="true" />
 
-    <EditText
-        style="@style/BracketMaster.EditText"
-        android:id="@+id/startTime"
+    <Button
+        style="@style/BracketMaster.Button.Primary"
+        android:id="@+id/datePickerStart"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/description"
-        android:inputType="datetime"
-        android:hint="Start time"/>
+        android:text="Start Date"/>
+
+    <Button
+        style="@style/BracketMaster.Button.Primary"
+        android:id="@+id/datePickerEnd"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/datePickerStart"
+        android:text="End Date"/>
 
     <Button
         style="@style/BracketMaster.Button.Primary"
@@ -55,7 +62,7 @@
         android:layout_height="wrap_content"
         android:text="Create"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/startTime"/>
+        android:layout_below="@id/datePickerEnd"/>
 
 
 

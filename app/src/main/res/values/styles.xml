@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:dialogTheme">@style/BracketMaster.Dialog</item>
     </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -15,6 +16,15 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="BracketMaster"></style>
+
+    <style name="BracketMaster.Dialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorAccent" tools:targetApi="21">@color/colorAccent</item>
+        <item name="android:datePickerStyle" tools:targetApi="21">@style/BracketMaster.DatePickerDialog</item>
+    </style>
+
+    <style name="BracketMaster.DatePickerDialog" parent="@android:style/Widget.Material.Light.DatePicker" tools:targetApi="21">
+    </style>
 
     <style name="BracketMaster.Logo">
         <item name="android:adjustViewBounds">true</item>

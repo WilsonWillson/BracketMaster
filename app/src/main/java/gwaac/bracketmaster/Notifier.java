@@ -1,22 +1,22 @@
 package gwaac.bracketmaster;
 
+import android.app.Activity;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 /**
  * Created by Arya on 10/22/15.
  */
 public class Notifier {
-    private AppCompatActivity activity;
+    private Activity activity;
     private View view;
 
-    public Notifier(AppCompatActivity activity, View view) {
+    public Notifier(Activity activity, View view) {
         this.activity = activity;
         this.view = view;
     }
 
-    public Notifier(AppCompatActivity activity) {
+    public Notifier(Activity activity) {
         /* For the love of god, make sure you EVENTUALLY assign this.view to something non-null. */
         this(activity, null);
     }
