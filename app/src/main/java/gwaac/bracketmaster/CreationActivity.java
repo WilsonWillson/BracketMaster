@@ -8,14 +8,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 
-public class CreationActivity extends AppCompatActivity implements DatePickerFragment.OnDateChosenListener {
+public class CreationActivity extends AppCompatActivity implements DatePickerFragment.OnDateChosenListener, TimePickerFragment.OnTimeChosenListener{
 
     private EditText mTournamentNameField;
     private EditText mGameNameField;
     private EditText mDescriptionField;
+
     private Button mDatePickerStartButton;
     private Button mDatePickerEndButton;
+    private Button mTimePickerStartButton;
+    private Button mTimePickerEndButton;
+
     private Button mCreateButton;
 
     private Notifier notifier;
@@ -31,6 +36,7 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
         mTournamentNameField = (EditText) findViewById(R.id.tournament_name);
         mGameNameField = (EditText) findViewById(R.id.game_name);
         mDescriptionField = (EditText) findViewById(R.id.description);
+
         mDatePickerStartButton = (Button) findViewById(R.id.datePickerStart);
         mDatePickerStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +55,24 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
             }
         });
 
+        mTimePickerStartButton = (Button)findViewById(R.id.timePickerStart);
+        mTimePickerStartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment timeFragment = TimePickerFragment.newInstance(TimePickerFragment.CREATION_START_TIME);
+                timeFragment.show(getSupportFragmentManager(), "startTime");
+            }
+        });
+
+        mTimePickerEndButton = (Button)findViewById(R.id.timePickerEnd);
+        mTimePickerEndButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment timeFragment = TimePickerFragment.newInstance(TimePickerFragment.CREATION_END_TIME);
+                timeFragment.show(getSupportFragmentManager(), "endTime");
+            }
+        });
+
         mCreateButton = (Button) findViewById(R.id.create_tournament);
         mCreateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,13 +87,26 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
     @Override
     public void onDateSet(DatePicker view, int flag, int year, int month, int day) {
         Log.d("[onDateSet]", "Date: " + month + "/" + day + "/" + year + ", Flag: " + flag);
-        String replaceText = month + "/" + day + "/" + year;
+        String dateText = month + "/" + day + "/" + year;
         if (flag == DatePickerFragment.CREATION_START_DATE) {
-            mDatePickerStartButton.setText(replaceText);
+            mDatePickerStartButton.setText(dateText);
         } else if (flag == DatePickerFragment.CREATION_END_DATE) {
-            mDatePickerEndButton.setText(replaceText);
+            mDatePickerEndButton.setText(dateText);
         } else {
+            Log.d("[onDateSet]", "This flag has not been handled.");
+        }
+    }
 
+    @Override
+    public void onTimeSet(TimePicker view, int flag, int hour, int minute) {
+        Log.d("[onTimeSet]", "Time: " + hour + ":" + (minute < 10 ? "0" + minute : minute) + ", Flag: " + flag);
+        String timeText = (hour % 12 == 0 ? "12" : hour % 12) + ":" + (minute < 10 ? "0" + minute : minute) + " " + (hour < 12 ? "AM" : "PM");
+        if (flag == TimePickerFragment.CREATION_START_TIME) {
+            mTimePickerStartButton.setText(timeText);
+        } else if (flag == TimePickerFragment.CREATION_END_TIME) {
+            mTimePickerEndButton.setText(timeText);
+        } else {
+            Log.d("[onTimeSet]", "This flag has not been handled.");
         }
     }
 }

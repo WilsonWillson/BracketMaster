@@ -39,7 +39,7 @@ public class DatePickerFragment extends AppCompatDialogFragment implements DateP
             mOnDateChosenListener = (OnDateChosenListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnTimeDialogListener");
+                    + " must implement OnDateChosenListener");
         }
     }
 
