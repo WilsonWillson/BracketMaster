@@ -27,7 +27,7 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.To
 
     @Override
     public TournamentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.tournament_row, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.tournament_card, parent, false);
         TournamentViewHolder tournamentViewHolder = new TournamentViewHolder(v);
         return tournamentViewHolder;
     }
@@ -35,8 +35,8 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.To
     @Override
     public void onBindViewHolder(TournamentViewHolder holder, int position) {
         holder.tournamentName.setText(mTournamentData.get(position).getName());
-        holder.tournamentDetail.setText(mTournamentData.get(position).getDescription());
-        holder.tournamentOwner.setText(mTournamentData.get(position).getOwner());
+//        holder.tournamentDetail.setText(mTournamentData.get(position).getDescription());
+//        holder.tournamentOwner.setText(mTournamentData.get(position).getOwner());
         holder.tournamentImage.setImageBitmap(mTournamentData.get(position).getGameImage());
     }
 
@@ -53,10 +53,10 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.To
 
         public TournamentViewHolder(View itemView) {
             super(itemView);
-            tournamentName = (TextView)itemView.findViewById(R.id.row_tournament_name);
-            tournamentDetail = (TextView)itemView.findViewById(R.id.row_tournament_detail);
-            tournamentOwner = (TextView)itemView.findViewById(R.id.row_tournament_owner);
-            tournamentImage = (ImageView)itemView.findViewById(R.id.row_tournament_image);
+            tournamentName = (TextView)itemView.findViewById(R.id.tournament_name);
+//            tournamentDetail = (TextView)itemView.findViewById(R.id.row_tournament_detail);
+//            tournamentOwner = (TextView)itemView.findViewById(R.id.row_tournament_owner);
+            tournamentImage = (ImageView)itemView.findViewById(R.id.tournament_game_image);
         }
     }
 }
