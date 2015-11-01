@@ -9,15 +9,11 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
-import java.text.ParseException;
-import java.util.Date;
-
 public class CreationActivity extends AppCompatActivity implements DatePickerFragment.OnDateChosenListener {
 
     private EditText mTournamentNameField;
     private EditText mGameNameField;
     private EditText mDescriptionField;
-    private EditText mStartTimeField;
     private Button mDatePickerStartButton;
     private Button mDatePickerEndButton;
     private Button mCreateButton;

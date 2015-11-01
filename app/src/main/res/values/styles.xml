@@ -80,4 +80,27 @@
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
+    <style name="BracketMaster.Form"/>
+
+    <style name="BracketMaster.Form.Button">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:paddingRight">4dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+    </style>
+
+    <style name="BracketMaster.Form.Button.Accent">
+        <item name="android:background">@color/colorAccent</item>
+    </style>
+
+    <style name="BracketMaster.Form.Button.Primary">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
 </resources>
