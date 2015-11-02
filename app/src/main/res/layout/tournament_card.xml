@@ -3,13 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="400dp"
+    android:layout_height="350dp"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     android:layout_marginTop="8dp"
     android:layout_marginBottom="8dp"
     card_view:cardCornerRadius="4dp"
-    card_view:cardElevation="4dp">
+    card_view:cardElevation="8dp">
 
     <RelativeLayout
         android:id="@+id/tournament_banner_layout"
@@ -32,6 +32,8 @@
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:padding="8dp"
             android:textColor="@color/colorWhite"
             android:textSize="18dp"
@@ -44,14 +46,81 @@
     <RelativeLayout
         android:id="@+id/tournament_content_layout"
         android:layout_width="fill_parent"
-        android:layout_height="250dp"
-        android:layout_gravity="bottom">
+        android:layout_height="200dp"
+        android:layout_gravity="bottom"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
         <TextView
+            android:id="@+id/tournament_description"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:text="Detailed content will go here."
-            android:gravity="center"/>
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:gravity="center"
+            android:textStyle="italic"
+            android:textSize="14dp"
+            android:textColor="@color/colorGrey"
+            android:text="A short description of the tournament goes here. You could say things like '5v5' or 'single-elimination.'"/>
+
+        <TextView
+            android:id="@+id/tournament_label_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tournament_description"
+            android:padding="4dp"
+            android:textSize="16dp"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:text="STARTS:"/>
+        <TextView
+            android:id="@+id/tournament_datetime_start"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tournament_description"
+            android:layout_toRightOf="@id/tournament_label_start"
+            android:layout_toEndOf="@id/tournament_label_start"
+            android:padding="4dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:text="November 1st @ 00:00 PM"/>
+
+        <TextView
+            android:id="@+id/tournament_label_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tournament_label_start"
+            android:padding="4dp"
+            android:textSize="16dp"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:text="ENDS:"/>
+        <TextView
+            android:id="@+id/tournament_datetime_end"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tournament_datetime_start"
+            android:layout_toRightOf="@id/tournament_label_end"
+            android:layout_toEndOf="@id/tournament_label_end"
+            android:padding="4dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:text="November 1st @ 00:00 PM"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:padding="4dp"
+            android:background="#00000000"
+            android:textColor="@color/colorPrimary"
+            android:text="View"/>
 
     </RelativeLayout>
 

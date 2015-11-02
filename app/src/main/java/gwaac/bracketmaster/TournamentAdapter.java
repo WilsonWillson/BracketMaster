@@ -15,9 +15,11 @@ import java.util.List;
 public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.TournamentViewHolder> {
 
     private List<Tournament> mTournamentData;
+    private CalendarHelper mCalendarHelper;
 
     public TournamentAdapter(List<Tournament> tournamentData) {
         mTournamentData = tournamentData;
+        mCalendarHelper = new CalendarHelper();
     }
 
     @Override
@@ -35,8 +37,9 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.To
     @Override
     public void onBindViewHolder(TournamentViewHolder holder, int position) {
         holder.tournamentName.setText(mTournamentData.get(position).getName());
-//        holder.tournamentDetail.setText(mTournamentData.get(position).getDescription());
-//        holder.tournamentOwner.setText(mTournamentData.get(position).getOwner());
+        holder.tournamentDetail.setText(mTournamentData.get(position).getDescription());
+        holder.tournamentDateTimeStart.setText(mCalendarHelper.getPrettyDate(mTournamentData.get(position).getStartDateTime()));
+        holder.tournamentDateTimeEnd.setText(mCalendarHelper.getPrettyDate(mTournamentData.get(position).getEndDateTime()));
         holder.tournamentImage.setImageBitmap(mTournamentData.get(position).getGameImage());
     }
 
@@ -48,14 +51,16 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.To
     public class TournamentViewHolder extends RecyclerView.ViewHolder {
         TextView tournamentName;
         TextView tournamentDetail;
-        TextView tournamentOwner;
+        TextView tournamentDateTimeStart;
+        TextView tournamentDateTimeEnd;
         ImageView tournamentImage;
 
         public TournamentViewHolder(View itemView) {
             super(itemView);
             tournamentName = (TextView)itemView.findViewById(R.id.tournament_name);
-//            tournamentDetail = (TextView)itemView.findViewById(R.id.row_tournament_detail);
-//            tournamentOwner = (TextView)itemView.findViewById(R.id.row_tournament_owner);
+            tournamentDetail = (TextView)itemView.findViewById(R.id.tournament_description);
+            tournamentDateTimeStart = (TextView)itemView.findViewById(R.id.tournament_datetime_start);
+            tournamentDateTimeEnd = (TextView)itemView.findViewById(R.id.tournament_datetime_end);
             tournamentImage = (ImageView)itemView.findViewById(R.id.tournament_game_image);
         }
     }
