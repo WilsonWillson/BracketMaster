@@ -40,16 +40,21 @@ public class CalendarHelper {
         }
     }
 
-    private String getTimeText(int hour, int minute) {
+    public String getPrettyTime(int hour, int minute) {
         return (hour % 12 == 0 ? "12" : hour % 12) + ":" + (minute < 10 ? "0" + minute : minute) + " " + (hour < 12 ? "AM" : "PM");
     }
 
-    public String getPrettyDate(Calendar date) {
+    public String getPrettyDateTime(Calendar date) {
         int month = date.get(Calendar.MONTH);
         int day = date.get(Calendar.DAY_OF_MONTH);
         int hour = date.get(Calendar.HOUR_OF_DAY);
         int minute = date.get(Calendar.MINUTE);
 
-        return mMonthLabels.get(month) + " " + day + getDayNotation(day) + " @ " + getTimeText(hour, minute);
+        return mMonthLabels.get(month) + " " + day + getDayNotation(day) + " @ " + getPrettyTime(hour, minute);
     }
+
+    public String getPrettyDate(int year, int month, int day) {
+        return mMonthLabels.get(month) + " " + day + getDayNotation(day) + ", " + year;
+    }
+
 }

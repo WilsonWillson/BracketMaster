@@ -8,9 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 
 import com.firebase.client.Firebase;
 
@@ -22,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FloatingActionButton mFab;
     private FloatingActionButton mFab2;
-    private Notifier mNotifier;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new TournamentAdapter(new Tournament(this).getSampleData());
         mRecyclerView.setAdapter(mAdapter);
 
-        mNotifier = new Notifier(this);
         mFab = (FloatingActionButton) findViewById(R.id.fab);
+        mFab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mFab2 = (FloatingActionButton)findViewById(R.id.fab2);
-        mFab2.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
+        mFab2.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorGrey)));
         mFab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

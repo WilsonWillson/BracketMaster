@@ -38,8 +38,8 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.To
     public void onBindViewHolder(TournamentViewHolder holder, int position) {
         holder.tournamentName.setText(mTournamentData.get(position).getName());
         holder.tournamentDetail.setText(mTournamentData.get(position).getDescription());
-        holder.tournamentDateTimeStart.setText(mCalendarHelper.getPrettyDate(mTournamentData.get(position).getStartDateTime()));
-        holder.tournamentDateTimeEnd.setText(mCalendarHelper.getPrettyDate(mTournamentData.get(position).getEndDateTime()));
+        holder.tournamentDateTimeStart.setText(mCalendarHelper.getPrettyDateTime(mTournamentData.get(position).getStartDateTime()));
+        holder.tournamentDateTimeEnd.setText(mCalendarHelper.getPrettyDateTime(mTournamentData.get(position).getEndDateTime()));
         holder.tournamentImage.setImageBitmap(mTournamentData.get(position).getGameImage());
     }
 

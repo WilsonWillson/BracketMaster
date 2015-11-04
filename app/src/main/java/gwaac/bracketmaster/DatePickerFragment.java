@@ -56,6 +56,6 @@ public class DatePickerFragment extends AppCompatDialogFragment implements DateP
 
     @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-        mOnDateChosenListener.onDateSet(datePicker, mFlag, i, i1+1, i2);
+        mOnDateChosenListener.onDateSet(datePicker, mFlag, i, i1, i2);
     }
 }

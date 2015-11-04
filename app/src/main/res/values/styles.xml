@@ -103,4 +103,24 @@
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
+    <style name="BracketMaster.TextInputLayout">
+        <item name="hintAnimationEnabled">false</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">12dp</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+
+    <style name="BracketMaster.TextInputLayout.Counter">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="BracketMaster.TextInputLayout.Counter.Overflow">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="BracketMaster.TextInputLayout.DateTime" parent="android:Widget.Material.Spinner.Underlined" tools:targetApi="21">
+        <item name="android:editable">false</item>
+        <item name="android:focusable">false</item>
+    </style>
+
 </resources>
