@@ -11,35 +11,31 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class CreationActivity extends AppCompatActivity implements DatePickerFragment.OnDateChosenListener, TimePickerFragment.OnTimeChosenListener{
 
-    private EditText mTournamentNameField;
-    private EditText mGameNameField;
-    private EditText mDescriptionField;
+    @InjectView(R.id.tournament_name) EditText mTournamentNameField;
+    @InjectView(R.id.tournament_game) EditText mGameNameField;
+    @InjectView(R.id.description) EditText mDescriptionField;
 
-    private TextInputLayout mDatePickerStartButton;
-    private TextInputLayout mDatePickerEndButton;
-    private TextInputLayout mTimePickerStartButton;
-    private TextInputLayout mTimePickerEndButton;
+    @InjectView(R.id.tournament_date_start) TextInputLayout mDatePickerStartButton;
+    @InjectView(R.id.tournament_date_end) TextInputLayout mDatePickerEndButton;
+    @InjectView(R.id.tournament_time_start) TextInputLayout mTimePickerStartButton;
+    @InjectView(R.id.tournament_time_end) TextInputLayout mTimePickerEndButton;
 
-    private Button mCreateButton;
+    @InjectView(R.id.create_tournament) Button mCreateButton;
 
     private Notifier notifier;
-
-    private CalendarHelper mCalendarHelper;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
+        ButterKnife.inject(this);
 
         notifier = new Notifier(this);
-        mCalendarHelper = new CalendarHelper();
-
-        mTournamentNameField = (EditText) findViewById(R.id.tournament_name);
-        mGameNameField = (EditText) findViewById(R.id.tournament_game);
-        mDescriptionField = (EditText) findViewById(R.id.description);
 
         mDatePickerStartButton = (TextInputLayout) findViewById(R.id.tournament_date_start);
         if (mDatePickerStartButton.getEditText() != null) {
@@ -52,7 +48,6 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
             });
         }
 
-        mDatePickerEndButton = (TextInputLayout)findViewById(R.id.tournament_date_end);
         if (mDatePickerEndButton.getEditText() != null) {
             mDatePickerEndButton.getEditText().setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -63,7 +58,6 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
             });
         }
 
-        mTimePickerStartButton = (TextInputLayout)findViewById(R.id.tournament_time_start);
         if (mTimePickerStartButton.getEditText() != null) {
             mTimePickerStartButton.getEditText().setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -74,7 +68,6 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
             });
         }
 
-        mTimePickerEndButton = (TextInputLayout)findViewById(R.id.tournament_time_end);
         if (mTimePickerEndButton.getEditText() != null) {
             mTimePickerEndButton.getEditText().setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -85,7 +78,6 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
             });
         }
 
-        mCreateButton = (Button) findViewById(R.id.create_tournament);
         mCreateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,25 +90,31 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
 
     @Override
     public void onDateSet(DatePicker view, int flag, int year, int month, int day) {
-        String dateText = mCalendarHelper.getPrettyDate(year, month, day);
-        if (flag == DatePickerFragment.CREATION_START_DATE) {
-            mDatePickerStartButton.getEditText().setText(dateText);
-        } else if (flag == DatePickerFragment.CREATION_END_DATE) {
-            mDatePickerEndButton.getEditText().setText(dateText);
-        } else {
-            Log.d("[onDateSet]", "This flag has not been handled.");
+        String dateText = CalendarHelper.getPrettyDate(year, month, day);
+        switch (flag) {
+            case DatePickerFragment.CREATION_START_DATE:
+                mDatePickerStartButton.getEditText().setText(dateText);
+                break;
+            case DatePickerFragment.CREATION_END_DATE:
+                mDatePickerEndButton.getEditText().setText(dateText);
+                break;
+            default:
+                Log.d("[onDateSet]", "This flag has not been handled.");
         }
     }
 
     @Override
     public void onTimeSet(TimePicker view, int flag, int hour, int minute) {
-        String timeText = mCalendarHelper.getPrettyTime(hour, minute);
-        if (flag == TimePickerFragment.CREATION_START_TIME) {
-            mTimePickerStartButton.getEditText().setText(timeText);
-        } else if (flag == TimePickerFragment.CREATION_END_TIME) {
-            mTimePickerEndButton.getEditText().setText(timeText);
-        } else {
-            Log.d("[onTimeSet]", "This flag has not been handled.");
+        String timeText = CalendarHelper.getPrettyTime(hour, minute);
+        switch (flag) {
+            case TimePickerFragment.CREATION_START_TIME:
+                mTimePickerStartButton.getEditText().setText(timeText);
+                break;
+            case TimePickerFragment.CREATION_END_TIME:
+                mTimePickerEndButton.getEditText().setText(timeText);
+                break;
+            default:
+                Log.d("[onTimeSet]", "This flag has not been handled.");
         }
     }
 }
