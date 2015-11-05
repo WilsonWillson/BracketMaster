@@ -1,12 +1,14 @@
 package gwaac.bracketmaster;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
@@ -25,8 +27,24 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    private FloatingActionButton mFab;
-    private FloatingActionButton mFab2;
+    private View mOverlay;
+    private boolean mOverlayVisible;
+
+    private MainActivity mThisActivity;
+
+    private FloatingActionButton mFabMenu;
+    private FloatingActionButton mFabSearch;
+    private FloatingActionButton mFabNew;
+    private FloatingActionButton mFabLogout;
+
+    private Animator mRotateClockwiseAnim;
+    private Animator mRotateCounterClockwiseAnim;
+    private Animator mTranslateUpAnim;
+    private Animator mTranslateDownAnim;
+    private Animator mTranslateLeftAnim;
+    private Animator mTranslateRightAnim;
+    private Animator mTranslateLeftUpAnim;
+    private Animator mTranslateRightDownAnim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.action_bar_main);
 
+        mThisActivity = this;
+
         mRecyclerView = (RecyclerView)findViewById(R.id.tournament_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
@@ -42,21 +62,64 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new TournamentAdapter(new Tournament(this).getSampleData());
         mRecyclerView.setAdapter(mAdapter);
 
-        mFab = (FloatingActionButton) findViewById(R.id.fab);
-        mFab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorAccent)));
-        mFab.setOnClickListener(new View.OnClickListener() {
+        mOverlay = findViewById(R.id.transparent_overlay);
+        mOverlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presentOverlay();
+            }
+        });
+        mOverlayVisible = false;
+
+        mFabMenu = (FloatingActionButton) findViewById(R.id.fab_menu);
+        mFabMenu.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorAccent)));
+        mFabMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //segueToCreation();
+                presentOverlay();
+            }
+        });
+
+        mFabSearch = (FloatingActionButton)findViewById(R.id.fab_search);
+        mFabSearch.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimaryDark)));
+        mFabSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                segueToSearch();
+            }
+        });
+
+        mFabNew = (FloatingActionButton)findViewById(R.id.fab_new);
+        mFabNew.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
+        mFabNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 segueToCreation();
             }
         });
 
-        mFab2 = (FloatingActionButton)findViewById(R.id.fab2);
-        mFab2.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimaryLight)));
-        mFab2.setOnClickListener(new View.OnClickListener() {
+        mFabLogout = (FloatingActionButton)findViewById(R.id.fab_logout);
+        mFabLogout.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorGrey)));
+        mFabLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                segueToSearch();
+                new AlertDialog.Builder(mThisActivity)
+                        .setTitle("Logout from BracketMaster")
+                        .setMessage("Would you like to log out?")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                logout();
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .show();
             }
         });
 
@@ -115,41 +178,51 @@ public class MainActivity extends AppCompatActivity {
         moveTaskToBack(true);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+    public void presentOverlay() {
+        if (mOverlayVisible) {
+            mTranslateDownAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_down);
+            mTranslateDownAnim.setTarget(mFabSearch);
+            mTranslateDownAnim.start();
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+            mTranslateRightDownAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_down_right);
+            mTranslateRightDownAnim.setTarget(mFabNew);
+            mTranslateRightDownAnim.start();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.logout) {
-            new AlertDialog.Builder(this)
-                    .setTitle("Logout from BracketMaster")
-                    .setMessage("Would you like to log out?")
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            logout();
-                        }
-                    })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+            mTranslateRightAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_right);
+            mTranslateRightAnim.setTarget(mFabLogout);
+            mTranslateRightAnim.start();
 
-                        }
-                    })
-                    .show();
-            return true;
+            mRotateCounterClockwiseAnim = AnimatorInflater.loadAnimator(this, R.animator.rotate_counterclockwise);
+            mRotateCounterClockwiseAnim.setTarget(mFabMenu);
+            mRotateCounterClockwiseAnim.start();
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mOverlay.setVisibility(View.GONE);
+                }
+            }, 200);
+
+            mOverlayVisible = false;
+        } else {
+            mOverlayVisible = true;
+            mOverlay.setVisibility(View.VISIBLE);
+
+            mRotateClockwiseAnim = AnimatorInflater.loadAnimator(this, R.animator.rotate_clockwise);
+            mRotateClockwiseAnim.setTarget(mFabMenu);
+            mRotateClockwiseAnim.start();
+
+            mTranslateLeftAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_left);
+            mTranslateLeftAnim.setTarget(mFabLogout);
+            mTranslateLeftAnim.start();
+
+            mTranslateLeftUpAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_up_left);
+            mTranslateLeftUpAnim.setTarget(mFabNew);
+            mTranslateLeftUpAnim.start();
+
+            mTranslateUpAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_up);
+            mTranslateUpAnim.setTarget(mFabSearch);
+            mTranslateUpAnim.start();
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }
