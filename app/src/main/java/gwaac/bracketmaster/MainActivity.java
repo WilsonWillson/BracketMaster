@@ -105,9 +105,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 new AlertDialog.Builder(mThisActivity)
-                        .setTitle("Logout from BracketMaster")
-                        .setMessage("Would you like to log out?")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        .setTitle("Logout from BracketMaster?")
+                        .setMessage("Are you sure you want to log out?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 logout();
