@@ -113,7 +113,6 @@ public class SignupActivity extends AppCompatActivity {
         resultData.putExtra("email", _emailText.getText().toString());
         resultData.putExtra("password", _passwordText.getText().toString());
         setResult(RESULT_OK, resultData);
-        Log.d("!!!!!!!!!!!!!!!!", "GOT HERE~");
         finish();
     }
 
