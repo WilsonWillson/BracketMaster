@@ -15,8 +15,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.firebase.client.Firebase;
@@ -45,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private Animator mTranslateRightAnim;
     private Animator mTranslateLeftUpAnim;
     private Animator mTranslateRightDownAnim;
+    private Animator mFadeInAnim;
+    private Animator mFadeOutAnim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -196,17 +196,26 @@ public class MainActivity extends AppCompatActivity {
             mRotateCounterClockwiseAnim.setTarget(mFabMenu);
             mRotateCounterClockwiseAnim.start();
 
+            mFadeOutAnim = AnimatorInflater.loadAnimator(this, R.animator.fade_out);
+            mFadeOutAnim.setTarget(mOverlay);
+            mFadeOutAnim.start();
+
+            mOverlayVisible = false;
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mOverlay.setVisibility(View.GONE);
+                    if (!mOverlayVisible) {
+                        mOverlay.setVisibility(View.GONE);
+                    }
                 }
             }, 200);
-
-            mOverlayVisible = false;
         } else {
             mOverlayVisible = true;
             mOverlay.setVisibility(View.VISIBLE);
+
+            mFadeInAnim = AnimatorInflater.loadAnimator(this, R.animator.fade_in);
+            mFadeInAnim.setTarget(mOverlay);
+            mFadeInAnim.start();
 
             mRotateClockwiseAnim = AnimatorInflater.loadAnimator(this, R.animator.rotate_clockwise);
             mRotateClockwiseAnim.setTarget(mFabMenu);

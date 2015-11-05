@@ -131,5 +131,5 @@ public class LoginActivity extends AppCompatActivity {
         // Disable going back to main activity.
         moveTaskToBack(true);
     }
-    
+
 }
