@@ -25,8 +25,6 @@ public class Tournament {
 
     private Bitmap mGameImage;
 
-    private List<Tournament> mTournaments;
-
     public Tournament(Context context) {
         mContext = context;
 
@@ -42,7 +40,7 @@ public class Tournament {
     }
 
     public List<Tournament> getSampleData() {
-        mTournaments = new ArrayList<>();
+        List<Tournament> mTournaments = new ArrayList<>();
 
         Tournament tournament = new Tournament(mContext);
         tournament.setName("2015 Slamfest ft. Dunkmaster Darius");

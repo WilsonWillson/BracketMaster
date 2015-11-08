@@ -19,15 +19,17 @@ import android.view.View;
 
 import com.firebase.client.Firebase;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    @InjectView(R.id.tournament_recycler_view) RecyclerView mRecyclerView;
 
-    private View mOverlay;
+    @InjectView(R.id.transparent_overlay) View mOverlay;
     private boolean mOverlayVisible;
 
+<<<<<<< Updated upstream
     private MainActivity mThisActivity;
 
     private FloatingActionButton mFabMenu;
@@ -45,6 +47,12 @@ public class MainActivity extends AppCompatActivity {
     private Animator mTranslateRightDownAnim;
     private Animator mFadeInAnim;
     private Animator mFadeOutAnim;
+=======
+    @InjectView(R.id.fab_menu) FloatingActionButton mFabMenu;
+    @InjectView(R.id.fab_search) FloatingActionButton mFabSearch;
+    @InjectView(R.id.fab_new) FloatingActionButton mFabNew;
+    @InjectView(R.id.fab_logout) FloatingActionButton mFabLogout;
+>>>>>>> Stashed changes
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +61,14 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.action_bar_main);
 
-        mThisActivity = this;
+        ButterKnife.inject(this);
 
-        mRecyclerView = (RecyclerView)findViewById(R.id.tournament_recycler_view);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new TournamentAdapter(new Tournament(this).getSampleData());
+        RecyclerView.Adapter mAdapter = new TournamentAdapter(new Tournament(this).getSampleData());
         mRecyclerView.setAdapter(mAdapter);
 
-        mOverlay = findViewById(R.id.transparent_overlay);
         mOverlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,17 +77,14 @@ public class MainActivity extends AppCompatActivity {
         });
         mOverlayVisible = false;
 
-        mFabMenu = (FloatingActionButton) findViewById(R.id.fab_menu);
         mFabMenu.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorAccent)));
         mFabMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //segueToCreation();
                 presentOverlay();
             }
         });
 
-        mFabSearch = (FloatingActionButton)findViewById(R.id.fab_search);
         mFabSearch.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimaryDark)));
         mFabSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mFabNew = (FloatingActionButton)findViewById(R.id.fab_new);
         mFabNew.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
         mFabNew.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,12 +101,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mFabLogout = (FloatingActionButton)findViewById(R.id.fab_logout);
         mFabLogout.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorGrey)));
         mFabLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new AlertDialog.Builder(mThisActivity)
+                new AlertDialog.Builder(MainActivity.this)
                         .setTitle("Logout from BracketMaster?")
                         .setMessage("Are you sure you want to log out?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -140,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         if (preferences.getString("uid", "null").equals("null")) {
             Firebase ref = ((BracketMasterApplication)getApplication()).myFirebaseRef;
             String uid = ref.getAuth().getUid();
-            preferences.edit().putString("uid", uid);
+            preferences.edit().putString("uid", uid).apply();
         }
 
     }
@@ -180,19 +181,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void presentOverlay() {
         if (mOverlayVisible) {
-            mTranslateDownAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_down);
+            Animator mTranslateDownAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_down);
             mTranslateDownAnim.setTarget(mFabSearch);
             mTranslateDownAnim.start();
 
-            mTranslateRightDownAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_down_right);
+            Animator mTranslateRightDownAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_down_right);
             mTranslateRightDownAnim.setTarget(mFabNew);
             mTranslateRightDownAnim.start();
 
-            mTranslateRightAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_right);
+            Animator mTranslateRightAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_right);
             mTranslateRightAnim.setTarget(mFabLogout);
             mTranslateRightAnim.start();
 
-            mRotateCounterClockwiseAnim = AnimatorInflater.loadAnimator(this, R.animator.rotate_counterclockwise);
+            Animator mRotateCounterClockwiseAnim = AnimatorInflater.loadAnimator(this, R.animator.rotate_counterclockwise);
             mRotateCounterClockwiseAnim.setTarget(mFabMenu);
             mRotateCounterClockwiseAnim.start();
 
@@ -213,23 +214,27 @@ public class MainActivity extends AppCompatActivity {
             mOverlayVisible = true;
             mOverlay.setVisibility(View.VISIBLE);
 
+<<<<<<< Updated upstream
             mFadeInAnim = AnimatorInflater.loadAnimator(this, R.animator.fade_in);
             mFadeInAnim.setTarget(mOverlay);
             mFadeInAnim.start();
 
             mRotateClockwiseAnim = AnimatorInflater.loadAnimator(this, R.animator.rotate_clockwise);
+=======
+            Animator mRotateClockwiseAnim = AnimatorInflater.loadAnimator(this, R.animator.rotate_clockwise);
+>>>>>>> Stashed changes
             mRotateClockwiseAnim.setTarget(mFabMenu);
             mRotateClockwiseAnim.start();
 
-            mTranslateLeftAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_left);
+            Animator mTranslateLeftAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_left);
             mTranslateLeftAnim.setTarget(mFabLogout);
             mTranslateLeftAnim.start();
 
-            mTranslateLeftUpAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_up_left);
+            Animator mTranslateLeftUpAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_up_left);
             mTranslateLeftUpAnim.setTarget(mFabNew);
             mTranslateLeftUpAnim.start();
 
-            mTranslateUpAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_up);
+            Animator mTranslateUpAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_up);
             mTranslateUpAnim.setTarget(mFabSearch);
             mTranslateUpAnim.start();
         }
