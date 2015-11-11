@@ -15,11 +15,9 @@ import java.util.List;
 public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.TournamentViewHolder> {
 
     private List<Tournament> mTournamentData;
-    private CalendarHelper mCalendarHelper;
 
     public TournamentAdapter(List<Tournament> tournamentData) {
         mTournamentData = tournamentData;
-        mCalendarHelper = new CalendarHelper();
     }
 
     @Override
@@ -30,16 +28,15 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.To
     @Override
     public TournamentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.tournament_card, parent, false);
-        TournamentViewHolder tournamentViewHolder = new TournamentViewHolder(v);
-        return tournamentViewHolder;
+        return new TournamentViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(TournamentViewHolder holder, int position) {
         holder.tournamentName.setText(mTournamentData.get(position).getName());
         holder.tournamentDetail.setText(mTournamentData.get(position).getDescription());
-        holder.tournamentDateTimeStart.setText(mCalendarHelper.getPrettyDateTime(mTournamentData.get(position).getStartDateTime()));
-        holder.tournamentDateTimeEnd.setText(mCalendarHelper.getPrettyDateTime(mTournamentData.get(position).getEndDateTime()));
+        holder.tournamentDateTimeStart.setText(CalendarHelper.getPrettyDateTime(mTournamentData.get(position).getStartDateTime()));
+        holder.tournamentDateTimeEnd.setText(CalendarHelper.getPrettyDateTime(mTournamentData.get(position).getEndDateTime()));
         holder.tournamentImage.setImageBitmap(mTournamentData.get(position).getGameImage());
     }
 

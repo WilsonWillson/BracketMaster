@@ -19,32 +19,23 @@ import android.view.View;
 
 import com.firebase.client.Firebase;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView mRecyclerView;
+    @InjectView(R.id.tournament_recycler_view) RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
-    private View mOverlay;
+    @InjectView(R.id.transparent_overlay) View mOverlay;
     private boolean mOverlayVisible;
 
     private MainActivity mThisActivity;
 
-    private FloatingActionButton mFabMenu;
-    private FloatingActionButton mFabSearch;
-    private FloatingActionButton mFabNew;
-    private FloatingActionButton mFabLogout;
-
-    private Animator mRotateClockwiseAnim;
-    private Animator mRotateCounterClockwiseAnim;
-    private Animator mTranslateUpAnim;
-    private Animator mTranslateDownAnim;
-    private Animator mTranslateLeftAnim;
-    private Animator mTranslateRightAnim;
-    private Animator mTranslateLeftUpAnim;
-    private Animator mTranslateRightDownAnim;
-    private Animator mFadeInAnim;
-    private Animator mFadeOutAnim;
+    @InjectView(R.id.fab_menu) FloatingActionButton mFabMenu;
+    @InjectView(R.id.fab_search) FloatingActionButton mFabSearch;
+    @InjectView(R.id.fab_new) FloatingActionButton mFabNew;
+    @InjectView(R.id.fab_logout) FloatingActionButton mFabLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +44,14 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.action_bar_main);
 
-        mThisActivity = this;
+        ButterKnife.inject(this);
 
-        mRecyclerView = (RecyclerView)findViewById(R.id.tournament_recycler_view);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new TournamentAdapter(new Tournament().getSampleData());
         mRecyclerView.setAdapter(mAdapter);
 
-        mOverlay = findViewById(R.id.transparent_overlay);
         mOverlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,17 +60,14 @@ public class MainActivity extends AppCompatActivity {
         });
         mOverlayVisible = false;
 
-        mFabMenu = (FloatingActionButton) findViewById(R.id.fab_menu);
         mFabMenu.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorAccent)));
         mFabMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //segueToCreation();
                 presentOverlay();
             }
         });
 
-        mFabSearch = (FloatingActionButton)findViewById(R.id.fab_search);
         mFabSearch.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimaryDark)));
         mFabSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mFabNew = (FloatingActionButton)findViewById(R.id.fab_new);
         mFabNew.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
         mFabNew.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,12 +84,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mFabLogout = (FloatingActionButton)findViewById(R.id.fab_logout);
         mFabLogout.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorGrey)));
         mFabLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new AlertDialog.Builder(mThisActivity)
+                new AlertDialog.Builder(MainActivity.this)
                         .setTitle("Logout from BracketMaster?")
                         .setMessage("Are you sure you want to log out?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -140,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         if (preferences.getString("uid", "null").equals("null")) {
             Firebase ref = ((BracketMasterApplication)getApplication()).myFirebaseRef;
             String uid = ref.getAuth().getUid();
-            preferences.edit().putString("uid", uid);
+            preferences.edit().putString("uid", uid).apply();
         }
 
     }
@@ -180,25 +164,25 @@ public class MainActivity extends AppCompatActivity {
 
     public void presentOverlay() {
         if (mOverlayVisible) {
-            mTranslateDownAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_down);
-            mTranslateDownAnim.setTarget(mFabSearch);
-            mTranslateDownAnim.start();
+            Animator translateDownAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_down);
+            translateDownAnim.setTarget(mFabSearch);
+            translateDownAnim.start();
 
-            mTranslateRightDownAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_down_right);
-            mTranslateRightDownAnim.setTarget(mFabNew);
-            mTranslateRightDownAnim.start();
+            Animator translateRightDownAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_down_right);
+            translateRightDownAnim.setTarget(mFabNew);
+            translateRightDownAnim.start();
 
-            mTranslateRightAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_right);
-            mTranslateRightAnim.setTarget(mFabLogout);
-            mTranslateRightAnim.start();
+            Animator translateRightAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_right);
+            translateRightAnim.setTarget(mFabLogout);
+            translateRightAnim.start();
 
-            mRotateCounterClockwiseAnim = AnimatorInflater.loadAnimator(this, R.animator.rotate_counterclockwise);
-            mRotateCounterClockwiseAnim.setTarget(mFabMenu);
-            mRotateCounterClockwiseAnim.start();
+            Animator rotateCounterClockwiseAnim = AnimatorInflater.loadAnimator(this, R.animator.rotate_counterclockwise);
+            rotateCounterClockwiseAnim.setTarget(mFabMenu);
+            rotateCounterClockwiseAnim.start();
 
-            mFadeOutAnim = AnimatorInflater.loadAnimator(this, R.animator.fade_out);
-            mFadeOutAnim.setTarget(mOverlay);
-            mFadeOutAnim.start();
+            Animator fadeOutAnim = AnimatorInflater.loadAnimator(this, R.animator.fade_out);
+            fadeOutAnim.setTarget(mOverlay);
+            fadeOutAnim.start();
 
             mOverlayVisible = false;
             new Handler().postDelayed(new Runnable() {
@@ -213,25 +197,25 @@ public class MainActivity extends AppCompatActivity {
             mOverlayVisible = true;
             mOverlay.setVisibility(View.VISIBLE);
 
-            mFadeInAnim = AnimatorInflater.loadAnimator(this, R.animator.fade_in);
-            mFadeInAnim.setTarget(mOverlay);
-            mFadeInAnim.start();
+            Animator fadeInAnim = AnimatorInflater.loadAnimator(this, R.animator.fade_in);
+            fadeInAnim.setTarget(mOverlay);
+            fadeInAnim.start();
 
-            mRotateClockwiseAnim = AnimatorInflater.loadAnimator(this, R.animator.rotate_clockwise);
-            mRotateClockwiseAnim.setTarget(mFabMenu);
-            mRotateClockwiseAnim.start();
+            Animator rotateClockwiseAnim = AnimatorInflater.loadAnimator(this, R.animator.rotate_clockwise);
+            rotateClockwiseAnim.setTarget(mFabMenu);
+            rotateClockwiseAnim.start();
 
-            mTranslateLeftAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_left);
-            mTranslateLeftAnim.setTarget(mFabLogout);
-            mTranslateLeftAnim.start();
+            Animator translateLeftAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_left);
+            translateLeftAnim.setTarget(mFabLogout);
+            translateLeftAnim.start();
 
-            mTranslateLeftUpAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_up_left);
-            mTranslateLeftUpAnim.setTarget(mFabNew);
-            mTranslateLeftUpAnim.start();
+            Animator translateLeftUpAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_up_left);
+            translateLeftUpAnim.setTarget(mFabNew);
+            translateLeftUpAnim.start();
 
-            mTranslateUpAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_up);
-            mTranslateUpAnim.setTarget(mFabSearch);
-            mTranslateUpAnim.start();
+            Animator translateUpAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_up);
+            translateUpAnim.setTarget(mFabSearch);
+            translateUpAnim.start();
         }
     }
 }

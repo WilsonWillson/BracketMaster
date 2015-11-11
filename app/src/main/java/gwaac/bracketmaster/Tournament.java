@@ -39,7 +39,7 @@ public class Tournament {
     }
 
     public List<Tournament> getSampleData() {
-        mTournaments = new ArrayList<>();
+        List<Tournament> mTournaments = new ArrayList<>();
 
         Tournament tournament = new Tournament();
         tournament.setName("2015 Slamfest ft. Dunkmaster Darius");
