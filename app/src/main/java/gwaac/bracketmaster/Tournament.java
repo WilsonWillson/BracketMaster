@@ -13,8 +13,6 @@ import java.util.List;
  */
 public class Tournament {
 
-    private Context mContext;
-
     private String mName;
     private String mDescription;
     private String mOwnerId;
@@ -27,8 +25,7 @@ public class Tournament {
 
     private List<Tournament> mTournaments;
 
-    public Tournament(Context context) {
-        mContext = context;
+    public Tournament() {
 
         mName = null;
         mDescription = null;
@@ -44,47 +41,42 @@ public class Tournament {
     public List<Tournament> getSampleData() {
         mTournaments = new ArrayList<>();
 
-        Tournament tournament = new Tournament(mContext);
+        Tournament tournament = new Tournament();
         tournament.setName("2015 Slamfest ft. Dunkmaster Darius");
         tournament.setDescription("I don't follow the rules. I DUNK THEM.\nSingle Elimination 5v5\n32 teams - Join Now!");
         tournament.setOwner("charliealbright");
-        tournament.setGameImage(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.league_of_legends));
         tournament.setStartDateTime(2015, 11, 25, 14, 0);
         tournament.setEndDateTime(2015, 11, 27, 12, 30);
         mTournaments.add(tournament);
 
-        tournament = new Tournament(mContext);
+        tournament = new Tournament();
         tournament.setName("ProBuilds Annual Tournament");
         tournament.setDescription("16-Team tournament sponsored by ProBuilds, your source for all the best LoL champion builds!\nDouble Elimination 5v5");
         tournament.setOwner("gavinpham");
-        tournament.setGameImage(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.league_of_legends));
         tournament.setStartDateTime(2015, 12, 2, 11, 0);
         tournament.setEndDateTime(2015, 12, 3, 18, 0);
         mTournaments.add(tournament);
 
-        tournament = new Tournament(mContext);
+        tournament = new Tournament();
         tournament.setName("LoLKing Pro League Finals");
         tournament.setDescription("LoLKing, your go-to source for everything League of Legends!\nWatch the best of the best duke it out in this 32-team tournament\nSingle Elimination 5v5");
         tournament.setOwner("johnwilson");
-        tournament.setGameImage(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.league_of_legends));
         tournament.setStartDateTime(2015, 12, 8, 12, 30);
         tournament.setEndDateTime(2015, 12, 12, 19, 0);
         mTournaments.add(tournament);
 
-        tournament = new Tournament(mContext);
+        tournament = new Tournament();
         tournament.setName("Cosmic Aftershock vs. Team Rocket");
         tournament.setDescription("Witness the best Rocket League players duke it out in this high octane 3v3 Finals!\nBest of 7 matches.");
         tournament.setOwner("charliealright");
-        tournament.setGameImage(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.rocket_league));
         tournament.setStartDateTime(2015, 12, 10, 15, 0);
         tournament.setEndDateTime(2015, 12, 12, 18, 0);
         mTournaments.add(tournament);
 
-        tournament = new Tournament(mContext);
+        tournament = new Tournament();
         tournament.setName("32 Team Amateur Tournament");
         tournament.setDescription("Come see where you stand against other amateur LoL players! No players above Gold rank will be accepted.\nSingle Elimination 5v5.");
         tournament.setOwner("johnwilson");
-        tournament.setGameImage(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.league_of_legends));
         tournament.setStartDateTime(2015, 12, 13, 16, 0);
         tournament.setEndDateTime(2015, 12, 15, 20, 0);
         mTournaments.add(tournament);

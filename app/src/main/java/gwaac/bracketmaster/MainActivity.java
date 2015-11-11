@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new TournamentAdapter(new Tournament(this).getSampleData());
+        mAdapter = new TournamentAdapter(new Tournament().getSampleData());
         mRecyclerView.setAdapter(mAdapter);
 
         mOverlay = findViewById(R.id.transparent_overlay);
