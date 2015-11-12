@@ -1,8 +1,6 @@
 package gwaac.bracketmaster;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,8 +20,6 @@ public class Tournament {
     private Calendar mEndDateTime;
 
     private Bitmap mGameImage;
-
-    private List<Tournament> mTournaments;
 
     public Tournament() {
 

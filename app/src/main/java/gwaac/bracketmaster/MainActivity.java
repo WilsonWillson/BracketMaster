@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         mOverlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presentOverlay();
+                toggleOverlay();
             }
         });
         mOverlayVisible = false;
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         mFabMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presentOverlay();
+                toggleOverlay();
             }
         });
 
@@ -94,13 +94,13 @@ public class MainActivity extends AppCompatActivity {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                toggleOverlay();
                                 logout();
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
                             }
                         })
                         .show();
@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
         moveTaskToBack(true);
     }
 
-    public void presentOverlay() {
+    public void toggleOverlay() {
         if (mOverlayVisible) {
             Animator translateDownAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_down);
             translateDownAnim.setTarget(mFabSearch);
@@ -190,12 +190,18 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
                     if (!mOverlayVisible) {
                         mOverlay.setVisibility(View.GONE);
+                        mFabLogout.setVisibility(View.GONE);
+                        mFabNew.setVisibility(View.GONE);
+                        mFabSearch.setVisibility(View.GONE);
                     }
                 }
             }, 200);
         } else {
             mOverlayVisible = true;
             mOverlay.setVisibility(View.VISIBLE);
+            mFabLogout.setVisibility(View.VISIBLE);
+            mFabNew.setVisibility(View.VISIBLE);
+            mFabSearch.setVisibility(View.VISIBLE);
 
             Animator fadeInAnim = AnimatorInflater.loadAnimator(this, R.animator.fade_in);
             fadeInAnim.setTarget(mOverlay);
