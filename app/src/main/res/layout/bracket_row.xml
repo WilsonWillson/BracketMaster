@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="horizontal">
+    <!--android:background="@drawable/bracket_row_outline"-->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <Button
+            android:background="@color/colorWhite"
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/player1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:text="Player 1"/>
+            <!--style="@style/BracketMaster.Button"-->
+
+
+        <Button
+            android:background="@color/colorWhite"
+            android:textColor="@color/colorAccent"
+            android:id="@+id/player2"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:text="Player 2"/>
+            <!--style="@style/BracketMaster.Button"-->
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/tournament_game_image"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="4"
+        android:src="@drawable/bracket_piece" />
+
+</LinearLayout>

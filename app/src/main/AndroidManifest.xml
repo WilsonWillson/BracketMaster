@@ -41,6 +41,14 @@
             android:theme="@style/AppTheme.Dark" >
 
         </activity>
+
+        <activity>
+            android:name=".BracketActivity"
+            android:label="View Bracket"
+            android:theme="@style/AppTheme.Dark">
+
+        </activity>
+
     </application>
 
 </manifest>
