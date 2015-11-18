@@ -1,9 +1,12 @@
 package gwaac.bracketmaster;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,8 +21,10 @@ import butterknife.ButterKnife;
 public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.TournamentViewHolder> {
 
     private List<Tournament> mTournamentData;
+    private Context mContext;
 
-    public TournamentAdapter(List<Tournament> tournamentData) {
+    public TournamentAdapter(Context context, List<Tournament> tournamentData) {
+        mContext = context;
         mTournamentData = tournamentData;
     }
 
@@ -35,12 +40,20 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.To
     }
 
     @Override
-    public void onBindViewHolder(TournamentViewHolder holder, int position) {
+    public void onBindViewHolder(TournamentViewHolder holder, final int position) {
         holder.tournamentName.setText(mTournamentData.get(position).getName());
         holder.tournamentDetail.setText(mTournamentData.get(position).getDescription());
         holder.tournamentDateTimeStart.setText(CalendarHelper.getPrettyDateTime(mTournamentData.get(position).getStartDateTime()));
         holder.tournamentDateTimeEnd.setText(CalendarHelper.getPrettyDateTime(mTournamentData.get(position).getEndDateTime()));
         //holder.tournamentImage.setImageBitmap(mTournamentData.get(position).getGameImage());
+        holder.viewTournamentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, BracketActivity.class);
+                intent.putExtra("tournamentData", mTournamentData.get(position));
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -54,6 +67,7 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.To
         @Bind(R.id.tournament_datetime_start) TextView tournamentDateTimeStart;
         @Bind(R.id.tournament_datetime_end) TextView tournamentDateTimeEnd;
         @Bind(R.id.tournament_game_image) ImageView tournamentImage;
+        @Bind(R.id.tournament_view_button) Button viewTournamentButton;
 
         public TournamentViewHolder(View itemView) {
             super(itemView);

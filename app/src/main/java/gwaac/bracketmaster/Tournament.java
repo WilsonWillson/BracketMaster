@@ -2,6 +2,7 @@ package gwaac.bracketmaster;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 /**
  * Created by Charlie on 10/27/15.
  */
-public class Tournament {
+public class Tournament implements Serializable {
 
     private String mName;
     private String mDescription;
