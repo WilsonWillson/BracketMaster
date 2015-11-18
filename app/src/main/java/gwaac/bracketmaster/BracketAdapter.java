@@ -1,11 +1,11 @@
 package gwaac.bracketmaster;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -13,9 +13,15 @@ import java.util.List;
  * Created by Adrian on 11/14/2015.
  */
 
-public class BracketAdapter extends RecyclerView.Adapter<BracketAdapter.BracketViewHolder> {
+public class BracketAdapter extends RecyclerView.Adapter<BracketAdapter.ViewHolder> {
 
-    private List<Match> mMatchData;
+    Context mContext;
+
+    public BracketAdapter(Context context) {
+        this.mContext = context;
+    }
+
+    private List<Match> mMatchData = new Match().getSampleData();
 
     public BracketAdapter(List<Match> matchData) {
         mMatchData = matchData;
@@ -27,30 +33,32 @@ public class BracketAdapter extends RecyclerView.Adapter<BracketAdapter.BracketV
     }
 
     @Override
-    public BracketViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.tournament_card, parent, false);
-        return new BracketViewHolder(v);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bracket_row, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(BracketViewHolder holder, int position) {
-        holder.player1.setText(mMatchData.get(position).getPlayer1());
-        holder.player2.setText(mMatchData.get(position).getPlayer2());
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        Match match = mMatchData.get(position);
+
+        holder.player1Button.setText(match.getPlayer1());
+        holder.player2Button.setText(match.getPlayer2());
     }
 
     @Override
     public int getItemCount() {
-        return mMatchData.size();
+        return new Match().getSampleData().size();
     }
 
-    public class BracketViewHolder extends RecyclerView.ViewHolder {
-        TextView player1;
-        TextView player2;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        Button player1Button;
+        Button player2Button;
 
-        public BracketViewHolder(View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
-            player1 = (Button)itemView.findViewById(R.id.player1);
-            player2 = (Button)itemView.findViewById(R.id.player2);
+            player1Button = (Button)itemView.findViewById(R.id.player1);
+            player2Button = (Button)itemView.findViewById(R.id.player2);
         }
     }
 }

@@ -1,52 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bracket_row"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:orientation="horizontal">
-    <!--android:background="@drawable/bracket_row_outline"-->
+    android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_marginBottom="10dp">
 
-        <Button
-            android:background="@color/colorWhite"
-            android:textColor="@color/colorPrimary"
-            android:id="@+id/player1"
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginBottom="2dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:text="Player 1"/>
-            <!--style="@style/BracketMaster.Button"-->
+            android:layout_height="fill_parent">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <Button
+                    style="@style/BracketMaster.BracketButton.Player1"
+                    android:id="@+id/player1"
+                    android:text="Player 1"/>
 
 
-        <Button
-            android:background="@color/colorWhite"
-            android:textColor="@color/colorAccent"
-            android:id="@+id/player2"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginBottom="2dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:text="Player 2"/>
-            <!--style="@style/BracketMaster.Button"-->
+                <Button
+                    style="@style/BracketMaster.BracketButton.Player2"
+                    android:id="@+id/player2"
+                    android:text="Player 2"/>
 
 
-    </LinearLayout>
+            </LinearLayout>
 
-    <ImageView
-        android:id="@+id/tournament_game_image"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="4"
-        android:src="@drawable/bracket_piece" />
+            <ImageView
+                android:id="@+id/bracket_piece_image"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="4"
+                android:src="@drawable/bracket_piece" />
+        </LinearLayout>
 
-</LinearLayout>
+    </FrameLayout>
+</android.support.v7.widget.CardView>

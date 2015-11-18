@@ -5,32 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="gwaac.bracketmaster.BracketActivity">
+    tools:context="gwaac.bracketmaster.MainActivity">
 
-    <include layout="@layout/content_bracket" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/bracket_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorGreyLight"
+        android:divider="@null"
+        android:listSelector="@android:color/transparent"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_back"
+        android:id="@+id/fab_prev"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         android:layout_gravity="start|bottom"
-        android:src="@drawable/ic_arrow_back_white" />
+        android:src="@drawable/ic_arrow_back_white"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_forward"
+        android:id="@+id/fab_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_arrow_forward_white" />
-
-    <View
-        android:id="@+id/transparent_overlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#AA000000"
-        android:alpha="0"
-        android:visibility="gone"/>
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/ic_arrow_forward_white"/>
 
 </android.support.design.widget.CoordinatorLayout>

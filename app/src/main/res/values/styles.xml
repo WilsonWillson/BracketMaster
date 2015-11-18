@@ -145,4 +145,39 @@
         <item name="android:focusable">false</item>
     </style>
 
+    <style name="BracketMaster.BracketButton">
+        <item name="android:textSize">16dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:paddingRight">4dp</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+    </style>
+
+    <style name="BracketMaster.BracketButton.Player1">
+        <item name="android:background">@drawable/player1_button</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="BracketMaster.BracketButton.Player2">
+        <item name="android:background">@drawable/player2_button</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="BracketMaster.BracketButton.Player1.Pressed">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="BracketMaster.BracketButton.Player2.Pressed">
+        <item name="android:background">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+
 </resources>
