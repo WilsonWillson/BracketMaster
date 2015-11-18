@@ -15,16 +15,12 @@ import java.util.List;
 
 public class BracketAdapter extends RecyclerView.Adapter<BracketAdapter.ViewHolder> {
 
-    Context mContext;
+    private List<Match> mMatchList;
+    private Context mContext;
 
-    public BracketAdapter(Context context) {
-        this.mContext = context;
-    }
-
-    private List<Match> mMatchData = new Match().getSampleData();
-
-    public BracketAdapter(List<Match> matchData) {
-        mMatchData = matchData;
+    public BracketAdapter(Context context, List<Match> matchList) {
+        mContext = context;
+        mMatchList = matchList;
     }
 
     @Override
@@ -40,7 +36,7 @@ public class BracketAdapter extends RecyclerView.Adapter<BracketAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Match match = mMatchData.get(position);
+        Match match = mMatchList.get(position);
 
         holder.player1Button.setText(match.getPlayer1());
         holder.player2Button.setText(match.getPlayer2());
@@ -48,7 +44,7 @@ public class BracketAdapter extends RecyclerView.Adapter<BracketAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return new Match().getSampleData().size();
+        return mMatchList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

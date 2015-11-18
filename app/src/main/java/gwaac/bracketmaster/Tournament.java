@@ -1,6 +1,8 @@
 package gwaac.bracketmaster;
 
 import android.graphics.Bitmap;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,17 +12,18 @@ import java.util.List;
 /**
  * Created by Charlie on 10/27/15.
  */
-public class Tournament implements Serializable {
+public class Tournament {
 
     private String mName;
     private String mDescription;
     private String mOwnerId;
-    private List<String> mParticipantIds;
+
+    private int mImageID;
 
     private Calendar mStartDateTime;
     private Calendar mEndDateTime;
 
-    private Bitmap mGameImage;
+    private List<Match> mMatchList;
 
     public List<Tournament> getSampleData() {
         List<Tournament> mTournaments = new ArrayList<>();
@@ -52,7 +55,7 @@ public class Tournament implements Serializable {
         tournament = new Tournament();
         tournament.setName("Cosmic Aftershock vs. Team Rocket");
         tournament.setDescription("Witness the best Rocket League players duke it out in this high octane 3v3 Finals!\nBest of 7 matches.");
-        tournament.setOwner("charliealright");
+        tournament.setOwner("adrianhernandez");
         tournament.setStartDateTime(2015, 12, 10, 15, 0);
         tournament.setEndDateTime(2015, 12, 12, 18, 0);
         mTournaments.add(tournament);
@@ -60,7 +63,7 @@ public class Tournament implements Serializable {
         tournament = new Tournament();
         tournament.setName("32 Team Amateur Tournament");
         tournament.setDescription("Come see where you stand against other amateur LoL players! No players above Gold rank will be accepted.\nSingle Elimination 5v5.");
-        tournament.setOwner("johnwilson");
+        tournament.setOwner("aryamccarthy");
         tournament.setStartDateTime(2015, 12, 13, 16, 0);
         tournament.setEndDateTime(2015, 12, 15, 20, 0);
         mTournaments.add(tournament);
@@ -92,27 +95,27 @@ public class Tournament implements Serializable {
         this.mOwnerId = mOwner;
     }
 
-    public List<String> getParticipantIds() {
-        return mParticipantIds;
+    public List<Match> getMatchList() {
+        return mMatchList;
     }
 
-    public void setParticipantIds(List<String> participantIds) {
-        mParticipantIds = participantIds;
+    public void setMatchList(List<Match> matchList) {
+        mMatchList = matchList;
     }
 
-    public void addParticipant(String participantId) {
-        if (mParticipantIds == null) {
-            mParticipantIds = new ArrayList<>();
+    public void addMatch(Match match) {
+        if (mMatchList == null) {
+            mMatchList = new ArrayList<>();
         }
-        mParticipantIds.add(participantId);
+        mMatchList.add(match);
     }
 
-    public Bitmap getGameImage() {
-        return mGameImage;
+    public int getImageID() {
+        return mImageID;
     }
 
-    public void setGameImage(Bitmap mGameImage) {
-        this.mGameImage = mGameImage;
+    public void setImageID(int imageID) {
+        this.mImageID = imageID;
     }
 
     public Calendar getStartDateTime() {

@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.util.List;
 
 import butterknife.Bind;
@@ -22,9 +24,11 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.To
 
     private List<Tournament> mTournamentData;
     private Context mContext;
+    private GameImageLoader mGameImageLoader;
 
     public TournamentAdapter(Context context, List<Tournament> tournamentData) {
         mContext = context;
+        mGameImageLoader = new GameImageLoader(context);
         mTournamentData = tournamentData;
     }
 
@@ -45,12 +49,12 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.To
         holder.tournamentDetail.setText(mTournamentData.get(position).getDescription());
         holder.tournamentDateTimeStart.setText(CalendarHelper.getPrettyDateTime(mTournamentData.get(position).getStartDateTime()));
         holder.tournamentDateTimeEnd.setText(CalendarHelper.getPrettyDateTime(mTournamentData.get(position).getEndDateTime()));
-        //holder.tournamentImage.setImageBitmap(mTournamentData.get(position).getGameImage());
+        holder.tournamentImage.setImageBitmap(mGameImageLoader.getImageForID(mTournamentData.get(position).getImageID()));
         holder.viewTournamentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, BracketActivity.class);
-                intent.putExtra("tournamentData", mTournamentData.get(position));
+                intent.putExtra("tournamentData", new Gson().toJson(mTournamentData.get(position)));
                 mContext.startActivity(intent);
             }
         });

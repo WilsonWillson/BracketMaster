@@ -12,6 +12,16 @@ public class Match {
     private String mPlayer1;
     private String mPlayer2;
 
+    public Match() {
+        mPlayer1 = "";
+        mPlayer2 = "";
+    }
+
+    public Match(String player1, String player2) {
+        mPlayer1 = player1;
+        mPlayer2 = player2;
+    }
+
     public List<Match> getSampleData() {
         List<Match> mMatches = new ArrayList<>();
 

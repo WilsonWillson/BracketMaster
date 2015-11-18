@@ -34,4 +34,5 @@ dependencies {
     compile 'com.firebase:firebase-client-android:2.4.0+'
     // Butterknife is great.
     compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.google.code.gson:gson:2.2.4'
 }
