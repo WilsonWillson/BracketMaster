@@ -1,9 +1,11 @@
 package gwaac.bracketmaster;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -51,6 +53,7 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.To
         TextView tournamentDateTimeStart;
         TextView tournamentDateTimeEnd;
         ImageView tournamentImage;
+        Button tournamentView;
 
         public TournamentViewHolder(View itemView) {
             super(itemView);
@@ -59,6 +62,16 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.To
             tournamentDateTimeStart = (TextView)itemView.findViewById(R.id.tournament_datetime_start);
             tournamentDateTimeEnd = (TextView)itemView.findViewById(R.id.tournament_datetime_end);
             tournamentImage = (ImageView)itemView.findViewById(R.id.tournament_game_image);
+            tournamentView = (Button)itemView.findViewById(R.id.tournament_view);
         }
+    }
+    public void viewBracket() {
+        segue(BracketActivity.class);
+        // Do something in response to button
+    }
+
+    private void segue(Class<?> cls) {
+        //Intent intent = new Intent(this, cls);
+       // startActivity(intent);
     }
 }
