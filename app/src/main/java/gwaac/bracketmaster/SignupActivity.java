@@ -3,35 +3,29 @@ package gwaac.bracketmaster;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
 import java.util.Map;
-import java.util.Objects;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class SignupActivity extends AppCompatActivity {
     Notifier notifier;
 
-    @InjectView(R.id.input_name) EditText _nameText;
-    @InjectView(R.id.input_email) EditText _emailText;
-    @InjectView(R.id.input_password) EditText _passwordText;
-    @InjectView(R.id.btn_signup) Button _signupButton;
-    @InjectView(R.id.link_login) TextView _loginLink;
+    @Bind(R.id.input_name) EditText _nameText;
+    @Bind(R.id.input_email) EditText _emailText;
+    @Bind(R.id.input_password) EditText _passwordText;
+    @Bind(R.id.btn_signup) Button _signupButton;
+    @Bind(R.id.link_login) TextView _loginLink;
 
     private ProgressDialog progressDialog;
 
@@ -39,7 +33,7 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         notifier = new Notifier(this);
 

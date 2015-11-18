@@ -16,16 +16,17 @@ import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.OnClick;
 
 public class LoginActivity extends AppCompatActivity {
     private static final int REQUEST_SIGNUP = 137;
 
-    @InjectView(R.id.input_email) EditText mEmailField;
-    @InjectView(R.id.input_password) EditText mPasswordField;
-    @InjectView(R.id.btn_login) Button mLoginButton;
-    @InjectView(R.id.link_signup) TextView mRegisterButton;
+    @Bind(R.id.input_email) EditText mEmailField;
+    @Bind(R.id.input_password) EditText mPasswordField;
+    @Bind(R.id.btn_login) Button mLoginButton;
+    @Bind(R.id.link_signup) TextView mRegisterButton;
     private Notifier notifier;
     private ProgressDialog progressDialog;
 
@@ -33,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         notifier = new Notifier(this);
 
@@ -51,7 +52,6 @@ public class LoginActivity extends AppCompatActivity {
                 notifier.setView(view);
                 Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
                 startActivityForResult(intent, REQUEST_SIGNUP);
-                //tryCreateAccount();
             }
         });
     }

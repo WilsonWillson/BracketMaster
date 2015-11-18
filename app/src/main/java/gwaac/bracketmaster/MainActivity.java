@@ -19,23 +19,20 @@ import android.view.View;
 
 import com.firebase.client.Firebase;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class MainActivity extends AppCompatActivity {
 
-    @InjectView(R.id.tournament_recycler_view) RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    @Bind(R.id.tournament_recycler_view) RecyclerView mRecyclerView;
 
-    @InjectView(R.id.transparent_overlay) View mOverlay;
+    @Bind(R.id.transparent_overlay) View mOverlay;
     private boolean mOverlayVisible;
 
-    private MainActivity mThisActivity;
-
-    @InjectView(R.id.fab_menu) FloatingActionButton mFabMenu;
-    @InjectView(R.id.fab_search) FloatingActionButton mFabSearch;
-    @InjectView(R.id.fab_new) FloatingActionButton mFabNew;
-    @InjectView(R.id.fab_logout) FloatingActionButton mFabLogout;
+    @Bind(R.id.fab_menu) FloatingActionButton mFabMenu;
+    @Bind(R.id.fab_search) FloatingActionButton mFabSearch;
+    @Bind(R.id.fab_new) FloatingActionButton mFabNew;
+    @Bind(R.id.fab_logout) FloatingActionButton mFabLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +41,12 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.action_bar_main);
 
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new TournamentAdapter(new Tournament().getSampleData());
+        TournamentAdapter mAdapter = new TournamentAdapter(new Tournament().getSampleData());
         mRecyclerView.setAdapter(mAdapter);
 
         mOverlay.setOnClickListener(new View.OnClickListener() {
@@ -219,9 +216,25 @@ public class MainActivity extends AppCompatActivity {
             translateLeftUpAnim.setTarget(mFabNew);
             translateLeftUpAnim.start();
 
-            Animator translateUpAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_up);
-            translateUpAnim.setTarget(mFabSearch);
-            translateUpAnim.start();
+            Animator mFadeInAnim = AnimatorInflater.loadAnimator(this, R.animator.fade_in);
+            mFadeInAnim.setTarget(mOverlay);
+            mFadeInAnim.start();
+
+            Animator mRotateClockwiseAnim = AnimatorInflater.loadAnimator(this, R.animator.rotate_clockwise);
+            mRotateClockwiseAnim.setTarget(mFabMenu);
+            mRotateClockwiseAnim.start();
+
+            Animator mTranslateLeftAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_left);
+            mTranslateLeftAnim.setTarget(mFabLogout);
+            mTranslateLeftAnim.start();
+
+            Animator mTranslateLeftUpAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_up_left);
+            mTranslateLeftUpAnim.setTarget(mFabNew);
+            mTranslateLeftUpAnim.start();
+
+            Animator mTranslateUpAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_up);
+            mTranslateUpAnim.setTarget(mFabSearch);
+            mTranslateUpAnim.start();
         }
     }
 }
