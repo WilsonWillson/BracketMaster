@@ -9,4 +9,24 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_search" tools:context="gwaac.bracketmaster.SearchActivity">
 
+    <android.support.design.widget.TextInputLayout
+        style="@style/BracketMaster.TextInputLayout"
+        android:id="@+id/tournament_description_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tournament_name_layout"
+        app:counterEnabled="true"
+        app:counterMaxLength="144"
+        app:counterTextAppearance="@style/BracketMaster.TextInputLayout.Counter"
+        app:counterOverflowTextAppearance="@style/BracketMaster.TextInputLayout.Counter.Overflow">
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/search"
+            android:hint="Search"
+            android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
+            android:layout_centerHorizontal="true" />
+
+    </android.support.design.widget.TextInputLayout>
 </RelativeLayout>
