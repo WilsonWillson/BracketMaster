@@ -4,10 +4,7 @@ package gwaac.bracketmaster;
  * Created by Adrian on 11/14/2015.
  */
 
-import android.graphics.Bitmap;
-
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class Match {

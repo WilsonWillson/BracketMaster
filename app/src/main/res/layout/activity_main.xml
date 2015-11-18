@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         android:layout_gravity="end|bottom"
-        android:src="@drawable/ic_lock_white"/>
+        android:src="@drawable/ic_lock_white"
+        android:visibility="gone"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_new"
@@ -23,7 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         android:layout_gravity="end|bottom"
-        android:src="@drawable/ic_create_white"/>
+        android:src="@drawable/ic_create_white"
+        android:visibility="gone"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_search"
@@ -31,7 +33,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         android:layout_gravity="end|bottom"
-        android:src="@drawable/ic_search_white" />
+        android:src="@drawable/ic_search_white"
+        android:visibility="gone"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_menu"
