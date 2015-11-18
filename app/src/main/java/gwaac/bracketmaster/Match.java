@@ -15,11 +15,6 @@ public class Match {
     private String mPlayer1;
     private String mPlayer2;
 
-    public Match() {
-        mPlayer1 = null;
-        mPlayer2 = null;
-    }
-
     public List<Match> getSampleData() {
         List<Match> mMatches = new ArrayList<>();
 

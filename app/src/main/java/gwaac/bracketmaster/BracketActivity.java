@@ -11,18 +11,14 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 
 public class BracketActivity extends AppCompatActivity {
 
-    private RecyclerView mRecyclerView;
-    private StaggeredGridLayoutManager mStaggeredLayoutManager;
-    private BracketAdapter mAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bracket);
-        mRecyclerView = (RecyclerView) findViewById(R.id.bracket_list);
-        mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.bracket_list);
+        StaggeredGridLayoutManager mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mStaggeredLayoutManager);
-        mAdapter = new BracketAdapter(this);
+        BracketAdapter mAdapter = new BracketAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
     }
 }

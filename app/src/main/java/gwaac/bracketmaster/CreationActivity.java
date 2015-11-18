@@ -1,9 +1,9 @@
 package gwaac.bracketmaster;
 
+import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -11,33 +11,28 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class CreationActivity extends AppCompatActivity implements DatePickerFragment.OnDateChosenListener, TimePickerFragment.OnTimeChosenListener{
 
-    @InjectView(R.id.tournament_name) EditText mTournamentNameField;
-    @InjectView(R.id.tournament_game) EditText mGameNameField;
-    @InjectView(R.id.description) EditText mDescriptionField;
+    @Bind(R.id.tournament_name) EditText mTournamentNameField;
+    @Bind(R.id.tournament_game) EditText mGameNameField;
+    @Bind(R.id.description) EditText mDescriptionField;
 
-    @InjectView(R.id.tournament_date_start) TextInputLayout mDatePickerStartButton;
-    @InjectView(R.id.tournament_date_end) TextInputLayout mDatePickerEndButton;
-    @InjectView(R.id.tournament_time_start) TextInputLayout mTimePickerStartButton;
-    @InjectView(R.id.tournament_time_end) TextInputLayout mTimePickerEndButton;
+    @Bind(R.id.tournament_date_start) TextInputLayout mDatePickerStartButton;
+    @Bind(R.id.tournament_date_end) TextInputLayout mDatePickerEndButton;
+    @Bind(R.id.tournament_time_start) TextInputLayout mTimePickerStartButton;
+    @Bind(R.id.tournament_time_end) TextInputLayout mTimePickerEndButton;
 
-    @InjectView(R.id.create_tournament) Button mCreateButton;
-
-    private Notifier notifier;
+    @Bind(R.id.create_tournament) Button mCreateButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
-        notifier = new Notifier(this);
-
-        mDatePickerStartButton = (TextInputLayout) findViewById(R.id.tournament_date_start);
         if (mDatePickerStartButton.getEditText() != null) {
             mDatePickerStartButton.getEditText().setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -81,7 +76,6 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
         mCreateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                notifier.setView(v);
                 // TODO: submit stuff.
                 finish();
             }

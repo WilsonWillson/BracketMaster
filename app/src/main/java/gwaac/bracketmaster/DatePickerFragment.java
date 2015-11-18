@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.widget.DatePicker;
+
 import java.util.Calendar;
 
 /**
@@ -43,7 +45,7 @@ public class DatePickerFragment extends AppCompatDialogFragment implements DateP
         }
     }
 
-    @Override
+    @Override @NonNull
     public Dialog onCreateDialog(Bundle onSavedInstanceState) {
         mFlag = getArguments().getInt("flag");
         final Calendar calendar = Calendar.getInstance();

@@ -21,19 +21,6 @@ public class Tournament {
 
     private Bitmap mGameImage;
 
-    public Tournament() {
-
-        mName = null;
-        mDescription = null;
-        mOwnerId = null;
-        mParticipantIds = null;
-
-        mStartDateTime = null;
-        mEndDateTime = null;
-
-        mGameImage = null;
-    }
-
     public List<Tournament> getSampleData() {
         List<Tournament> mTournaments = new ArrayList<>();
 

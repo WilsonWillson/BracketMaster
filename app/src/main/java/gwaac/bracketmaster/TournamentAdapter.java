@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by Charlie on 10/27/15.
  */
@@ -46,19 +49,15 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.To
     }
 
     public class TournamentViewHolder extends RecyclerView.ViewHolder {
-        TextView tournamentName;
-        TextView tournamentDetail;
-        TextView tournamentDateTimeStart;
-        TextView tournamentDateTimeEnd;
-        ImageView tournamentImage;
+        @Bind(R.id.tournament_name) TextView tournamentName;
+        @Bind(R.id.tournament_description) TextView tournamentDetail;
+        @Bind(R.id.tournament_datetime_start) TextView tournamentDateTimeStart;
+        @Bind(R.id.tournament_datetime_end) TextView tournamentDateTimeEnd;
+        @Bind(R.id.tournament_game_image) ImageView tournamentImage;
 
         public TournamentViewHolder(View itemView) {
             super(itemView);
-            tournamentName = (TextView)itemView.findViewById(R.id.tournament_name);
-            tournamentDetail = (TextView)itemView.findViewById(R.id.tournament_description);
-            tournamentDateTimeStart = (TextView)itemView.findViewById(R.id.tournament_datetime_start);
-            tournamentDateTimeEnd = (TextView)itemView.findViewById(R.id.tournament_datetime_end);
-            tournamentImage = (ImageView)itemView.findViewById(R.id.tournament_game_image);
+            ButterKnife.bind(this, itemView);
         }
     }
 }
