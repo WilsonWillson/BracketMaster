@@ -31,4 +31,16 @@
         android:layout_gravity="end|bottom"
         android:src="@drawable/ic_arrow_forward_white"/>
 
+    <TextView
+        android:id="@+id/bracket_no_matches_label"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:gravity="center_horizontal"
+        android:padding="32dp"
+        android:textSize="14sp"
+        android:visibility="gone"
+        android:text="No matches found."
+        android:textColor="@color/colorGrey"/>
+
 </android.support.design.widget.CoordinatorLayout>

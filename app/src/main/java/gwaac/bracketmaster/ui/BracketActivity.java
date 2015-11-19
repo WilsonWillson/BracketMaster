@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -23,19 +25,34 @@ public class BracketActivity extends AppCompatActivity {
 
     private Tournament mTournament;
 
+    private TextView mNoResultsLabel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_bracket);
+
+        mNoResultsLabel = (TextView)findViewById(R.id.bracket_no_matches_label);
 
         Intent intent = getIntent();
         mTournament = new Gson().fromJson(intent.getSerializableExtra("tournamentData").toString(), Tournament.class);
-        Log.v(TAG, "Tournament: " + mTournament.getMatchList().size() + " matches scheduled.");
 
-        setContentView(R.layout.activity_bracket);
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.bracket_list);
-        StaggeredGridLayoutManager mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(mStaggeredLayoutManager);
-        BracketAdapter mAdapter = new BracketAdapter(this, mTournament.getMatchList());
-        mRecyclerView.setAdapter(mAdapter);
+        if (mTournament.getMatchList() == null) {
+            displayNoResults();
+        } else {
+            if (mTournament.getMatchList().size() > 0) {
+                RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.bracket_list);
+                StaggeredGridLayoutManager mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+                mRecyclerView.setLayoutManager(mStaggeredLayoutManager);
+                BracketAdapter mAdapter = new BracketAdapter(this, mTournament.getMatchList());
+                mRecyclerView.setAdapter(mAdapter);
+            } else {
+                displayNoResults();
+            }
+        }
+    }
+
+    public void displayNoResults() {
+        mNoResultsLabel.setVisibility(View.VISIBLE);
     }
 }
