@@ -9,8 +9,8 @@ import android.widget.Button;
 
 import java.util.List;
 
-import gwaac.bracketmaster.data.model.Match;
 import gwaac.bracketmaster.R;
+import gwaac.bracketmaster.data.model.Match;
 
 /**
  * Created by Adrian on 11/14/2015.
@@ -56,8 +56,8 @@ public class BracketAdapter extends RecyclerView.Adapter<BracketAdapter.ViewHold
 
         public ViewHolder(View itemView) {
             super(itemView);
-            player1Button = (Button)itemView.findViewById(R.id.player1);
-            player2Button = (Button)itemView.findViewById(R.id.player2);
+            player1Button = (Button) itemView.findViewById(R.id.player1);
+            player2Button = (Button) itemView.findViewById(R.id.player2);
         }
     }
 }

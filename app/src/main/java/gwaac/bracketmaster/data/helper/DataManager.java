@@ -1,6 +1,5 @@
 package gwaac.bracketmaster.data.helper;
 
-import android.content.Context;
 import android.text.TextUtils;
 
 import java.util.ArrayList;

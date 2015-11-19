@@ -4,19 +4,14 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.support.v7.widget.SearchView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -24,10 +19,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import gwaac.bracketmaster.R;
-
-import butterknife.ButterKnife;
 import butterknife.Bind;
+import butterknife.ButterKnife;
+import gwaac.bracketmaster.R;
 import gwaac.bracketmaster.data.adapter.TournamentAdapter;
 import gwaac.bracketmaster.data.helper.DataManager;
 import gwaac.bracketmaster.data.model.Tournament;
@@ -36,8 +30,10 @@ public class SearchActivity extends AppCompatActivity {
 
     private static final String TAG = SearchActivity.class.getSimpleName();
 
-    @Bind(R.id.search_result_recycler_view) RecyclerView mRecyclerView;
-    @Bind(R.id.search_result_no_results_label) TextView mNoResultsLabel;
+    @Bind(R.id.search_result_recycler_view)
+    RecyclerView mRecyclerView;
+    @Bind(R.id.search_result_no_results_label)
+    TextView mNoResultsLabel;
 
     List<Tournament> tournaments;
 
@@ -99,7 +95,6 @@ public class SearchActivity extends AppCompatActivity {
         mNoResultsLabel.setText("No Results found.\nPlease return to the search page and try again.");
         mNoResultsLabel.setVisibility(View.VISIBLE);
     }
-
 
 
     @Override

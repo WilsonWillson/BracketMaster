@@ -2,11 +2,8 @@ package gwaac.bracketmaster.data.helper;
 
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Charlie on 11/1/15.
