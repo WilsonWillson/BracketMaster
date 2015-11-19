@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        TournamentAdapter mAdapter = new TournamentAdapter(this, new DataManager(this).getTournamentData());
+        TournamentAdapter mAdapter = new TournamentAdapter(this, DataManager.getTournamentData());
         mRecyclerView.setAdapter(mAdapter);
 
         mOverlay.setOnClickListener(new View.OnClickListener() {

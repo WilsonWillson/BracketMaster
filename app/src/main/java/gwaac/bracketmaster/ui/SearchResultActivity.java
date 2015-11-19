@@ -25,7 +25,6 @@ public class SearchResultActivity extends AppCompatActivity {
     public static final int SEARCH_TYPE_TITLE = 1;
     public static final int SEARCH_TYPE_OWNER = 2;
 
-    private DataManager mDataManager;
     private List<Tournament> mTournamentList;
 
     @Bind(R.id.search_result_recycler_view) RecyclerView mRecyclerView;
@@ -37,8 +36,6 @@ public class SearchResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_result);
 
         ButterKnife.bind(this);
-
-        mDataManager = new DataManager(this);
 
         Intent intent = getIntent();
         int searchType = intent.getIntExtra("searchType", 0);
@@ -58,9 +55,9 @@ public class SearchResultActivity extends AppCompatActivity {
 
     public List<Tournament> getSearchResults(int searchType, String query) {
         if (searchType == SEARCH_TYPE_TITLE) {
-            return mDataManager.searchByTitle(query);
+            return DataManager.searchByTitle(query);
         } else if (searchType == SEARCH_TYPE_OWNER) {
-            return mDataManager.searchByOwner(query);
+            return DataManager.searchByOwner(query);
         } else {
             return null;
         }

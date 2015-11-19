@@ -14,17 +14,7 @@ import gwaac.bracketmaster.data.model.Tournament;
  */
 public class DataManager {
 
-    private static Context mContext;
-    private static List<Tournament> mTournamentList;
-
-    public DataManager(Context context) {
-        mContext = context;
-        mTournamentList = null;
-    }
-
-    public static void setContext(Context context) {
-        mContext = context;
-    }
+    private static List<Tournament> mTournamentList = null;
 
     public static List<Tournament> getTournamentData() {
         if (mTournamentList == null) {
