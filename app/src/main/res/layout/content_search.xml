@@ -9,12 +9,33 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_search" tools:context="gwaac.bracketmaster.ui.SearchActivity">
 
+    <TextView
+        android:id="@+id/search_spinner_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:textSize="12dp"
+        android:text="Search By" />
+
+    <Spinner
+        style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+        android:id="@+id/search_type_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_below="@id/search_spinner_label"/>
+
     <android.support.design.widget.TextInputLayout
         style="@style/BracketMaster.TextInputLayout"
-        android:id="@+id/tournament_description_layout"
+        android:id="@+id/search_text_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tournament_name_layout"
+        android:layout_below="@id/search_type_spinner"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
         app:counterEnabled="true"
         app:counterMaxLength="144"
         app:counterTextAppearance="@style/BracketMaster.TextInputLayout.Counter"
@@ -23,10 +44,19 @@
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/search"
+            android:id="@+id/search_edittext"
             android:hint="Search"
             android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
             android:layout_centerHorizontal="true" />
 
     </android.support.design.widget.TextInputLayout>
+
+    <Button
+        style="@style/BracketMaster.Form.Button.Accent"
+        android:id="@+id/search_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_text_layout"
+        android:layout_centerHorizontal="true"
+        android:text="search"/>
 </RelativeLayout>
