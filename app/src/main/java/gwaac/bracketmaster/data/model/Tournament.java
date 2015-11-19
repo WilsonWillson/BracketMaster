@@ -70,32 +70,36 @@ public class Tournament {
         return mName;
     }
 
-    public void setName(String mName) {
+    public Tournament setName(String mName) {
         this.mName = mName;
+        return this;
     }
 
     public String getDescription() {
         return mDescription;
     }
 
-    public void setDescription(String mDescription) {
+    public Tournament setDescription(String mDescription) {
         this.mDescription = mDescription;
+        return this;
     }
 
     public String getOwner() {
         return mOwnerId;
     }
 
-    public void setOwner(String mOwner) {
+    public Tournament setOwner(String mOwner) {
         this.mOwnerId = mOwner;
+        return this;
     }
 
     public List<Match> getMatchList() {
         return mMatchList;
     }
 
-    public void setMatchList(List<Match> matchList) {
+    public Tournament setMatchList(List<Match> matchList) {
         mMatchList = matchList;
+        return this;
     }
 
     public void addMatch(Match match) {
@@ -109,33 +113,38 @@ public class Tournament {
         return mImageID;
     }
 
-    public void setImageID(int imageID) {
+    public Tournament setImageID(int imageID) {
         this.mImageID = imageID;
+        return this;
     }
 
     public Calendar getStartDateTime() {
         return mStartDateTime;
     }
 
-    public void setStartDateTime(Calendar startDateTime) {
+    public Tournament setStartDateTime(Calendar startDateTime) {
         mStartDateTime = startDateTime;
+        return this;
     }
 
-    public void setStartDateTime(int year, int month, int day, int hour, int minute) {
+    public Tournament setStartDateTime(int year, int month, int day, int hour, int minute) {
         mStartDateTime = Calendar.getInstance();
         mStartDateTime.set(year, month-1, day, hour, minute);
+        return this;
     }
 
     public Calendar getEndDateTime() {
         return mEndDateTime;
     }
 
-    public void setEndDateTime(Calendar endDateTime) {
+    public Tournament setEndDateTime(Calendar endDateTime) {
         mEndDateTime = endDateTime;
+        return this;
     }
 
-    public void setEndDateTime(int year, int month, int day, int hour, int minute) {
+    public Tournament setEndDateTime(int year, int month, int day, int hour, int minute) {
         mEndDateTime = Calendar.getInstance();
         mEndDateTime.set(year, month-1, day, hour, minute);
+        return this;
     }
 }

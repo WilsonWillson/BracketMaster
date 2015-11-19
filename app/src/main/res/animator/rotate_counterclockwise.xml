@@ -4,6 +4,6 @@
         android:duration="200"
         android:interpolator="@android:interpolator/linear"
         android:propertyName="rotation"
-        android:valueFrom="225f"
+        android:valueFrom="135f"
         android:valueTo="0f"/>
 </set>

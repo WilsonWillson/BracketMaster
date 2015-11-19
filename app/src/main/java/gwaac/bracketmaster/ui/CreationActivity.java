@@ -1,6 +1,8 @@
 package gwaac.bracketmaster.ui;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -11,9 +13,17 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import com.firebase.client.Firebase;
+
+import java.util.Calendar;
+import java.util.Date;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import gwaac.bracketmaster.BracketMasterApplication;
+import gwaac.bracketmaster.TournamentProperties;
 import gwaac.bracketmaster.data.helper.CalendarHelper;
+import gwaac.bracketmaster.data.model.Tournament;
 import gwaac.bracketmaster.ui.modal.DatePickerFragment;
 import gwaac.bracketmaster.R;
 import gwaac.bracketmaster.ui.modal.TimePickerFragment;
@@ -80,11 +90,34 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
         mCreateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String tournamentName = mTournamentNameField.getText().toString();
+                String gameName = mGameNameField.getText().toString();
+                String description = mDescriptionField.getText().toString();
+                String owner = PreferenceManager.getDefaultSharedPreferences(CreationActivity.this).getString("uid", "null");
+                if (owner.equals("null")) Log.i("[submitting tourney]", "Nobody's logged in.");
+                Tournament tournament = new Tournament()
+                        .setOwner(owner)
+                        .setDescription(description)
+                        .setName(tournamentName)
+                        .setStartDateTime(start)
+                        .setEndDateTime(end);
+                Log.i("[submitting tourney]", "Oh no. What's going wrong?");
+                CreationActivity.this.submitToFirebase(tournament);
+                // TODO: We never actually use gameName.
                 // TODO: submit stuff.
                 finish();
             }
         });
     }
+
+    private void submitToFirebase(Tournament t) {
+        TournamentProperties tp = TournamentProperties.fromTournament(t);
+        Firebase myFirebaseRef = ((BracketMasterApplication) getApplicationContext()).myFirebaseRef;
+        myFirebaseRef.child("tournaments").push().setValue(tp);
+
+    }
+
+    private Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
 
     @Override
     public void onDateSet(DatePicker view, int flag, int year, int month, int day) {
@@ -92,9 +125,15 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
         switch (flag) {
             case DatePickerFragment.CREATION_START_DATE:
                 mDatePickerStartButton.getEditText().setText(dateText);
+                start.set(Calendar.YEAR, year);
+                start.set(Calendar.MONTH, month);
+                start.set(Calendar.DAY_OF_MONTH, day);
                 break;
             case DatePickerFragment.CREATION_END_DATE:
                 mDatePickerEndButton.getEditText().setText(dateText);
+                end.set(Calendar.YEAR, year);
+                end.set(Calendar.MONTH, month);
+                end.set(Calendar.DAY_OF_MONTH, day);
                 break;
             default:
                 Log.d("[onDateSet]", "This flag has not been handled.");
@@ -107,9 +146,13 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
         switch (flag) {
             case TimePickerFragment.CREATION_START_TIME:
                 mTimePickerStartButton.getEditText().setText(timeText);
+                start.set(Calendar.HOUR_OF_DAY, hour);
+                start.set(Calendar.MINUTE, minute);
                 break;
             case TimePickerFragment.CREATION_END_TIME:
                 mTimePickerEndButton.getEditText().setText(timeText);
+                end.set(Calendar.HOUR_OF_DAY, hour);
+                start.set(Calendar.MINUTE, minute);
                 break;
             default:
                 Log.d("[onTimeSet]", "This flag has not been handled.");

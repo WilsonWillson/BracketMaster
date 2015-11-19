@@ -4,5 +4,5 @@
         android:duration="200"
         android:interpolator="@android:interpolator/linear"
         android:propertyName="rotation"
-        android:valueTo="225f"/>
+        android:valueTo="135f"/>
 </set>
