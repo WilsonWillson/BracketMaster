@@ -93,7 +93,7 @@ public class DataManager {
 
         for (int i = 0; i < getTournamentData().size(); i++) {
             String tournamentTitle = mTournamentList.get(i).getName();
-            if (tournamentTitle.contains(query)) {
+            if (tournamentTitle.toLowerCase().contains(query.toLowerCase())) {
                 results.add(mTournamentList.get(i));
             }
         }
@@ -117,7 +117,7 @@ public class DataManager {
 
         for (int i = 0; i < getTournamentData().size(); i++) {
             String tournamentDescription = mTournamentList.get(i).getDescription();
-            if (tournamentDescription.contains(query)) {
+            if (tournamentDescription.toLowerCase().contains(query.toLowerCase())) {
                 results.add(mTournamentList.get(i));
             }
         }

@@ -15,6 +15,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.firebase.client.ChildEventListener;
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.transparent_overlay) View mOverlay;
     private boolean mOverlayVisible;
+
+    private static boolean madeDataFlow;
 
     @Bind(R.id.fab_menu) FloatingActionButton mFabMenu;
     @Bind(R.id.fab_search) FloatingActionButton mFabSearch;
@@ -116,10 +119,13 @@ public class MainActivity extends AppCompatActivity {
 
         loginIfNeeded();
 
-        makeDataFlow();
+        if (!madeDataFlow)
+            makeDataFlow();
+        madeDataFlow = true;
     }
 
     private void makeDataFlow() {
+        Log.v("******************", "Adding another listener.");
         Firebase ref = ((BracketMasterApplication)getApplication()).myFirebaseRef;
         ref.child("tournaments").addChildEventListener(new ChildEventListener() {
             @Override

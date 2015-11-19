@@ -1,5 +1,6 @@
 package gwaac.bracketmaster.ui;
 
+import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -37,6 +38,12 @@ public class SearchResultActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String searchString = intent.getStringExtra("searchString");
+
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            getSearchResults(query);
+        }
+
 
         List<Tournament> mTournamentList = getSearchResults(searchString);
         if (mTournamentList == null || mTournamentList.size() == 0) {
