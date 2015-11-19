@@ -39,10 +39,17 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), SearchResultActivity.class);
-                if (TextUtils.equals((String)mSearchTypeSpinner.getSelectedItem(), "Title")) {
-                    intent.putExtra("searchType", SearchResultActivity.SEARCH_TYPE_TITLE);
-                } else {
-                    intent.putExtra("searchType", SearchResultActivity.SEARCH_TYPE_OWNER);
+                switch ((String) mSearchTypeSpinner.getSelectedItem()) {
+                    default:
+                    case "Title":
+                        intent.putExtra("searchType", SearchResultActivity.SEARCH_TYPE_TITLE);
+                        break;
+                    case "Owner":
+                        intent.putExtra("searchType", SearchResultActivity.SEARCH_TYPE_OWNER);
+                        break;
+                    case "Description":
+                        intent.putExtra("searchType", SearchResultActivity.SEARCH_TYPE_DESCRIPTION);
+                        break;
                 }
                 intent.putExtra("searchString", mSearchStringTextView.getEditText().getText().toString());
                 startActivity(intent);

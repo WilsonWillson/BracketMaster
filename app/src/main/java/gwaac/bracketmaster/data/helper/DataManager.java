@@ -89,12 +89,9 @@ public class DataManager {
     }
 
     public static List<Tournament> searchByTitle(String query) {
-        if (mTournamentList == null) {
-            populateTournamentData();
-        }
         List<Tournament> results = new ArrayList<>();
 
-        for (int i = 0; i < mTournamentList.size(); i++) {
+        for (int i = 0; i < getTournamentData().size(); i++) {
             String tournamentTitle = mTournamentList.get(i).getName();
             if (tournamentTitle.contains(query)) {
                 results.add(mTournamentList.get(i));
@@ -104,15 +101,23 @@ public class DataManager {
     }
 
     public static List<Tournament> searchByOwner(String query) {
-        if (mTournamentList == null) {
-            populateTournamentData();
-        }
-
         List<Tournament> results = new ArrayList<>();
 
-        for (int i = 0; i < mTournamentList.size(); i++) {
+        for (int i = 0; i < getTournamentData().size(); i++) {
             String tournamentOwner = mTournamentList.get(i).getOwner();
             if (TextUtils.equals(tournamentOwner.toLowerCase(), query.toLowerCase())) {
+                results.add(mTournamentList.get(i));
+            }
+        }
+        return results;
+    }
+
+    public static List<Tournament> searchByDescription(String query) {
+        List<Tournament> results = new ArrayList<>();
+
+        for (int i = 0; i < getTournamentData().size(); i++) {
+            String tournamentDescription = mTournamentList.get(i).getDescription();
+            if (tournamentDescription.contains(query)) {
                 results.add(mTournamentList.get(i));
             }
         }

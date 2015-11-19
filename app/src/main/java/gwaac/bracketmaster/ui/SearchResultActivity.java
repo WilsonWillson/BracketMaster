@@ -24,6 +24,7 @@ public class SearchResultActivity extends AppCompatActivity {
 
     public static final int SEARCH_TYPE_TITLE = 1;
     public static final int SEARCH_TYPE_OWNER = 2;
+    public static final int SEARCH_TYPE_DESCRIPTION = 3;
 
     private List<Tournament> mTournamentList;
 
@@ -54,12 +55,14 @@ public class SearchResultActivity extends AppCompatActivity {
     }
 
     public List<Tournament> getSearchResults(int searchType, String query) {
-        if (searchType == SEARCH_TYPE_TITLE) {
-            return DataManager.searchByTitle(query);
-        } else if (searchType == SEARCH_TYPE_OWNER) {
-            return DataManager.searchByOwner(query);
-        } else {
-            return null;
+        switch (searchType) {
+            default:
+            case SEARCH_TYPE_TITLE:
+                return DataManager.searchByTitle(query);
+            case SEARCH_TYPE_OWNER:
+                return DataManager.searchByOwner(query);
+            case SEARCH_TYPE_DESCRIPTION:
+                return DataManager.searchByDescription(query);
         }
     }
 

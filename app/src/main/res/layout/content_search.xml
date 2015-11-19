@@ -36,8 +36,6 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        app:counterEnabled="true"
-        app:counterMaxLength="144"
         app:counterTextAppearance="@style/BracketMaster.TextInputLayout.Counter"
         app:counterOverflowTextAppearance="@style/BracketMaster.TextInputLayout.Counter.Overflow">
 
@@ -46,15 +44,16 @@
             android:layout_height="wrap_content"
             android:id="@+id/search_edittext"
             android:hint="Search"
-            android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
+            android:inputType="text"
+            android:lines="1"
             android:layout_centerHorizontal="true" />
 
     </android.support.design.widget.TextInputLayout>
 
     <Button
-        style="@style/BracketMaster.Form.Button.Accent"
+        style="@style/BracketMaster.Form.Button.Primary"
         android:id="@+id/search_button"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/search_text_layout"
         android:layout_centerHorizontal="true"

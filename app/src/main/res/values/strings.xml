@@ -10,5 +10,6 @@
     <string-array name="search_types">
         <item>Title</item>
         <item>Owner</item>
+        <item>Description</item>
     </string-array>
 </resources>
