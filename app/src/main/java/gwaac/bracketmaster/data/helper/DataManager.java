@@ -39,7 +39,7 @@ public class DataManager {
         Tournament tournament = new Tournament();
         tournament.setName("2015 Slamfest ft. Dunkmaster Darius");
         tournament.setDescription("I don't follow the rules. I DUNK THEM.\nSingle Elimination 5v5\n32 teams - Join Now!");
-        tournament.setImageID(GameImageLoader.LEAGUE_OF_LEGENDS);
+        tournament.setGameName("League of Legends");
         tournament.setOwner("charliealbright");
         tournament.setStartDateTime(2015, 11, 25, 14, 0);
         tournament.setEndDateTime(2015, 11, 27, 12, 30);
@@ -52,7 +52,7 @@ public class DataManager {
         tournament = new Tournament();
         tournament.setName("ProBuilds Annual Tournament");
         tournament.setDescription("16-Team tournament sponsored by ProBuilds, your source for all the best LoL champion builds!\nDouble Elimination 5v5");
-        tournament.setImageID(GameImageLoader.LEAGUE_OF_LEGENDS);
+        tournament.setGameName("League of Legends");
         tournament.setOwner("gavinpham");
         tournament.setStartDateTime(2015, 12, 2, 11, 0);
         tournament.setEndDateTime(2015, 12, 3, 18, 0);
@@ -63,7 +63,7 @@ public class DataManager {
         tournament = new Tournament();
         tournament.setName("LoLKing Pro League Finals");
         tournament.setDescription("LoLKing, your go-to source for everything League of Legends!\nWatch the best of the best duke it out in this 32-team tournament\nSingle Elimination 5v5");
-        tournament.setImageID(GameImageLoader.LEAGUE_OF_LEGENDS);
+        tournament.setGameName("League of Legends");
         tournament.setOwner("johnwilson");
         tournament.setStartDateTime(2015, 12, 8, 12, 30);
         tournament.setEndDateTime(2015, 12, 12, 19, 0);
@@ -78,7 +78,7 @@ public class DataManager {
         tournament = new Tournament();
         tournament.setName("Cosmic Aftershock vs. Team Rocket");
         tournament.setDescription("Witness the best Rocket League players duke it out in this high octane 3v3 Finals!\nBest of 7 matches.");
-        tournament.setImageID(GameImageLoader.ROCKET_LEAGUE);
+        tournament.setGameName("Rocket League");
         tournament.setOwner("adrianhernandez");
         tournament.setStartDateTime(2015, 12, 10, 15, 0);
         tournament.setEndDateTime(2015, 12, 12, 18, 0);
@@ -88,7 +88,7 @@ public class DataManager {
         tournament = new Tournament();
         tournament.setName("32 Team Amateur Tournament");
         tournament.setDescription("Come see where you stand against other amateur LoL players! No players above Gold rank will be accepted.\nSingle Elimination 5v5.");
-        tournament.setImageID(GameImageLoader.LEAGUE_OF_LEGENDS);
+        tournament.setGameName("League of Legends");
         tournament.setOwner("aryamccarthy");
         tournament.setStartDateTime(2015, 12, 13, 16, 0);
         tournament.setEndDateTime(2015, 12, 15, 20, 0);

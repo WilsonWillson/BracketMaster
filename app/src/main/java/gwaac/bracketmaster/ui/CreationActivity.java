@@ -99,6 +99,7 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
                         .setOwner(owner)
                         .setDescription(description)
                         .setName(tournamentName)
+                        .setGameName(gameName)
                         .setStartDateTime(start)
                         .setEndDateTime(end);
                 Log.i("[submitting tourney]", "Oh no. What's going wrong?");

@@ -127,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
                 TournamentProperties tp = dataSnapshot.getValue(TournamentProperties.class);
                 Tournament t = TournamentProperties.toTournament(tp);
 
-                t.setImageID((Math.random() % 2 == 0) ? GameImageLoader.ROCKET_LEAGUE : GameImageLoader.LEAGUE_OF_LEGENDS);
                 DataManager.getTournamentData().add(t);
                 mRecyclerView.getAdapter().notifyDataSetChanged();
             }

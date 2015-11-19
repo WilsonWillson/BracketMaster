@@ -12,8 +12,7 @@ public class Tournament {
     private String mName;
     private String mDescription;
     private String mOwnerId;
-
-    private int mImageID;
+    private String mGameName;
 
     private Calendar mStartDateTime;
     private Calendar mEndDateTime;
@@ -30,6 +29,7 @@ public class Tournament {
             tournament.setName("2015 Slamfest ft. Dunkmaster Darius");
             tournament.setDescription("I don't follow the rules. I DUNK THEM.\nSingle Elimination 5v5\n32 teams - Join Now!");
             tournament.setOwner("charliealbright");
+            tournament.setGameName("League of Legends");
             tournament.setStartDateTime(2015, 11, 25, 14, 0);
             tournament.setEndDateTime(2015, 11, 27, 12, 30);
             mSampleData.add(tournament);
@@ -38,6 +38,7 @@ public class Tournament {
             tournament.setName("ProBuilds Annual Tournament");
             tournament.setDescription("16-Team tournament sponsored by ProBuilds, your source for all the best LoL champion builds!\nDouble Elimination 5v5");
             tournament.setOwner("gavinpham");
+            tournament.setGameName("League of Legends");
             tournament.setStartDateTime(2015, 12, 2, 11, 0);
             tournament.setEndDateTime(2015, 12, 3, 18, 0);
             mSampleData.add(tournament);
@@ -46,6 +47,7 @@ public class Tournament {
             tournament.setName("LoLKing Pro League Finals");
             tournament.setDescription("LoLKing, your go-to source for everything League of Legends!\nWatch the best of the best duke it out in this 32-team tournament\nSingle Elimination 5v5");
             tournament.setOwner("johnwilson");
+            tournament.setGameName("League of Legends");
             tournament.setStartDateTime(2015, 12, 8, 12, 30);
             tournament.setEndDateTime(2015, 12, 12, 19, 0);
             mSampleData.add(tournament);
@@ -54,6 +56,7 @@ public class Tournament {
             tournament.setName("Cosmic Aftershock vs. Team Rocket");
             tournament.setDescription("Witness the best Rocket League players duke it out in this high octane 3v3 Finals!\nBest of 7 matches.");
             tournament.setOwner("adrianhernandez");
+            tournament.setGameName("Rocket League");
             tournament.setStartDateTime(2015, 12, 10, 15, 0);
             tournament.setEndDateTime(2015, 12, 12, 18, 0);
             mSampleData.add(tournament);
@@ -62,6 +65,7 @@ public class Tournament {
             tournament.setName("32 Team Amateur Tournament");
             tournament.setDescription("Come see where you stand against other amateur LoL players! No players above Gold rank will be accepted.\nSingle Elimination 5v5.");
             tournament.setOwner("aryamccarthy");
+            tournament.setGameName("League of Legends");
             tournament.setStartDateTime(2015, 12, 13, 16, 0);
             tournament.setEndDateTime(2015, 12, 15, 20, 0);
             mSampleData.add(tournament);
@@ -74,8 +78,15 @@ public class Tournament {
         return mName;
     }
 
-    public Tournament setName(String mName) {
-        this.mName = mName;
+    public Tournament setName(String name) {
+        mName = name;
+        return this;
+    }
+
+    public String getGameName() { return mGameName; }
+
+    public Tournament setGameName(String gameName) {
+        mGameName = gameName;
         return this;
     }
 
@@ -83,8 +94,8 @@ public class Tournament {
         return mDescription;
     }
 
-    public Tournament setDescription(String mDescription) {
-        this.mDescription = mDescription;
+    public Tournament setDescription(String description) {
+        mDescription = description;
         return this;
     }
 
@@ -92,8 +103,8 @@ public class Tournament {
         return mOwnerId;
     }
 
-    public Tournament setOwner(String mOwner) {
-        this.mOwnerId = mOwner;
+    public Tournament setOwner(String owner) {
+        mOwnerId = owner;
         return this;
     }
 
@@ -111,15 +122,6 @@ public class Tournament {
             mMatchList = new ArrayList<>();
         }
         mMatchList.add(match);
-    }
-
-    public int getImageID() {
-        return mImageID;
-    }
-
-    public Tournament setImageID(int imageID) {
-        this.mImageID = imageID;
-        return this;
     }
 
     public Calendar getStartDateTime() {
