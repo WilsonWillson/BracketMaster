@@ -4,6 +4,8 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.SearchRecentSuggestions;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +13,7 @@ import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -24,6 +27,7 @@ import butterknife.ButterKnife;
 import gwaac.bracketmaster.R;
 import gwaac.bracketmaster.data.adapter.TournamentAdapter;
 import gwaac.bracketmaster.data.helper.DataManager;
+import gwaac.bracketmaster.data.helper.TournamentSuggestionProvider;
 import gwaac.bracketmaster.data.model.Tournament;
 
 public class SearchActivity extends AppCompatActivity {
@@ -56,6 +60,7 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
+
     @Override
     protected void onNewIntent(Intent intent) {
         setIntent(intent);
@@ -65,6 +70,10 @@ public class SearchActivity extends AppCompatActivity {
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
+            SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
+                    TournamentSuggestionProvider.AUTHORITY, TournamentSuggestionProvider.MODE);
+            suggestions.saveRecentQuery(query, null);
+
             List<Tournament> mTournamentList = getSearchResults(query);
             if (mTournamentList == null || mTournamentList.size() == 0) {
                 displayNoResults();
@@ -105,8 +114,9 @@ public class SearchActivity extends AppCompatActivity {
         // Associate searchable configuration with the SearchView
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
-                (SearchView) menu.findItem(R.id.search).getActionView();
+        final MenuItem searchMenuItem = menu.findItem(R.id.search);
+        final SearchView searchView = (SearchView) searchMenuItem.getActionView();
+
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false);
