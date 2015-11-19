@@ -1,8 +1,10 @@
-package gwaac.bracketmaster;
+package gwaac.bracketmaster.ui.modal;
 
 import android.app.Activity;
 import android.support.design.widget.Snackbar;
 import android.view.View;
+
+import gwaac.bracketmaster.R;
 
 /**
  * Created by Arya on 10/22/15.

@@ -1,4 +1,4 @@
-package gwaac.bracketmaster;
+package gwaac.bracketmaster.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -17,6 +17,9 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import gwaac.bracketmaster.BracketMasterApplication;
+import gwaac.bracketmaster.ui.modal.Notifier;
+import gwaac.bracketmaster.R;
 
 public class SignupActivity extends AppCompatActivity {
     Notifier notifier;

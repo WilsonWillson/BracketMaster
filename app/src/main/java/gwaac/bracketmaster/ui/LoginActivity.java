@@ -1,4 +1,4 @@
-package gwaac.bracketmaster;
+package gwaac.bracketmaster.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -18,7 +18,9 @@ import com.firebase.client.FirebaseError;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import gwaac.bracketmaster.BracketMasterApplication;
+import gwaac.bracketmaster.ui.modal.Notifier;
+import gwaac.bracketmaster.R;
 
 public class LoginActivity extends AppCompatActivity {
     private static final int REQUEST_SIGNUP = 137;

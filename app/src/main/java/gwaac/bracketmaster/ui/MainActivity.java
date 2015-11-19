@@ -1,4 +1,4 @@
-package gwaac.bracketmaster;
+package gwaac.bracketmaster.ui;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
@@ -21,6 +21,10 @@ import com.firebase.client.Firebase;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import gwaac.bracketmaster.BracketMasterApplication;
+import gwaac.bracketmaster.data.helper.DataManager;
+import gwaac.bracketmaster.R;
+import gwaac.bracketmaster.data.adapter.TournamentAdapter;
 
 public class MainActivity extends AppCompatActivity {
 

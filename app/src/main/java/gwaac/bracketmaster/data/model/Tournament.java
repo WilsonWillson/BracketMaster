@@ -1,10 +1,5 @@
-package gwaac.bracketmaster;
+package gwaac.bracketmaster.data.model;
 
-import android.graphics.Bitmap;
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;

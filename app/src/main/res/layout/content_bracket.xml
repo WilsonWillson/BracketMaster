@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="gwaac.bracketmaster.BracketActivity">
+    tools:context="gwaac.bracketmaster.ui.BracketActivity">
     <!--tools:showIn="@layout/activity_bracket"-->
 
 

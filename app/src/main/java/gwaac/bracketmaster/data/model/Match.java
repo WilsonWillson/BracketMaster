@@ -1,4 +1,4 @@
-package gwaac.bracketmaster;
+package gwaac.bracketmaster.data.model;
 
 /**
  * Created by Adrian on 11/14/2015.

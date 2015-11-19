@@ -1,4 +1,4 @@
-package gwaac.bracketmaster;
+package gwaac.bracketmaster.data.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,11 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import gwaac.bracketmaster.data.helper.CalendarHelper;
+import gwaac.bracketmaster.data.helper.GameImageLoader;
+import gwaac.bracketmaster.R;
+import gwaac.bracketmaster.data.model.Tournament;
+import gwaac.bracketmaster.ui.BracketActivity;
 
 /**
  * Created by Charlie on 10/27/15.

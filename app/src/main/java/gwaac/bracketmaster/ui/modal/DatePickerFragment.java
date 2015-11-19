@@ -1,4 +1,4 @@
-package gwaac.bracketmaster;
+package gwaac.bracketmaster.ui.modal;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;

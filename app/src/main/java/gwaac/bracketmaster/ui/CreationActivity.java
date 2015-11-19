@@ -1,4 +1,4 @@
-package gwaac.bracketmaster;
+package gwaac.bracketmaster.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -13,8 +13,12 @@ import android.widget.TimePicker;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import gwaac.bracketmaster.data.helper.CalendarHelper;
+import gwaac.bracketmaster.ui.modal.DatePickerFragment;
+import gwaac.bracketmaster.R;
+import gwaac.bracketmaster.ui.modal.TimePickerFragment;
 
-public class CreationActivity extends AppCompatActivity implements DatePickerFragment.OnDateChosenListener, TimePickerFragment.OnTimeChosenListener{
+public class CreationActivity extends AppCompatActivity implements DatePickerFragment.OnDateChosenListener, TimePickerFragment.OnTimeChosenListener {
 
     @Bind(R.id.tournament_name) EditText mTournamentNameField;
     @Bind(R.id.tournament_game) EditText mGameNameField;

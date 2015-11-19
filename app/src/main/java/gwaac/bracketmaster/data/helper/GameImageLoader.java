@@ -1,8 +1,10 @@
-package gwaac.bracketmaster;
+package gwaac.bracketmaster.data.helper;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
+import gwaac.bracketmaster.R;
 
 /**
  * Created by Charlie on 11/18/15.

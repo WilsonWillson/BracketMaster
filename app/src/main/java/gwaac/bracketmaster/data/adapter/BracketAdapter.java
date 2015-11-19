@@ -1,4 +1,4 @@
-package gwaac.bracketmaster;
+package gwaac.bracketmaster.data.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import java.util.List;
+
+import gwaac.bracketmaster.data.model.Match;
+import gwaac.bracketmaster.R;
 
 /**
  * Created by Adrian on 11/14/2015.

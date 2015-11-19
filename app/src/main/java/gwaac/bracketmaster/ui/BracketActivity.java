@@ -1,4 +1,4 @@
-package gwaac.bracketmaster;
+package gwaac.bracketmaster.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,10 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 
 import com.google.gson.Gson;
+
+import gwaac.bracketmaster.R;
+import gwaac.bracketmaster.data.model.Tournament;
+import gwaac.bracketmaster.data.adapter.BracketAdapter;
 
 /**
  * Created by Adrian on 11/14/2015.
