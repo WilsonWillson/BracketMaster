@@ -8,7 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import gwaac.bracketmaster.R;
 import gwaac.bracketmaster.data.adapter.TournamentAdapter;
@@ -22,12 +25,6 @@ public class SearchResultActivity extends AppCompatActivity {
 
     private static final String TAG = SearchResultActivity.class.getSimpleName();
 
-    public static final int SEARCH_TYPE_TITLE = 1;
-    public static final int SEARCH_TYPE_OWNER = 2;
-    public static final int SEARCH_TYPE_DESCRIPTION = 3;
-
-    private List<Tournament> mTournamentList;
-
     @Bind(R.id.search_result_recycler_view) RecyclerView mRecyclerView;
     @Bind(R.id.search_result_no_results_label) TextView mNoResultsLabel;
 
@@ -39,10 +36,9 @@ public class SearchResultActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        int searchType = intent.getIntExtra("searchType", 0);
         String searchString = intent.getStringExtra("searchString");
 
-        mTournamentList = getSearchResults(searchType, searchString);
+        List<Tournament> mTournamentList = getSearchResults(searchString);
         if (mTournamentList == null || mTournamentList.size() == 0) {
             displayNoResults();
         } else {
@@ -54,16 +50,14 @@ public class SearchResultActivity extends AppCompatActivity {
         }
     }
 
-    public List<Tournament> getSearchResults(int searchType, String query) {
-        switch (searchType) {
-            default:
-            case SEARCH_TYPE_TITLE:
-                return DataManager.searchByTitle(query);
-            case SEARCH_TYPE_OWNER:
-                return DataManager.searchByOwner(query);
-            case SEARCH_TYPE_DESCRIPTION:
-                return DataManager.searchByDescription(query);
-        }
+    public List<Tournament> getSearchResults(String query) {
+        Set<Tournament> tournaments = new HashSet<>();
+        tournaments.addAll(DataManager.searchByTitle(query));
+        tournaments.addAll(DataManager.searchByOwner(query));
+        tournaments.addAll(DataManager.searchByDescription(query));
+        List<Tournament> result = new ArrayList<>();
+        result.addAll(tournaments);
+        return result;
     }
 
     public void displayNoResults() {
