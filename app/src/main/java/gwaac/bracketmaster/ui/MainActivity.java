@@ -17,14 +17,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import gwaac.bracketmaster.BracketMasterApplication;
+import gwaac.bracketmaster.TournamentProperties;
 import gwaac.bracketmaster.data.helper.DataManager;
 import gwaac.bracketmaster.R;
 import gwaac.bracketmaster.data.adapter.TournamentAdapter;
+import gwaac.bracketmaster.data.helper.GameImageLoader;
+import gwaac.bracketmaster.data.model.Tournament;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -109,6 +115,43 @@ public class MainActivity extends AppCompatActivity {
         });
 
         loginIfNeeded();
+
+        makeDataFlow();
+    }
+
+    private void makeDataFlow() {
+        Firebase ref = ((BracketMasterApplication)getApplication()).myFirebaseRef;
+        ref.child("tournaments").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                TournamentProperties tp = dataSnapshot.getValue(TournamentProperties.class);
+                Tournament t = TournamentProperties.toTournament(tp);
+
+                t.setImageID((Math.random() % 2 == 0) ? GameImageLoader.ROCKET_LEAGUE : GameImageLoader.LEAGUE_OF_LEGENDS);
+                DataManager.getTournamentData().add(t);
+                mRecyclerView.getAdapter().notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 
     private void loginIfNeeded() {

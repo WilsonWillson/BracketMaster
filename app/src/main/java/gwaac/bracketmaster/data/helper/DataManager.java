@@ -14,22 +14,26 @@ import gwaac.bracketmaster.data.model.Tournament;
  */
 public class DataManager {
 
-    private Context mContext;
-    private List<Tournament> mTournamentList;
+    private static Context mContext;
+    private static List<Tournament> mTournamentList;
 
     public DataManager(Context context) {
         mContext = context;
         mTournamentList = null;
     }
 
-    public List<Tournament> getTournamentData() {
+    public static void setContext(Context context) {
+        mContext = context;
+    }
+
+    public static List<Tournament> getTournamentData() {
         if (mTournamentList == null) {
             populateTournamentData();
         }
         return mTournamentList;
     }
 
-    public void populateTournamentData() {
+    public static void populateTournamentData() {
         mTournamentList = new ArrayList<>();
 
         Tournament tournament = new Tournament();
@@ -94,7 +98,7 @@ public class DataManager {
         mTournamentList.add(tournament);
     }
 
-    public List<Tournament> searchByTitle(String query) {
+    public static List<Tournament> searchByTitle(String query) {
         if (mTournamentList == null) {
             populateTournamentData();
         }
@@ -109,7 +113,7 @@ public class DataManager {
         return results;
     }
 
-    public List<Tournament> searchByOwner(String query) {
+    public static List<Tournament> searchByOwner(String query) {
         if (mTournamentList == null) {
             populateTournamentData();
         }
