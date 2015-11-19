@@ -51,11 +51,6 @@
             android:label="View Bracket"
             android:theme="@style/AppTheme.Dark" >
         </activity>
-        <activity
-            android:name=".ui.SearchResultActivity"
-            android:label="@string/title_activity_search_result"
-            android:parentActivityName=".ui.SearchActivity">
-        </activity>
     </application>
 
 </manifest>

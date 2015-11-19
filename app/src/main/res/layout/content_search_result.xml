@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_search_result"
-    tools:context="gwaac.bracketmaster.ui.SearchResultActivity">
+    tools:context="gwaac.bracketmaster.ui.SearchActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/search_result_recycler_view"
