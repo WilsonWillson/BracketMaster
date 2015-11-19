@@ -1,8 +1,11 @@
 package gwaac.bracketmaster.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -14,6 +17,8 @@ import butterknife.ButterKnife;
 import butterknife.Bind;
 
 public class SearchActivity extends AppCompatActivity {
+
+    private static final String TAG = SearchActivity.class.getSimpleName();
 
     @Bind(R.id.search_type_spinner) Spinner mSearchTypeSpinner;
     @Bind(R.id.search_text_layout) TextInputLayout mSearchStringTextView;
@@ -33,9 +38,14 @@ public class SearchActivity extends AppCompatActivity {
         mSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /**
-                 * collect search type and search string and send in intent to SearchResultActivity
-                 */
+                Intent intent = new Intent(view.getContext(), SearchResultActivity.class);
+                if (TextUtils.equals((String)mSearchTypeSpinner.getSelectedItem(), "Title")) {
+                    intent.putExtra("searchType", SearchResultActivity.SEARCH_TYPE_TITLE);
+                } else {
+                    intent.putExtra("searchType", SearchResultActivity.SEARCH_TYPE_OWNER);
+                }
+                intent.putExtra("searchString", mSearchStringTextView.getEditText().getText().toString());
+                startActivity(intent);
             }
         });
     }

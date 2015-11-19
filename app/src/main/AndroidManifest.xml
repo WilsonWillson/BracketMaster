@@ -17,8 +17,8 @@
         </activity>
         <activity
             android:name=".ui.MainActivity"
-            android:label="@string/title_activity_main"
-            android:hardwareAccelerated="true">
+            android:hardwareAccelerated="true"
+            android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,15 +39,17 @@
             android:name=".ui.SignupActivity"
             android:label="@string/title_activity_signup"
             android:theme="@style/AppTheme.Dark" >
-
         </activity>
         <activity
             android:name=".ui.BracketActivity"
             android:label="View Bracket"
-            android:theme="@style/AppTheme.Dark">
-
+            android:theme="@style/AppTheme.Dark" >
         </activity>
-
+        <activity
+            android:name=".ui.SearchResultActivity"
+            android:label="@string/title_activity_search_result"
+            android:parentActivityName=".ui.SearchActivity">
+        </activity>
     </application>
 
 </manifest>

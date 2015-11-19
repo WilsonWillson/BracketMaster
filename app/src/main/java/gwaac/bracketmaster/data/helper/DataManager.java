@@ -1,6 +1,8 @@
 package gwaac.bracketmaster.data.helper;
 
 import android.content.Context;
+import android.text.TextUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,13 +15,22 @@ import gwaac.bracketmaster.data.model.Tournament;
 public class DataManager {
 
     private Context mContext;
+    private List<Tournament> mTournamentList;
 
     public DataManager(Context context) {
         mContext = context;
+        mTournamentList = null;
     }
 
     public List<Tournament> getTournamentData() {
-        List<Tournament> tournamentData = new ArrayList<>();
+        if (mTournamentList == null) {
+            populateTournamentData();
+        }
+        return mTournamentList;
+    }
+
+    public void populateTournamentData() {
+        mTournamentList = new ArrayList<>();
 
         Tournament tournament = new Tournament();
         tournament.setName("2015 Slamfest ft. Dunkmaster Darius");
@@ -32,7 +43,7 @@ public class DataManager {
         tournament.addMatch(new Match("TL", "KOO"));
         tournament.addMatch(new Match("FW", "C9"));
         tournament.addMatch(new Match("TSM", "NRG"));
-        tournamentData.add(tournament);
+        mTournamentList.add(tournament);
 
         tournament = new Tournament();
         tournament.setName("ProBuilds Annual Tournament");
@@ -43,7 +54,7 @@ public class DataManager {
         tournament.setEndDateTime(2015, 12, 3, 18, 0);
         tournament.addMatch(new Match("Team Power", "Sucky Summoners"));
         tournament.addMatch(new Match("Team BACON", "Team SAUSAGE"));
-        tournamentData.add(tournament);
+        mTournamentList.add(tournament);
 
         tournament = new Tournament();
         tournament.setName("LoLKing Pro League Finals");
@@ -58,7 +69,7 @@ public class DataManager {
         tournament.addMatch(new Match("Gangplank", "Mordekaiser"));
         tournament.addMatch(new Match("Lucian", "Ashe"));
         tournament.addMatch(new Match("Annie", "Twisted Fate"));
-        tournamentData.add(tournament);
+        mTournamentList.add(tournament);
 
         tournament = new Tournament();
         tournament.setName("Cosmic Aftershock vs. Team Rocket");
@@ -68,7 +79,7 @@ public class DataManager {
         tournament.setStartDateTime(2015, 12, 10, 15, 0);
         tournament.setEndDateTime(2015, 12, 12, 18, 0);
         tournament.addMatch(new Match("Cosmic Aftershock", "Team Rocket"));
-        tournamentData.add(tournament);
+        mTournamentList.add(tournament);
 
         tournament = new Tournament();
         tournament.setName("32 Team Amateur Tournament");
@@ -80,10 +91,37 @@ public class DataManager {
         tournament.addMatch(new Match("charliealbright", "gavinpham"));
         tournament.addMatch(new Match("adrianhernandez", "johnwilson"));
         tournament.addMatch(new Match("aryamccarthy", "------"));
-        tournamentData.add(tournament);
+        mTournamentList.add(tournament);
+    }
 
+    public List<Tournament> searchByTitle(String query) {
+        if (mTournamentList == null) {
+            populateTournamentData();
+        }
+        List<Tournament> results = new ArrayList<>();
 
+        for (int i = 0; i < mTournamentList.size(); i++) {
+            String tournamentTitle = mTournamentList.get(i).getName();
+            if (tournamentTitle.contains(query)) {
+                results.add(mTournamentList.get(i));
+            }
+        }
+        return results;
+    }
 
-        return tournamentData;
+    public List<Tournament> searchByOwner(String query) {
+        if (mTournamentList == null) {
+            populateTournamentData();
+        }
+
+        List<Tournament> results = new ArrayList<>();
+
+        for (int i = 0; i < mTournamentList.size(); i++) {
+            String tournamentOwner = mTournamentList.get(i).getOwner();
+            if (TextUtils.equals(tournamentOwner.toLowerCase(), query.toLowerCase())) {
+                results.add(mTournamentList.get(i));
+            }
+        }
+        return results;
     }
 }

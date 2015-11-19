@@ -5,6 +5,7 @@
     <string name="title_activity_search">Find Tournament</string>
     <string name="title_activity_create">Create Tournament</string>
     <string name="title_activity_signup">Sign up</string>
+    <string name="title_activity_search_result">Search Results</string>
 
     <string-array name="search_types">
         <item>Title</item>
