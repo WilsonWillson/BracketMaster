@@ -1,6 +1,5 @@
 package gwaac.bracketmaster.ui;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
@@ -16,12 +15,11 @@ import android.widget.TimePicker;
 import com.firebase.client.Firebase;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import gwaac.bracketmaster.BracketMasterApplication;
-import gwaac.bracketmaster.TournamentProperties;
+import gwaac.bracketmaster.data.helper.TournamentProperties;
 import gwaac.bracketmaster.data.helper.CalendarHelper;
 import gwaac.bracketmaster.data.model.Tournament;
 import gwaac.bracketmaster.ui.modal.DatePickerFragment;

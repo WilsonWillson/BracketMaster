@@ -2,6 +2,7 @@ package gwaac.bracketmaster.ui.modal;
 
 import android.app.Activity;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 
 import gwaac.bracketmaster.R;
@@ -10,30 +11,55 @@ import gwaac.bracketmaster.R;
  * Created by Arya on 10/22/15.
  */
 public class Notifier {
-    private Activity activity;
-    private View view;
+
+    private static final String TAG = Notifier.class.getSimpleName();
+
+    private Activity mActivity;
+    private View mView;
+
+    private OnVisibilityChangedListener mOnVisibilityChangedListener;
 
     public Notifier(Activity activity, View view) {
-        this.activity = activity;
-        this.view = view;
+        mActivity = activity;
+        mView = view;
+        mOnVisibilityChangedListener = null;
     }
 
     public Notifier(Activity activity) {
-        /* For the love of god, make sure you EVENTUALLY assign this.view to something non-null. */
         this(activity, null);
     }
 
-    public void setView(View view) {
-        this.view = view;
+    private void alertUser(String text, String action) {
+        if (mView == null) {
+            Log.e(TAG, "View reference not set, cannot create Snackbar.");
+        } else {
+            Snackbar.make(mView, text, Snackbar.LENGTH_LONG).setAction(action, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                /* pass */
+                }
+            }).setActionTextColor(mActivity.getResources().getColor(R.color.colorPrimary)).setCallback(new Snackbar.Callback() {
+                @Override
+                public void onShown(Snackbar snackbar) {
+                    super.onShown(snackbar);
+                    if (mOnVisibilityChangedListener != null) {
+                        mOnVisibilityChangedListener.onVisibilityChanged(true);
+                    }
+                }
+
+                @Override
+                public void onDismissed(Snackbar snackbar, int event) {
+                    super.onDismissed(snackbar, event);
+                    if (mOnVisibilityChangedListener != null) {
+                        mOnVisibilityChangedListener.onVisibilityChanged(false);
+                    }
+                }
+            }).show();
+        }
     }
 
-    private void alertUser(String text, String action) {
-        Snackbar.make(this.view, text, Snackbar.LENGTH_LONG).setAction(action, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /* pass */
-            }
-        }).setActionTextColor(activity.getResources().getColor(R.color.colorPrimary)).show();
+    public void setView(View view) {
+        mView = view;
     }
 
     public void alertEmptyField() {
@@ -63,5 +89,13 @@ public class Notifier {
     @Deprecated
     public void alertMainActivity() {
         alertWithConfirmation("This is the main page of the app.");
+    }
+
+    public interface OnVisibilityChangedListener {
+        public void onVisibilityChanged(boolean isVisible);
+    }
+
+    public void setOnVisibilityChangedListener(OnVisibilityChangedListener listener) {
+        mOnVisibilityChangedListener = listener;
     }
 }

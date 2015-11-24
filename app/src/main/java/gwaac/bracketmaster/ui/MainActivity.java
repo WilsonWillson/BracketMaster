@@ -2,7 +2,10 @@ package gwaac.bracketmaster.ui;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,33 +14,44 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBar;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import gwaac.bracketmaster.BracketMasterApplication;
-import gwaac.bracketmaster.TournamentProperties;
+import gwaac.bracketmaster.data.helper.TournamentProperties;
 import gwaac.bracketmaster.data.helper.DataManager;
 import gwaac.bracketmaster.R;
 import gwaac.bracketmaster.data.adapter.TournamentAdapter;
-import gwaac.bracketmaster.data.helper.GameImageLoader;
 import gwaac.bracketmaster.data.model.Tournament;
+import gwaac.bracketmaster.ui.modal.Notifier;
 
 public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.tournament_recycler_view) RecyclerView mRecyclerView;
-
+    private RecyclerView.Adapter mTournamentAdapter;
     @Bind(R.id.transparent_overlay) View mOverlay;
+    @Bind(R.id.search_no_results_label) TextView mNoResultsLabel;
     private boolean mOverlayVisible;
 
     private static boolean madeDataFlow;
@@ -47,20 +61,20 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.fab_new) FloatingActionButton mFabNew;
     @Bind(R.id.fab_logout) FloatingActionButton mFabLogout;
 
+    private List<Tournament> mTournamentList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.action_bar_main);
 
         ButterKnife.bind(this);
 
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        TournamentAdapter mAdapter = new TournamentAdapter(this, DataManager.getTournamentData());
-        mRecyclerView.setAdapter(mAdapter);
+        mTournamentAdapter = new TournamentAdapter(this, DataManager.getTournamentData());
+        mRecyclerView.setAdapter(mTournamentAdapter);
 
         mOverlay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,6 +136,78 @@ public class MainActivity extends AppCompatActivity {
         if (!madeDataFlow)
             makeDataFlow();
         madeDataFlow = true;
+
+        Intent intent = getIntent();
+        handleIntent(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.search);
+        MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                mRecyclerView.swapAdapter(mTournamentAdapter, true);
+                return true;
+            }
+        });
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView)searchItem.getActionView();
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false);
+
+        return true;
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        setIntent(intent);
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            List<Tournament> tournamentList = getSearchResults(query);
+            if (tournamentList == null || tournamentList.size() == 0) {
+                displayNoResults();
+            } else {
+                mNoResultsLabel.setVisibility(View.GONE);
+                mTournamentList = tournamentList;
+                TournamentAdapter newAdapter = new TournamentAdapter(this, mTournamentList);
+                mRecyclerView.swapAdapter(newAdapter, false);
+            }
+
+        }
+
+    }
+
+    public List<Tournament> getSearchResults(String query) {
+        Log.v("[Search Activity]", "Query: " + query);
+        Set<Tournament> tournaments = new HashSet<>();
+        tournaments.addAll(DataManager.searchByTitle(query));
+        tournaments.addAll(DataManager.searchByOwner(query));
+        tournaments.addAll(DataManager.searchByDescription(query));
+        List<Tournament> result = new ArrayList<>();
+        result.addAll(tournaments);
+        Log.v("[Search Activity]", "Result size: " + result.size());
+        return result;
+    }
+
+    public void displayNoResults() {
+        mNoResultsLabel.setText("No Results found.\nPlease return to the search page and try again.");
+        mNoResultsLabel.setVisibility(View.VISIBLE);
     }
 
     private void makeDataFlow() {
@@ -197,18 +283,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void segueToSearch() {
-        segue(SearchActivity.class);
+        toggleOverlay();
+        final Activity activity = this;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Notifier notifier = new Notifier(activity, mRecyclerView);
+                notifier.setOnVisibilityChangedListener(new Notifier.OnVisibilityChangedListener() {
+                    @Override
+                    public void onVisibilityChanged(boolean isVisible) {
+                        if (isVisible) {
+                            mFabMenu.setEnabled(false);
+                        } else {
+                            mFabMenu.setEnabled(true);
+                        }
+                    }
+                });
+                notifier.alertWithConfirmation("Search activity has been removed. Replacing with user account page in the near future.");
+            }
+        }, 250);
     }
 
     private void logout() {
         Firebase ref = ((BracketMasterApplication)getApplication()).myFirebaseRef;
         ref.unauth();
         segueToLogin();
-    }
-
-    @Override
-    public void onBackPressed() {
-        moveTaskToBack(true);
     }
 
     public void toggleOverlay() {

@@ -1,4 +1,4 @@
-package gwaac.bracketmaster;
+package gwaac.bracketmaster.data.helper;
 
 import java.util.Calendar;
 import java.util.List;
