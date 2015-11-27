@@ -13,6 +13,7 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.provider.SearchRecentSuggestions;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -43,6 +44,7 @@ import gwaac.bracketmaster.data.helper.TournamentProperties;
 import gwaac.bracketmaster.data.helper.DataManager;
 import gwaac.bracketmaster.R;
 import gwaac.bracketmaster.data.adapter.TournamentAdapter;
+import gwaac.bracketmaster.data.helper.TournamentSuggestionProvider;
 import gwaac.bracketmaster.data.model.Tournament;
 
 public class MainActivity extends AppCompatActivity {
@@ -178,6 +180,9 @@ public class MainActivity extends AppCompatActivity {
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
+            SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
+                    TournamentSuggestionProvider.AUTHORITY, TournamentSuggestionProvider.MODE);
+            suggestions.saveRecentQuery(query, null);
             List<Tournament> tournamentList = getSearchResults(query);
             if (tournamentList == null || tournamentList.size() == 0) {
                 displayNoResults();
