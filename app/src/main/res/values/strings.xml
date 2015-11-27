@@ -13,4 +13,5 @@
         <item>Owner</item>
         <item>Description</item>
     </string-array>
+    <string name="title_activity_account">AccountActivity</string>
 </resources>

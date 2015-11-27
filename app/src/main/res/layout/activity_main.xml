@@ -38,12 +38,12 @@
         android:visibility="gone"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_search"
+        android:id="@+id/fab_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         android:layout_gravity="end|bottom"
-        android:src="@drawable/ic_search_white"
+        android:src="@drawable/ic_person_white"
         android:visibility="gone"/>
 
     <android.support.design.widget.FloatingActionButton

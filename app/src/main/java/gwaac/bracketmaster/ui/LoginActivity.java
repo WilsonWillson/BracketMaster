@@ -24,6 +24,7 @@ import gwaac.bracketmaster.R;
 
 public class LoginActivity extends AppCompatActivity {
     private static final int REQUEST_SIGNUP = 137;
+    private static final String TAG = LoginActivity.class.getSimpleName();
 
     @Bind(R.id.input_email) EditText mEmailField;
     @Bind(R.id.input_password) EditText mPasswordField;
@@ -62,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         /* This may not be necessary. See returned AuthData object here:
         https://www.firebase.com/docs/android/guide/login/password.html#section-logging-in
          */
+        Log.v("", "AuthData " + authData.toString());
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         preferences.edit().clear();
         preferences.edit().putString("uid", authData.getUid()).apply();
@@ -75,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
         myFirebaseRef.authWithPassword(email, pass, new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData authData) {
+                Log.v(TAG, "AuthData " + authData.toString());
                 notifier.alertSuccessfulLogin();
                 saveAccount(authData);
                 progressDialog.dismiss();

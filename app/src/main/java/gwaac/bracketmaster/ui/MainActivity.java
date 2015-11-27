@@ -44,7 +44,6 @@ import gwaac.bracketmaster.data.helper.DataManager;
 import gwaac.bracketmaster.R;
 import gwaac.bracketmaster.data.adapter.TournamentAdapter;
 import gwaac.bracketmaster.data.model.Tournament;
-import gwaac.bracketmaster.ui.modal.Notifier;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private static boolean madeDataFlow;
 
     @Bind(R.id.fab_menu) FloatingActionButton mFabMenu;
-    @Bind(R.id.fab_search) FloatingActionButton mFabSearch;
+    @Bind(R.id.fab_account) FloatingActionButton mFabAccount;
     @Bind(R.id.fab_new) FloatingActionButton mFabNew;
     @Bind(R.id.fab_logout) FloatingActionButton mFabLogout;
 
@@ -92,11 +91,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mFabSearch.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimaryDark)));
-        mFabSearch.setOnClickListener(new View.OnClickListener() {
+        mFabAccount.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimaryDark)));
+        mFabAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                segueToSearch();
+                segueToAccount();
             }
         });
 
@@ -274,6 +273,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void segue(Class<?> cls) {
+        clearAnimation();
         Intent intent = new Intent(this, cls);
         startActivity(intent);
     }
@@ -282,26 +282,8 @@ public class MainActivity extends AppCompatActivity {
         segue(CreationActivity.class);
     }
 
-    private void segueToSearch() {
-        toggleOverlay();
-        final Activity activity = this;
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Notifier notifier = new Notifier(activity, mRecyclerView);
-                notifier.setOnVisibilityChangedListener(new Notifier.OnVisibilityChangedListener() {
-                    @Override
-                    public void onVisibilityChanged(boolean isVisible) {
-                        if (isVisible) {
-                            mFabMenu.setEnabled(false);
-                        } else {
-                            mFabMenu.setEnabled(true);
-                        }
-                    }
-                });
-                notifier.alertWithConfirmation("Search activity has been removed. Replacing with user account page in the near future.");
-            }
-        }, 250);
+    private void segueToAccount() {
+        segue(AccountActivity.class);
     }
 
     private void logout() {
@@ -310,27 +292,38 @@ public class MainActivity extends AppCompatActivity {
         segueToLogin();
     }
 
+    public Animator mTranslateUpAnim;
+    public Animator mTranslateDownAnim;
+    public Animator mTranslateRightAnim;
+    public Animator mTranslateLeftAnim;
+    public Animator mTranslateRightDownAnim;
+    public Animator mTranslateLeftUpAnim;
+    public Animator mFadeInAnim;
+    public Animator mFadeOutAnim;
+    public Animator mRotateClockwiseAnim;
+    public Animator mRotateCounterClockwiseAnim;
+
     public void toggleOverlay() {
         if (mOverlayVisible) {
-            Animator translateDownAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_down);
-            translateDownAnim.setTarget(mFabSearch);
-            translateDownAnim.start();
+            mTranslateDownAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_down);
+            mTranslateDownAnim.setTarget(mFabAccount);
+            mTranslateDownAnim.start();
 
-            Animator translateRightDownAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_down_right);
-            translateRightDownAnim.setTarget(mFabNew);
-            translateRightDownAnim.start();
+            mTranslateRightDownAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_down_right);
+            mTranslateRightDownAnim.setTarget(mFabNew);
+            mTranslateRightDownAnim.start();
 
-            Animator translateRightAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_right);
-            translateRightAnim.setTarget(mFabLogout);
-            translateRightAnim.start();
+            mTranslateRightAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_right);
+            mTranslateRightAnim.setTarget(mFabLogout);
+            mTranslateRightAnim.start();
 
-            Animator rotateCounterClockwiseAnim = AnimatorInflater.loadAnimator(this, R.animator.rotate_counterclockwise);
-            rotateCounterClockwiseAnim.setTarget(mFabMenu);
-            rotateCounterClockwiseAnim.start();
+            mRotateCounterClockwiseAnim = AnimatorInflater.loadAnimator(this, R.animator.rotate_counterclockwise);
+            mRotateCounterClockwiseAnim.setTarget(mFabMenu);
+            mRotateCounterClockwiseAnim.start();
 
-            Animator fadeOutAnim = AnimatorInflater.loadAnimator(this, R.animator.fade_out);
-            fadeOutAnim.setTarget(mOverlay);
-            fadeOutAnim.start();
+            mFadeOutAnim = AnimatorInflater.loadAnimator(this, R.animator.fade_out);
+            mFadeOutAnim.setTarget(mOverlay);
+            mFadeOutAnim.start();
 
             mOverlayVisible = false;
             new Handler().postDelayed(new Runnable() {
@@ -340,7 +333,7 @@ public class MainActivity extends AppCompatActivity {
                         mOverlay.setVisibility(View.GONE);
                         mFabLogout.setVisibility(View.GONE);
                         mFabNew.setVisibility(View.GONE);
-                        mFabSearch.setVisibility(View.GONE);
+                        mFabAccount.setVisibility(View.GONE);
                     }
                 }
             }, 200);
@@ -349,43 +342,61 @@ public class MainActivity extends AppCompatActivity {
             mOverlay.setVisibility(View.VISIBLE);
             mFabLogout.setVisibility(View.VISIBLE);
             mFabNew.setVisibility(View.VISIBLE);
-            mFabSearch.setVisibility(View.VISIBLE);
+            mFabAccount.setVisibility(View.VISIBLE);
 
-            Animator fadeInAnim = AnimatorInflater.loadAnimator(this, R.animator.fade_in);
-            fadeInAnim.setTarget(mOverlay);
-            fadeInAnim.start();
-
-            Animator rotateClockwiseAnim = AnimatorInflater.loadAnimator(this, R.animator.rotate_clockwise);
-            rotateClockwiseAnim.setTarget(mFabMenu);
-            rotateClockwiseAnim.start();
-
-            Animator translateLeftAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_left);
-            translateLeftAnim.setTarget(mFabLogout);
-            translateLeftAnim.start();
-
-            Animator translateLeftUpAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_up_left);
-            translateLeftUpAnim.setTarget(mFabNew);
-            translateLeftUpAnim.start();
-
-            Animator mFadeInAnim = AnimatorInflater.loadAnimator(this, R.animator.fade_in);
+            mFadeInAnim = AnimatorInflater.loadAnimator(this, R.animator.fade_in);
             mFadeInAnim.setTarget(mOverlay);
             mFadeInAnim.start();
 
-            Animator mRotateClockwiseAnim = AnimatorInflater.loadAnimator(this, R.animator.rotate_clockwise);
+            mRotateClockwiseAnim = AnimatorInflater.loadAnimator(this, R.animator.rotate_clockwise);
             mRotateClockwiseAnim.setTarget(mFabMenu);
             mRotateClockwiseAnim.start();
 
-            Animator mTranslateLeftAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_left);
+            mTranslateLeftAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_left);
             mTranslateLeftAnim.setTarget(mFabLogout);
             mTranslateLeftAnim.start();
 
-            Animator mTranslateLeftUpAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_up_left);
+            mTranslateLeftUpAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_up_left);
             mTranslateLeftUpAnim.setTarget(mFabNew);
             mTranslateLeftUpAnim.start();
 
-            Animator mTranslateUpAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_up);
-            mTranslateUpAnim.setTarget(mFabSearch);
+            mTranslateUpAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_up);
+            mTranslateUpAnim.setTarget(mFabAccount);
             mTranslateUpAnim.start();
         }
+    }
+
+    public void clearAnimation() {
+        mTranslateDownAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_down);
+        mTranslateDownAnim.setDuration(1);
+        mTranslateDownAnim.setTarget(mFabAccount);
+        mTranslateDownAnim.start();
+
+        mTranslateRightDownAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_down_right);
+        mTranslateRightDownAnim.setDuration(1);
+        mTranslateRightDownAnim.setTarget(mFabNew);
+        mTranslateRightDownAnim.start();
+
+        mTranslateRightAnim = AnimatorInflater.loadAnimator(this, R.animator.translate_right);
+        mTranslateRightAnim.setDuration(1);
+        mTranslateRightAnim.setTarget(mFabLogout);
+        mTranslateRightAnim.start();
+
+        mRotateCounterClockwiseAnim = AnimatorInflater.loadAnimator(this, R.animator.rotate_counterclockwise);
+        mRotateCounterClockwiseAnim.setDuration(1);
+        mRotateCounterClockwiseAnim.setTarget(mFabMenu);
+        mRotateCounterClockwiseAnim.start();
+
+        mFadeOutAnim = AnimatorInflater.loadAnimator(this, R.animator.fade_out);
+        mFadeOutAnim.setDuration(1);
+        mFadeOutAnim.setTarget(mOverlay);
+        mFadeOutAnim.start();
+
+        mOverlayVisible = false;
+
+        mOverlay.setVisibility(View.GONE);
+        mFabLogout.setVisibility(View.GONE);
+        mFabNew.setVisibility(View.GONE);
+        mFabAccount.setVisibility(View.GONE);
     }
 }
