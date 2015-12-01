@@ -24,10 +24,11 @@
             <ImageView
                 android:id="@+id/tournament_game_image"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/league_of_legends" />
+                android:src="@drawable/logo_league_of_legends" />
 
             <TextView
                 android:id="@+id/tournament_name"

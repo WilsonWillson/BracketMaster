@@ -52,28 +52,19 @@
         </android.support.design.widget.TextInputLayout>
 
 
-    <android.support.design.widget.TextInputLayout
-        style="@style/BracketMaster.TextInputLayout"
-        android:id="@+id/tournament_game_layout"
+    <Spinner
+        style="@style/BracketMaster.Spinner"
+        android:id="@+id/tournament_game_spinner"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tournament_description_layout">
-
-        <EditText
-            android:id="@+id/tournament_game"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textCapWords|textAutoCorrect"
-            android:hint="Game"/>
-
-    </android.support.design.widget.TextInputLayout>
+        android:layout_below="@id/tournament_description_layout"/>
 
 
     <LinearLayout
         android:id="@+id/tournament_datetime_start_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tournament_game_layout"
+        android:layout_below="@id/tournament_game_spinner"
         android:layout_marginTop="16dp"
         android:orientation="horizontal">
 
@@ -82,7 +73,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            android:layout_below="@id/tournament_game_layout"
+            android:layout_below="@id/tournament_game_spinner"
             android:hint="Starts">
 
             <EditText
@@ -97,7 +88,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:layout_below="@id/tournament_game_layout">
+            android:layout_below="@id/tournament_game_spinner">
 
             <EditText
                 style="@style/BracketMaster.TextInputLayout.DateTime"
@@ -120,7 +111,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            android:layout_below="@id/tournament_game_layout"
+            android:layout_below="@id/tournament_game_spinner"
             android:hint="Ends">
 
             <EditText
@@ -135,7 +126,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:layout_below="@id/tournament_game_layout">
+            android:layout_below="@id/tournament_game_spinner">
 
             <EditText
                 style="@style/BracketMaster.TextInputLayout.DateTime"

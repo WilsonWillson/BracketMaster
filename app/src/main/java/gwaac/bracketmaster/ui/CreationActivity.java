@@ -7,9 +7,11 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 
 import com.firebase.client.Firebase;
@@ -19,6 +21,7 @@ import java.util.Calendar;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import gwaac.bracketmaster.BracketMasterApplication;
+import gwaac.bracketmaster.data.helper.GameImageLoader;
 import gwaac.bracketmaster.data.helper.TournamentProperties;
 import gwaac.bracketmaster.data.helper.CalendarHelper;
 import gwaac.bracketmaster.data.model.Tournament;
@@ -29,7 +32,7 @@ import gwaac.bracketmaster.ui.modal.TimePickerFragment;
 public class CreationActivity extends AppCompatActivity implements DatePickerFragment.OnDateChosenListener, TimePickerFragment.OnTimeChosenListener {
 
     @Bind(R.id.tournament_name) EditText mTournamentNameField;
-    @Bind(R.id.tournament_game) EditText mGameNameField;
+    @Bind(R.id.tournament_game_spinner) Spinner mGameSpinner;
     @Bind(R.id.description) EditText mDescriptionField;
 
     @Bind(R.id.tournament_date_start) TextInputLayout mDatePickerStartButton;
@@ -39,11 +42,15 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
 
     @Bind(R.id.create_tournament) Button mCreateButton;
 
+    private GameImageLoader mGameImageLoader;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
         ButterKnife.bind(this);
+
+        mGameImageLoader = new GameImageLoader(this);
 
         if (mDatePickerStartButton.getEditText() != null) {
             mDatePickerStartButton.getEditText().setOnClickListener(new View.OnClickListener() {
@@ -89,7 +96,7 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
             @Override
             public void onClick(View v) {
                 String tournamentName = mTournamentNameField.getText().toString();
-                String gameName = mGameNameField.getText().toString();
+                String gameName = mGameSpinner.getSelectedItem().toString();
                 String description = mDescriptionField.getText().toString();
                 String owner = PreferenceManager.getDefaultSharedPreferences(CreationActivity.this).getString("uid", "null");
                 if (owner.equals("null")) Log.i("[submitting tourney]", "Nobody's logged in.");
@@ -97,7 +104,7 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
                         .setOwner(owner)
                         .setDescription(description)
                         .setName(tournamentName)
-                        .setGameName(gameName)
+                        .setGameImageID(mGameImageLoader.getIdForGameName(gameName))
                         .setStartDateTime(start)
                         .setEndDateTime(end);
                 Log.i("[submitting tourney]", "Oh no. What's going wrong?");
@@ -107,6 +114,11 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
                 finish();
             }
         });
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.game_titles, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mGameSpinner.setAdapter(adapter);
     }
 
     private void submitToFirebase(Tournament t) {

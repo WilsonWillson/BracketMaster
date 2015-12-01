@@ -6,6 +6,8 @@
     <string name="title_activity_create">Create Tournament</string>
     <string name="title_activity_signup">Sign up</string>
     <string name="title_activity_search_result">Search Results</string>
+    <string name="title_activity_account">AccountActivity</string>
+
     <string name="search_hint">Search tournaments</string>
 
     <string-array name="search_types">
@@ -13,5 +15,21 @@
         <item>Owner</item>
         <item>Description</item>
     </string-array>
-    <string name="title_activity_account">AccountActivity</string>
+    <string-array name="game_titles">
+        <item>Game</item>
+        <item>Battlefield</item>
+        <item>Counter Strike</item>
+        <item>Doom</item>
+        <item>DOTA 2</item>
+        <item>Halo</item>
+        <item>Hearthstone</item>
+        <item>Heroes of the Storm</item>
+        <item>League of Legends</item>
+        <item>Rocket League</item>
+        <item>Starcraft 2</item>
+        <item>Street Fighter</item>
+        <item>Super Smash Bros.</item>
+        <item>Unreal Tournament</item>
+        <item>World of Tanks</item>
+    </string-array>
 </resources>

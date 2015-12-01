@@ -54,7 +54,7 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.To
         holder.tournamentDetail.setText(mTournamentData.get(position).getDescription());
         holder.tournamentDateTimeStart.setText(CalendarHelper.getPrettyDateTime(mTournamentData.get(position).getStartDateTime()));
         holder.tournamentDateTimeEnd.setText(CalendarHelper.getPrettyDateTime(mTournamentData.get(position).getEndDateTime()));
-        holder.tournamentImage.setImageBitmap(mGameImageLoader.getImageForID(mTournamentData.get(position).getGameName().equals("Rocket League") ? GameImageLoader.ROCKET_LEAGUE : GameImageLoader.LEAGUE_OF_LEGENDS));
+        holder.tournamentImage.setImageBitmap(mGameImageLoader.getImageForID(mTournamentData.get(position).getGameImageID()));
         holder.viewTournamentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

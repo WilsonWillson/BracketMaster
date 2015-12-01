@@ -12,7 +12,7 @@ public class TournamentProperties {
     public String name;
     public String description;
     public String ownerID;
-    public String gameName;
+    public int gameImageID;
     public List<String> participantIDs;
     public Long startTime;
     public Long endTime;
@@ -22,7 +22,7 @@ public class TournamentProperties {
         tp.name = tournament.getName();
         tp.description = tournament.getDescription();
         tp.ownerID = tournament.getOwner();
-        tp.gameName = tournament.getGameName();
+        tp.gameImageID = tournament.getGameImageID();
         tp.participantIDs = null;
         tp.startTime = tournament.getStartDateTime().getTime().getTime();
         tp.endTime = tournament.getEndDateTime().getTime().getTime();
@@ -40,7 +40,7 @@ public class TournamentProperties {
                 .setName(tp.name)
                 .setDescription(tp.description)
                 .setOwner(tp.ownerID)
-                .setGameName(tp.gameName)
+                .setGameImageID(tp.gameImageID)
                 .setStartDateTime(start)
                 .setEndDateTime(end);
 
