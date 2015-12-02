@@ -130,8 +130,6 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
                         .setEndDateTime(end);
                 Log.i("[submitting tourney]", "Oh no. What's going wrong?");
                 CreationActivity.this.submitToFirebase(tournament);
-                // TODO: We never actually use gameName.
-                // TODO: submit stuff.
                 finish();
             }
         });

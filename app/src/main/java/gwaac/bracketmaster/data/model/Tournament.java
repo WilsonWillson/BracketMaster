@@ -12,7 +12,11 @@ public class Tournament {
     private String mName;
     private String mDescription;
     private String mOwnerId;
+    private List<String> mSignupList;
+
     private int mGameImageID;
+
+    private boolean mStarted;
 
     private Calendar mStartDateTime;
     private Calendar mEndDateTime;
@@ -50,6 +54,32 @@ public class Tournament {
 
     public Tournament setOwner(String owner) {
         mOwnerId = owner;
+        return this;
+    }
+
+    public boolean isStarted() {
+        return mStarted;
+    }
+
+    public Tournament setStarted(boolean started) {
+        mStarted = started;
+        return this;
+    }
+
+    public List<String> getSignupList() {
+        return mSignupList;
+    }
+
+    public Tournament setSignupList(List<String> signupList) {
+        mSignupList = signupList;
+        return this;
+    }
+
+    public Tournament addSignup(String userID) {
+        if (mSignupList == null) {
+            mSignupList = new ArrayList<>();
+        }
+        mSignupList.add(userID);
         return this;
     }
 

@@ -67,6 +67,9 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.To
 
     @Override
     public int getItemCount() {
+        if (mTournamentData == null) {
+            return 0;
+        }
         return mTournamentData.size();
     }
 
