@@ -49,7 +49,7 @@
         <activity
             android:name=".ui.BracketActivity"
             android:label="View Bracket"
-            android:theme="@style/AppTheme.Dark" >
+            android:parentActivityName=".ui.MainActivity">
         </activity>
         <activity
             android:name=".ui.AccountActivity"
