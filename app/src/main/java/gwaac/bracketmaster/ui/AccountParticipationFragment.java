@@ -72,8 +72,9 @@ public class AccountParticipationFragment extends android.support.v4.app.Fragmen
         participation.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Map signups = ((Map<String, Object>) dataSnapshot.getValue());
+                Map signups = dataSnapshot.getValue(Map.class);
 
+                if (signups == null) return; // Get out if it doesn't work.
                 for (Object o : signups.keySet()) {
                     String tournamentID = (String) o;
 
