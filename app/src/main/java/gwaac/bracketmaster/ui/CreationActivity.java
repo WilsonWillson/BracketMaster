@@ -2,6 +2,7 @@ package gwaac.bracketmaster.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -54,7 +55,7 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
         ButterKnife.bind(this);
-        mNotifier = new Notifier(this, this.getCurrentFocus());
+        mNotifier = new Notifier(this, mCreateButton);
 
         mGameImageLoader = new GameImageLoader(this);
 
@@ -143,9 +144,20 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
     }
 
     private void submitToFirebase(Tournament t) {
+        mCreateButton.setEnabled(false);
+        ProgressDialog progressDialog = new ProgressDialog(CreationActivity.this,
+                R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Logging in...");
+        progressDialog.show();
+
+
         TournamentProperties tp = TournamentProperties.fromTournament(t);
         Firebase myFirebaseRef = ((BracketMasterApplication) getApplicationContext()).myFirebaseRef;
         myFirebaseRef.child("tournaments").push().setValue(tp);
+
+        progressDialog.dismiss();
+        mCreateButton.setEnabled(true);
 
     }
 
