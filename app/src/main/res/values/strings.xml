@@ -6,7 +6,7 @@
     <string name="title_activity_create">Create Tournament</string>
     <string name="title_activity_signup">Sign up</string>
     <string name="title_activity_search_result">Search Results</string>
-    <string name="title_activity_account">AccountActivity</string>
+    <string name="title_activity_account">My Account</string>
 
     <string name="search_hint">Search tournaments</string>
 
@@ -31,4 +31,5 @@
         <item>Unreal Tournament</item>
         <item>World of Tanks</item>
     </string-array>
+
 </resources>

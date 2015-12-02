@@ -1,43 +1,75 @@
 package gwaac.bracketmaster.ui;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
-import com.firebase.client.Firebase;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.w3c.dom.Text;
-
-import gwaac.bracketmaster.BracketMasterApplication;
+import butterknife.ButterKnife;
 import gwaac.bracketmaster.R;
+
+import butterknife.Bind;
 
 public class AccountActivity extends AppCompatActivity {
 
-    private static final String TAG = AccountActivity.class.getSimpleName();
+    @Bind(R.id.account_activity_toolbar) Toolbar mToolbar;
+    @Bind(R.id.account_tab_layout) TabLayout mTabLayout;
+    @Bind(R.id.account_viewpager) ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
+        ButterKnife.bind(this);
 
-        getUserData();
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new AccountSettingsFragment(), "SETTINGS");
+        adapter.addFragment(new AccountTournamentsFragment(), "TOURNAMENTS");
+        mViewPager.setAdapter(adapter);
+
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
-    public void getUserData() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String UID = preferences.getString("uid", "none");
 
-        if (!TextUtils.equals("none", UID)) {
-            Firebase myFirebaseRef = ((BracketMasterApplication) getApplicationContext()).myFirebaseRef;
-            Log.v(TAG, "userData = " + myFirebaseRef.child("users").child(UID));
+    private class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
         }
     }
-
 }
