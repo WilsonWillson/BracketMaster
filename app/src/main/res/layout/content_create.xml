@@ -25,7 +25,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textCapWords|textAutoCorrect"
-                android:textSize="36dp"
+                android:textSize="36sp"
+                android:maxLength="36"
                 android:hint="Tournament Name"/>
 
         </android.support.design.widget.TextInputLayout>
@@ -46,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/description"
                 android:hint="Description"
+                android:maxLength="144"
                 android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
                 android:layout_centerHorizontal="true" />
 
