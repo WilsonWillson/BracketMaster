@@ -2,7 +2,6 @@ package gwaac.bracketmaster.ui;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -156,6 +155,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
                 mRecyclerView.swapAdapter(mTournamentAdapter, true);
+                if (mNoResultsLabel.getVisibility() == View.VISIBLE) {
+                    mNoResultsLabel.setVisibility(View.GONE);
+                }
                 return true;
             }
         });
