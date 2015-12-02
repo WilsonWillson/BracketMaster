@@ -9,4 +9,12 @@
         android:layout_width="match_parent"
         android:scrollbars="vertical"
         />
+
+    <TextView
+        android:id="@+id/not_signed_up_label"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="You aren't signed up for any tournaments."
+        android:gravity="center"/>
+
 </RelativeLayout>

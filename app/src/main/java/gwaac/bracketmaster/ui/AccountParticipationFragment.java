@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -34,6 +35,8 @@ public class AccountParticipationFragment extends android.support.v4.app.Fragmen
 
     @Bind(R.id.participation_recycler_view)
     RecyclerView mRecyclerView;
+    @Bind(R.id.not_signed_up_label)
+    TextView mNotSignedUpLabel;
     List<Tournament> tournaments;
 
     public AccountParticipationFragment() {
@@ -75,6 +78,9 @@ public class AccountParticipationFragment extends android.support.v4.app.Fragmen
                 Map signups = dataSnapshot.getValue(Map.class);
 
                 if (signups == null) return; // Get out if it doesn't work.
+
+                mNotSignedUpLabel.setVisibility(View.GONE);
+
                 for (Object o : signups.keySet()) {
                     String tournamentID = (String) o;
 
@@ -86,6 +92,7 @@ public class AccountParticipationFragment extends android.support.v4.app.Fragmen
                             Tournament t = TournamentProperties.toTournament(tp);
                             AccountParticipationFragment.this.tournaments.add(t);
                             mRecyclerView.getAdapter().notifyDataSetChanged();
+
                         }
 
                         @Override
