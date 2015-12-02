@@ -104,12 +104,24 @@
                 android:text="November 1st @ 00:00 PM"/>
 
             <Button
-                android:id="@+id/tournament_view_button"
-                android:layout_width="match_parent"
+                android:id="@+id/tournament_signup_button"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@id/tournament_datetime_end"
+                android:layout_alignParentEnd="true"
+                android:background="@android:color/transparent"
                 android:textColor="@color/colorPrimary"
+                android:text="Sign Up"/>
+
+            <Button
+                android:id="@+id/tournament_view_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tournament_datetime_end"
+                android:layout_toLeftOf="@id/tournament_signup_button"
+                android:layout_toStartOf="@id/tournament_signup_button"
+                android:background="@android:color/transparent"
+                android:textColor="@color/colorGrey"
                 android:text="View"/>
 
         </RelativeLayout>
