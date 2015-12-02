@@ -66,7 +66,7 @@ public class AccountParticipationFragment extends android.support.v4.app.Fragmen
         if (tournaments == null) {
             tournaments = new ArrayList<>();
         }
-        Firebase ref = ((BracketMasterApplication)getActivity().getApplication()).myFirebaseRef;
+        final Firebase ref = ((BracketMasterApplication)getActivity().getApplication()).myFirebaseRef;
         String uid = ref.getAuth().getUid();
         Firebase participation = ref.child("signups/" + uid);
         participation.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -76,8 +76,22 @@ public class AccountParticipationFragment extends android.support.v4.app.Fragmen
 
                 for (Object o : signups.keySet()) {
                     String tournamentID = (String) o;
-                    System.out.println(tournamentID);
-                    // TODO: process the IDs.
+
+                    final Firebase tournaments = ref.child("tournaments/" + tournamentID);
+                    tournaments.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            TournamentProperties tp = dataSnapshot.getValue(TournamentProperties.class);
+                            Tournament t = TournamentProperties.toTournament(tp);
+                            AccountParticipationFragment.this.tournaments.add(t);
+                            mRecyclerView.getAdapter().notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
                 }
             }
 
