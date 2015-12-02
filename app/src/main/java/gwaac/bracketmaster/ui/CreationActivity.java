@@ -1,5 +1,7 @@
 package gwaac.bracketmaster.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
@@ -32,9 +34,9 @@ import gwaac.bracketmaster.ui.modal.TimePickerFragment;
 public class CreationActivity extends AppCompatActivity implements DatePickerFragment.OnDateChosenListener, TimePickerFragment.OnTimeChosenListener {
 
     @Bind(R.id.tournament_name) EditText mTournamentNameField;
-    @Bind(R.id.tournament_game_spinner) Spinner mGameSpinner;
     @Bind(R.id.description) EditText mDescriptionField;
 
+    @Bind(R.id.tournament_game) TextInputLayout mGameSpinnerButton;
     @Bind(R.id.tournament_date_start) TextInputLayout mDatePickerStartButton;
     @Bind(R.id.tournament_date_end) TextInputLayout mDatePickerEndButton;
     @Bind(R.id.tournament_time_start) TextInputLayout mTimePickerStartButton;
@@ -51,6 +53,25 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
         ButterKnife.bind(this);
 
         mGameImageLoader = new GameImageLoader(this);
+
+        if (mGameSpinnerButton.getEditText() != null) {
+            mGameSpinnerButton.getEditText().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                    builder.setTitle("Choose Game");
+                    final String[] games = getResources().getStringArray(R.array.game_titles);
+                    builder.setItems(games, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                            mGameSpinnerButton.getEditText().setText(games[i]);
+                        }
+                    });
+                    builder.show();
+                }
+            });
+        }
 
         if (mDatePickerStartButton.getEditText() != null) {
             mDatePickerStartButton.getEditText().setOnClickListener(new View.OnClickListener() {
@@ -96,7 +117,7 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
             @Override
             public void onClick(View v) {
                 String tournamentName = mTournamentNameField.getText().toString();
-                String gameName = mGameSpinner.getSelectedItem().toString();
+                String gameName = mGameSpinnerButton.getEditText().getText().toString();
                 String description = mDescriptionField.getText().toString();
                 String owner = PreferenceManager.getDefaultSharedPreferences(CreationActivity.this).getString("uid", "null");
                 if (owner.equals("null")) Log.i("[submitting tourney]", "Nobody's logged in.");
@@ -114,11 +135,6 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
                 finish();
             }
         });
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.game_titles, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mGameSpinner.setAdapter(adapter);
     }
 
     private void submitToFirebase(Tournament t) {

@@ -16,7 +16,6 @@
         <item>Description</item>
     </string-array>
     <string-array name="game_titles">
-        <item>Game</item>
         <item>Battlefield</item>
         <item>Counter Strike</item>
         <item>Doom</item>
