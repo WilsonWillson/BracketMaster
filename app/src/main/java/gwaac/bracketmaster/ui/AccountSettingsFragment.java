@@ -14,6 +14,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -55,29 +56,13 @@ public class AccountSettingsFragment extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.fragment_account_settings, container, false);
         ButterKnife.bind(this, view);
         Firebase firebase = ((BracketMasterApplication)getActivity().getApplication()).myFirebaseRef;
-        String uid = firebase.getAuth().getUid();
+        final String uid = firebase.getAuth().getUid();
 
         Query query = firebase.child("users").orderByKey().startAt(uid).endAt(uid);
-
-        query.addChildEventListener(new ChildEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                user_label.setText(dataSnapshot.getValue().toString());
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                user_label.setText(dataSnapshot.child(uid).getValue().toString());
             }
 
             @Override
@@ -85,7 +70,6 @@ public class AccountSettingsFragment extends android.support.v4.app.Fragment {
 
             }
         });
-
 
         return view;
     }
