@@ -34,7 +34,9 @@ public class AccountActivity extends AppCompatActivity {
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new AccountSettingsFragment(), "SETTINGS");
-        adapter.addFragment(new AccountTournamentsFragment(), "TOURNAMENTS");
+        adapter.addFragment(new AccountTournamentsFragment(), "OWNED");
+        adapter.addFragment(new AccountParticipationFragment(), "JOINED");
+
         mViewPager.setAdapter(adapter);
 
         mTabLayout.setupWithViewPager(mViewPager);

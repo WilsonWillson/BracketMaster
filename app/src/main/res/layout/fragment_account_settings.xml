@@ -15,6 +15,20 @@
             android:gravity="center"/>
 
     <Button
+        android:id="@+id/change_username_btn"
+        android:padding="16dp"
+        android:text="Change username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/change_password_btn"
+        android:padding="16dp"
+        android:text="Change password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
         android:id="@+id/logout_from_acct_page"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
