@@ -15,9 +15,12 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -65,35 +68,21 @@ public class AccountParticipationFragment extends android.support.v4.app.Fragmen
         }
         Firebase ref = ((BracketMasterApplication)getActivity().getApplication()).myFirebaseRef;
         String uid = ref.getAuth().getUid();
-        Query query = ref.child("tournaments").orderByChild("signupList").equalTo(uid);
-        query.addChildEventListener(new ChildEventListener() {
+        Firebase participation = ref.child("signups/" + uid);
+        participation.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                TournamentProperties properties = dataSnapshot.getValue(TournamentProperties.class);
-                Tournament tournament = TournamentProperties.toTournament(properties);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Map signups = ((Map<String, Object>) dataSnapshot.getValue());
 
-                tournaments.add(tournament);
-                mRecyclerView.getAdapter().notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+                for (Object o : signups.keySet()) {
+                    String tournamentID = (String) o;
+                    System.out.println(tournamentID);
+                    // TODO: process the IDs.
+                }
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
             }
         });
     }
