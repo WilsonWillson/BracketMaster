@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -30,6 +31,8 @@ public class AccountTournamentsFragment extends android.support.v4.app.Fragment 
 
     @Bind(R.id.my_tournaments_recycler_view)
     RecyclerView mRecyclerView;
+    @Bind(R.id.not_running_things_label)
+    TextView mNotRunningThingsLabel;
     List<Tournament> tournaments;
 
 
@@ -74,6 +77,8 @@ public class AccountTournamentsFragment extends android.support.v4.app.Fragment 
 
                 tournaments.add(tournament);
                 mRecyclerView.getAdapter().notifyDataSetChanged();
+
+                mNotRunningThingsLabel.setVisibility(View.GONE);
             }
 
             @Override
