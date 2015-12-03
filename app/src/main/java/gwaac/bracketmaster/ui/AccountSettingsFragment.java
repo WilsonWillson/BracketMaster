@@ -2,6 +2,7 @@ package gwaac.bracketmaster.ui;
 
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,6 +27,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import gwaac.bracketmaster.BracketMasterApplication;
 import gwaac.bracketmaster.R;
+import gwaac.bracketmaster.data.helper.TournamentProperties;
+import gwaac.bracketmaster.ui.modal.Notifier;
 
 public class AccountSettingsFragment extends android.support.v4.app.Fragment {
 
@@ -81,7 +84,6 @@ public class AccountSettingsFragment extends android.support.v4.app.Fragment {
 
     @OnClick(R.id.change_email_btn)
     public void changeEmail() {
-        Log.v(TAG, "FUCK");
         LayoutInflater inflater = getLayoutInflater(null);
         View dialogView = inflater.inflate(R.layout.dialog_change_email, null);
         final TextInputLayout emailField = (TextInputLayout)dialogView.findViewById(R.id.change_email_field);
@@ -89,16 +91,49 @@ public class AccountSettingsFragment extends android.support.v4.app.Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext())
                 .setTitle("Change Email")
                 .setView(dialogView)
-                .setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                .setNeutralButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (emailField.getEditText() != null && passwordField.getEditText() != null) {
-                            String newEmail = emailField.getEditText().getText().toString();
-                            String newPassword = passwordField.getEditText().getText().toString();
-                            Log.v(TAG, "New Password = " + newPassword);
+                            final String newEmail = emailField.getEditText().getText().toString();
+                            String password = passwordField.getEditText().getText().toString();
+                            Log.v(TAG, "Password = " + password);
                             Log.v(TAG, "New Email = " + newEmail);
                             // TODO: Save new email to Firebase (ARYA)
-                            dialogInterface.dismiss();
+
+                            final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
+                                    R.style.AppTheme_Dark_Dialog);
+                            progressDialog.setIndeterminate(true);
+                            progressDialog.setMessage("Logging in...");
+                            progressDialog.show();
+                            final DialogInterface di = dialogInterface;
+
+                            Firebase myFirebaseRef = ((BracketMasterApplication) getActivity().getApplicationContext()).myFirebaseRef;
+                            String oldEmail = (String) myFirebaseRef.getAuth().getProviderData().get("email");
+                            System.out.println(oldEmail);
+                            myFirebaseRef.changeEmail(
+                                    oldEmail,
+                                    password,
+                                    newEmail,
+                                    new Firebase.ResultHandler() {
+                                        @Override
+                                        public void onSuccess() {
+                                            Notifier notifier = new Notifier(getActivity(), getView());
+                                            notifier.alertWithConfirmation("Email changed to " + newEmail);
+                                            progressDialog.dismiss();
+                                            di.dismiss();
+                                        }
+
+                                        @Override
+                                        public void onError(FirebaseError firebaseError) {
+                                            Notifier notifier = new Notifier(getActivity(), getView());
+                                            notifier.alertWithConfirmation(firebaseError.getMessage());
+                                            progressDialog.dismiss();
+                                        }
+                                    }
+                            );
+
+
                         }
 
                     }
