@@ -5,6 +5,6 @@
         android:duration="200"
         android:interpolator="@android:interpolator/anticipate"
         android:propertyName="translationY"
-        android:valueFrom="-300"
+        android:valueFrom="-100dp"
         android:valueTo="0"/>
 </set>

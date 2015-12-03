@@ -6,11 +6,11 @@
         android:duration="200"
         android:interpolator="@android:interpolator/overshoot"
         android:propertyName="translationX"
-        android:valueTo="-212"/>
+        android:valueTo="-70dp"/>
 
     <objectAnimator
         android:duration="200"
         android:interpolator="@android:interpolator/overshoot"
         android:propertyName="translationY"
-        android:valueTo="-212"/>
+        android:valueTo="-70dp"/>
 </set>
