@@ -94,10 +94,38 @@ public class AccountSettingsFragment extends android.support.v4.app.Fragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (emailField.getEditText() != null && passwordField.getEditText() != null) {
                             String newEmail = emailField.getEditText().getText().toString();
-                            String newPassword = passwordField.getEditText().getText().toString();
-                            Log.v(TAG, "New Password = " + newPassword);
+                            String currentPassword = passwordField.getEditText().getText().toString();
+                            Log.v(TAG, "Current Password = " + currentPassword);
                             Log.v(TAG, "New Email = " + newEmail);
                             // TODO: Save new email to Firebase (ARYA)
+                            dialogInterface.dismiss();
+                        }
+
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        dialog.show();
+    }
+
+    @OnClick(R.id.change_password_btn)
+    public void changePassword() {
+        LayoutInflater inflater = getLayoutInflater(null);
+        View dialogView = inflater.inflate(R.layout.dialog_change_password, null);
+        final TextInputLayout currentPasswordField = (TextInputLayout)dialogView.findViewById(R.id.change_password_current);
+        final TextInputLayout newPasswordField = (TextInputLayout)dialogView.findViewById(R.id.change_password_new);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext())
+                .setTitle("Change Password")
+                .setView(dialogView)
+                .setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (currentPasswordField.getEditText() != null && newPasswordField.getEditText() != null) {
+                            String currentPassword = currentPasswordField.getEditText().getText().toString();
+                            String newPassword = newPasswordField.getEditText().getText().toString();
+                            Log.v(TAG, "Current Password = " + currentPassword);
+                            Log.v(TAG, "New Password = " + newPassword);
+                            // TODO: Save new password to Firebase (ARYA)
                             dialogInterface.dismiss();
                         }
 
