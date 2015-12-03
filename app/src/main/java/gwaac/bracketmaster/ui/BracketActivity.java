@@ -1,5 +1,7 @@
 package gwaac.bracketmaster.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -94,6 +96,17 @@ public class BracketActivity extends AppCompatActivity {
             mRecyclerView.swapAdapter(adapter, false);
             return;
         }
+
+        new AlertDialog.Builder(this)
+                .setTitle("Winner!")
+                .setMessage(username + " has won the tournament!")
+                .setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                }).show();
+
 
     }
 }
