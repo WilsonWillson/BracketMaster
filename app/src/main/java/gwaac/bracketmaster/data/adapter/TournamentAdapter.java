@@ -72,7 +72,7 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.To
     }
 
     @Override
-    public void onBindViewHolder(TournamentViewHolder holder, final int position) {
+    public void onBindViewHolder(final TournamentViewHolder holder, final int position) {
         holder.tournamentName.setText(mTournamentData.get(position).getName());
         holder.tournamentDetail.setText(mTournamentData.get(position).getDescription());
         holder.tournamentDateTimeStart.setText(CalendarHelper.getPrettyDateTime(mTournamentData.get(position).getStartDateTime()));
@@ -93,7 +93,22 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.To
             holder.signupTournamentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //  TODO: implement start tournament functionality
+                    new AlertDialog.Builder(view.getContext())
+                            .setTitle("Start Tournament?")
+                            .setMessage("Do you want to start the tournament?")
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    mTournamentData.get(position).setStarted(true);
+                                    holder.signupTournamentButton.setVisibility(View.GONE);
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            }).show();
                 }
             });
             if (mTournamentData.get(position).isStarted()) {
