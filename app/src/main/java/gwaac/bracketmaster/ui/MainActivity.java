@@ -45,6 +45,7 @@ import gwaac.bracketmaster.R;
 import gwaac.bracketmaster.data.adapter.TournamentAdapter;
 import gwaac.bracketmaster.data.helper.TournamentSuggestionProvider;
 import gwaac.bracketmaster.data.model.Tournament;
+import gwaac.bracketmaster.ui.modal.Notifier;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -406,4 +407,15 @@ public class MainActivity extends AppCompatActivity {
         mFabNew.setVisibility(View.GONE);
         mFabAccount.setVisibility(View.GONE);
     }
+
+    public Notifier.OnVisibilityChangedListener OnNotifierVisibilityChangedListener = new Notifier.OnVisibilityChangedListener() {
+        @Override
+        public void onVisibilityChanged(boolean isVisible) {
+            if (isVisible) {
+                mFabMenu.setEnabled(false);
+            } else {
+                mFabMenu.setEnabled(true);
+            }
+        }
+    };
 }

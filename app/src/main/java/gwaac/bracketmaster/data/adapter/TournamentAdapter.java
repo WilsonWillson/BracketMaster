@@ -1,6 +1,9 @@
 package gwaac.bracketmaster.data.adapter;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -29,6 +32,8 @@ import gwaac.bracketmaster.data.helper.GameImageLoader;
 import gwaac.bracketmaster.R;
 import gwaac.bracketmaster.data.model.Tournament;
 import gwaac.bracketmaster.ui.BracketActivity;
+import gwaac.bracketmaster.ui.MainActivity;
+import gwaac.bracketmaster.ui.modal.Notifier;
 
 /**
  * Created by Charlie on 10/27/15.
@@ -75,14 +80,46 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.To
         });
         holder.signupTournamentButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
                 Firebase firebase = ((BracketMasterApplication)mContext.getApplicationContext()).myFirebaseRef;
                 final String uid = firebase.getAuth().getUid();
                 Query query = firebase.child("users").orderByKey().startAt(uid).endAt(uid);
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Log.v(TAG, "DisplayName = " + dataSnapshot.child(uid).getValue());
+                        final String displayName = dataSnapshot.child(uid).getValue().toString();
+
+                        if (mTournamentData.get(position).getSignupList() != null && mTournamentData.get(position).getSignupList().contains(displayName)) {
+                            new AlertDialog.Builder(view.getContext())
+                                    .setTitle("Sign Up for Tournament")
+                                    .setMessage("You have already signed up for this tournament.")
+                                    .setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                        }
+                                    }).show();
+                        } else {
+                            new AlertDialog.Builder(view.getContext())
+                                    .setTitle("Sign Up for Tournament")
+                                    .setMessage("Would you like to sign up for this tournament?")
+                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            mTournamentData.get(position).addSignup(displayName);
+                                            Notifier notifier = new Notifier((Activity) mContext, view);
+                                            if (mContext instanceof MainActivity) {
+                                                //  If we are in the MainActivity, we need to disable the FAB Menu to prevent Animation bugginess.
+                                                notifier.setOnVisibilityChangedListener(((MainActivity) mContext).OnNotifierVisibilityChangedListener);
+                                            }
+                                            notifier.alertWithConfirmation("Sign up successful!");
+                                        }
+                                    })
+                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                        }
+                                    }).show();
+                        }
                     }
 
                     @Override
