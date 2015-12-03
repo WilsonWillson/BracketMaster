@@ -10,18 +10,20 @@
             android:layout_height="wrap_content"
             android:text="Username"
             android:ellipsize="middle"
-            android:textSize="34sp"
+            android:textSize="30sp"
             android:padding="16dp"
             android:gravity="center"/>
 
     <Button
-        android:id="@+id/change_username_btn"
+        style="@style/BracketMaster.Form.Button.Primary"
+        android:id="@+id/change_email_btn"
         android:padding="16dp"
-        android:text="Change username"
+        android:text="Change Email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <Button
+        style="@style/BracketMaster.Form.Button.Primary"
         android:id="@+id/change_password_btn"
         android:padding="16dp"
         android:text="Change password"
@@ -29,6 +31,7 @@
         android:layout_height="wrap_content" />
 
     <Button
+        style="@style/BracketMaster.Form.Button.Accent"
         android:id="@+id/logout_from_acct_page"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
