@@ -15,6 +15,15 @@
         android:divider="@null"
         android:listSelector="@android:color/transparent"/>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/bracket_list_two"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorGreyLight"
+        android:divider="@null"
+        android:listSelector="@android:color/transparent"
+        android:visibility="gone"/>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_prev"
         android:layout_width="wrap_content"
