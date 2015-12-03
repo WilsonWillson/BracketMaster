@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.DialogPreference;
 import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -91,7 +92,7 @@ public class AccountSettingsFragment extends android.support.v4.app.Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext())
                 .setTitle("Change Email")
                 .setView(dialogView)
-                .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (emailField.getEditText() != null && passwordField.getEditText() != null) {
@@ -99,13 +100,12 @@ public class AccountSettingsFragment extends android.support.v4.app.Fragment {
                             String password = passwordField.getEditText().getText().toString();
                             Log.v(TAG, "Password = " + password);
                             Log.v(TAG, "New Email = " + newEmail);
-                            // TODO: Save new email to Firebase (ARYA)
 
-                            final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
+                            /*final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
                                     R.style.AppTheme_Dark_Dialog);
                             progressDialog.setIndeterminate(true);
                             progressDialog.setMessage("Logging in...");
-                            progressDialog.show();
+                            progressDialog.show();*/
                             final DialogInterface di = dialogInterface;
 
                             Firebase myFirebaseRef = ((BracketMasterApplication) getActivity().getApplicationContext()).myFirebaseRef;
@@ -120,7 +120,7 @@ public class AccountSettingsFragment extends android.support.v4.app.Fragment {
                                         public void onSuccess() {
                                             Notifier notifier = new Notifier(getActivity(), getView());
                                             notifier.alertWithConfirmation("Email changed to " + newEmail);
-                                            progressDialog.dismiss();
+                                            /*progressDialog.dismiss();*/
                                             di.dismiss();
                                         }
 
@@ -128,7 +128,7 @@ public class AccountSettingsFragment extends android.support.v4.app.Fragment {
                                         public void onError(FirebaseError firebaseError) {
                                             Notifier notifier = new Notifier(getActivity(), getView());
                                             notifier.alertWithConfirmation(firebaseError.getMessage());
-                                            progressDialog.dismiss();
+                                            /*progressDialog.dismiss();*/
                                         }
                                     }
                             );
@@ -136,6 +136,64 @@ public class AccountSettingsFragment extends android.support.v4.app.Fragment {
 
                         }
 
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        dialog.show();
+    }
+
+    @OnClick(R.id.change_password_btn)
+    public void changePassword() {
+        LayoutInflater inflater = getLayoutInflater(null);
+        View dialogView = inflater.inflate(R.layout.dialog_change_password, null);
+        final TextInputLayout currentPasswordField = (TextInputLayout)dialogView.findViewById(R.id.change_password_current);
+        final TextInputLayout newPasswordField = (TextInputLayout)dialogView.findViewById(R.id.change_password_new);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext())
+                .setTitle("Change Password")
+                .setView(dialogView)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (currentPasswordField.getEditText() != null && newPasswordField.getEditText() != null) {
+                            String currentPassword = currentPasswordField.getEditText().getText().toString();
+                            String newPassword = newPasswordField.getEditText().getText().toString();
+                            Log.v(TAG, "Current Password = " + currentPassword);
+                            Log.v(TAG, "New Password = " + newPassword);
+
+                            Firebase myFirebaseRef = ((BracketMasterApplication) getActivity().getApplicationContext()).myFirebaseRef;
+                            String oldEmail = (String) myFirebaseRef.getAuth().getProviderData().get("email");
+                            System.out.println(oldEmail);
+                            myFirebaseRef.changePassword(oldEmail,
+                                    currentPassword,
+                                    newPassword,
+                                    new Firebase.ResultHandler() {
+                                        @Override
+                                        public void onSuccess() {
+                                            Notifier notifier = new Notifier(getActivity(), getView());
+                                            notifier.alertWithConfirmation("Success! Password changed.");
+                                        }
+
+                                        @Override
+                                        public void onError(FirebaseError firebaseError) {
+                                            Notifier notifier = new Notifier(getActivity(), getView());
+                                            notifier.alertWithConfirmation(firebaseError.getMessage());
+                                        }
+                                    });
+
+                            dialogInterface.dismiss();
+                        }
+
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
                     }
                 });
         AlertDialog dialog = builder.create();
