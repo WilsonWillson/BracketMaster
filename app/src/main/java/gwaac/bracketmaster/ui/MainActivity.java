@@ -304,6 +304,8 @@ public class MainActivity extends AppCompatActivity {
     private void logout() {
         Firebase ref = ((BracketMasterApplication)getApplication()).myFirebaseRef;
         ref.unauth();
+        PreferenceManager.getDefaultSharedPreferences(this).edit().clear();
+
         segueToLogin();
     }
 

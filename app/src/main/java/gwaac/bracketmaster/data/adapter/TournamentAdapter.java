@@ -93,7 +93,6 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.To
                 }
             });
         } else {
-            Log.v(TAG, "Not Owned " + mTournamentData.get(position).getName());
             holder.signupTournamentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View view) {

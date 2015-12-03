@@ -196,7 +196,7 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
             case TimePickerFragment.CREATION_END_TIME:
                 mTimePickerEndButton.getEditText().setText(timeText);
                 end.set(Calendar.HOUR_OF_DAY, hour);
-                start.set(Calendar.MINUTE, minute);
+                end.set(Calendar.MINUTE, minute);
                 break;
             default:
                 Log.d("[onTimeSet]", "This flag has not been handled.");
@@ -228,7 +228,7 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
             mNotifier.alertWithConfirmation("The end time is not set.");
             return false;
         }
-        if (start.after(Calendar.getInstance())) {
+        if (!start.after(Calendar.getInstance())) {
             mNotifier.alertWithConfirmation("Your game can't start in the past.");
             return false;
         }

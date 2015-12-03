@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.DialogPreference;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -79,6 +80,7 @@ public class AccountSettingsFragment extends android.support.v4.app.Fragment {
     public void logout() {
         Firebase ref = ((BracketMasterApplication) getActivity().getApplication()).myFirebaseRef;
         ref.unauth();
+        PreferenceManager.getDefaultSharedPreferences(this.getActivity()).edit().clear();
         Intent intent = new Intent(this.getActivity(), LoginActivity.class);
         startActivity(intent);
         getActivity().finish();
@@ -113,6 +115,10 @@ public class AccountSettingsFragment extends android.support.v4.app.Fragment {
 
                             String oldEmail = (String) myFirebaseRef.getAuth().getProviderData().get("email");
                             System.out.println(oldEmail);
+                            if (!PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("email", "<NULL>").equals("<NULL>")) {
+                                oldEmail = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("email", "<NULL>");
+                            }
+                            System.out.println(oldEmail);
                             myFirebaseRef.changeEmail(
                                     oldEmail,
                                     password,
@@ -122,6 +128,7 @@ public class AccountSettingsFragment extends android.support.v4.app.Fragment {
                                         public void onSuccess() {
                                             Notifier notifier = new Notifier(getActivity(), getView());
                                             notifier.alertWithConfirmation("Email changed to " + newEmail);
+                                            PreferenceManager.getDefaultSharedPreferences(getActivity()).edit().putString("email", newEmail).apply();
                                             /*progressDialog.dismiss();*/
                                             di.dismiss();
                                         }
