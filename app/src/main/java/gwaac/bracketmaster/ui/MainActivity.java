@@ -32,6 +32,8 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -227,6 +229,12 @@ public class MainActivity extends AppCompatActivity {
                 Tournament t = TournamentProperties.toTournament(tp);
 
                 DataManager.getTournamentData().add(t);
+                Collections.sort(DataManager.getTournamentData(), new Comparator<Tournament>() {
+                    @Override
+                    public int compare(Tournament lhs, Tournament rhs) {
+                        return lhs.getStartDateTime().compareTo(rhs.getStartDateTime());
+                    }
+                });
                 mRecyclerView.getAdapter().notifyDataSetChanged();
             }
 

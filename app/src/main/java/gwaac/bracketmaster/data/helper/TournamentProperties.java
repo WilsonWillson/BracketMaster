@@ -41,7 +41,7 @@ public class TournamentProperties {
         Calendar end = Calendar.getInstance();
         end.setTimeInMillis(tp.endTime);
 
-        Tournament t = new Tournament()
+        return new Tournament()
                 .setName(tp.name)
                 .setDescription(tp.description)
                 .setOwner(tp.ownerID)
@@ -50,7 +50,5 @@ public class TournamentProperties {
                 .setStarted(tp.started)
                 .setStartDateTime(start)
                 .setEndDateTime(end);
-
-        return t;
     }
 }
