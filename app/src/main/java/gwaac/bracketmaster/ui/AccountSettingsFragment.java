@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.firebase.client.AuthData;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -109,6 +110,7 @@ public class AccountSettingsFragment extends android.support.v4.app.Fragment {
                             final DialogInterface di = dialogInterface;
 
                             Firebase myFirebaseRef = ((BracketMasterApplication) getActivity().getApplicationContext()).myFirebaseRef;
+
                             String oldEmail = (String) myFirebaseRef.getAuth().getProviderData().get("email");
                             System.out.println(oldEmail);
                             myFirebaseRef.changeEmail(
