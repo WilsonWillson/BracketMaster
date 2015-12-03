@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
+        loginIfNeeded();
 
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
@@ -133,8 +134,6 @@ public class MainActivity extends AppCompatActivity {
                         .show();
             }
         });
-
-        loginIfNeeded();
 
         if (!madeDataFlow)
             makeDataFlow();
