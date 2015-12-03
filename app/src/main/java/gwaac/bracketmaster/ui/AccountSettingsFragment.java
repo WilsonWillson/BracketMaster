@@ -188,7 +188,6 @@ public class AccountSettingsFragment extends android.support.v4.app.Fragment {
 
                             dialogInterface.dismiss();
                         }
-
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
