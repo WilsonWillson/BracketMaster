@@ -2,9 +2,12 @@ package gwaac.bracketmaster.data.helper;
 
 import android.text.TextUtils;
 
+import com.firebase.client.Firebase;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import gwaac.bracketmaster.BracketMasterApplication;
 import gwaac.bracketmaster.data.model.Match;
 import gwaac.bracketmaster.data.model.Tournament;
 
