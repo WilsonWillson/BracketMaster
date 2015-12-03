@@ -35,6 +35,23 @@ public class DataManager {
                 .setMatchList(matches);
         tournaments.add(tournament);
 
+        matches = new ArrayList<>();
+        matches.add(new Match("Adon", "Ryu"));
+        matches.add(new Match("Geki", "Lee"));
+        matches.add(new Match("Eagle", "Retsu"));
+        matches.add(new Match("Sagat", "---"));
+
+        tournament = new Tournament()
+                .setName("Street Fighter RAMPAGE")
+                .setDescription("Punch! Kick! Roundhouse!")
+                .setOwner("")
+                .setStartDateTime(2015, 12, 7, 14, 0)
+                .setEndDateTime(2015, 12, 7, 22, 0)
+                .setGameImageID(GameImageLoader.STREET_FIGHTER)
+                .setStarted(true)
+                .setMatchList(matches);
+        tournaments.add(tournament);
+
         return tournaments;
     }
 
