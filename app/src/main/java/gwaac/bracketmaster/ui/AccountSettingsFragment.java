@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.DialogPreference;
 import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -89,7 +90,7 @@ public class AccountSettingsFragment extends android.support.v4.app.Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext())
                 .setTitle("Change Email")
                 .setView(dialogView)
-                .setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (emailField.getEditText() != null && passwordField.getEditText() != null) {
@@ -101,6 +102,11 @@ public class AccountSettingsFragment extends android.support.v4.app.Fragment {
                             dialogInterface.dismiss();
                         }
 
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
                     }
                 });
         AlertDialog dialog = builder.create();
@@ -117,7 +123,7 @@ public class AccountSettingsFragment extends android.support.v4.app.Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext())
                 .setTitle("Change Password")
                 .setView(dialogView)
-                .setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (currentPasswordField.getEditText() != null && newPasswordField.getEditText() != null) {
@@ -129,6 +135,11 @@ public class AccountSettingsFragment extends android.support.v4.app.Fragment {
                             dialogInterface.dismiss();
                         }
 
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
                     }
                 });
         AlertDialog dialog = builder.create();
