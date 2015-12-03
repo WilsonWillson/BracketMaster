@@ -37,22 +37,32 @@ public class BracketActivity extends AppCompatActivity {
         Intent intent = getIntent();
         mTournament = new Gson().fromJson(intent.getSerializableExtra("tournamentData").toString(), Tournament.class);
 
-        if (mTournament.getMatchList() == null) {
-            displayNoResults();
-        } else {
-            if (mTournament.getMatchList().size() > 0) {
-                RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.bracket_list);
-                StaggeredGridLayoutManager mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
-                mRecyclerView.setLayoutManager(mStaggeredLayoutManager);
-                BracketAdapter mAdapter = new BracketAdapter(this, mTournament.getMatchList());
-                mRecyclerView.setAdapter(mAdapter);
-            } else {
+        if (mTournament.isStarted()) {
+            if (mTournament.getMatchList() == null) {
                 displayNoResults();
+            } else {
+                if (mTournament.getMatchList().size() > 0) {
+                    RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.bracket_list);
+                    StaggeredGridLayoutManager mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+                    mRecyclerView.setLayoutManager(mStaggeredLayoutManager);
+                    BracketAdapter mAdapter = new BracketAdapter(this, mTournament.getMatchList());
+                    mRecyclerView.setAdapter(mAdapter);
+                } else {
+                    displayNoResults();
+                }
             }
+        } else {
+            displayNotStarted();
         }
     }
 
     public void displayNoResults() {
+        mNoResultsLabel.setText("No matches have been posted for this tournament. Please check back at a later time.");
+        mNoResultsLabel.setVisibility(View.VISIBLE);
+    }
+
+    public void displayNotStarted() {
+        mNoResultsLabel.setText("This tournament has not been started. Please check back at a later time.");
         mNoResultsLabel.setVisibility(View.VISIBLE);
     }
 }

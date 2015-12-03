@@ -47,11 +47,17 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.To
     private List<Tournament> mTournamentData;
     private Context mContext;
     private GameImageLoader mGameImageLoader;
+    private String mUID;
+    private final Firebase mFirebase;
 
     public TournamentAdapter(Context context, List<Tournament> tournamentData) {
         mContext = context;
         mGameImageLoader = new GameImageLoader(context);
         mTournamentData = tournamentData;
+        mFirebase = ((BracketMasterApplication)mContext.getApplicationContext()).myFirebaseRef;
+        if (mFirebase.getAuth() != null) {
+            mUID = mFirebase.getAuth().getUid();
+        }
     }
 
     @Override
@@ -82,9 +88,7 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.To
         });
 
         String ownerID = mTournamentData.get(position).getOwner();
-        final Firebase firebase = ((BracketMasterApplication)mContext.getApplicationContext()).myFirebaseRef;
-        if (firebase.getAuth() != null && TextUtils.equals(ownerID, firebase.getAuth().getUid())) {
-            Log.v(TAG, "Owned: " + mTournamentData.get(position).getName());
+        if (TextUtils.equals(ownerID, mUID)) {
             holder.signupTournamentButton.setText("Start");
             holder.signupTournamentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -92,93 +96,104 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.To
                     //  TODO: implement start tournament functionality
                 }
             });
+            if (mTournamentData.get(position).isStarted()) {
+                holder.signupTournamentButton.setVisibility(View.GONE);
+            } else {
+                holder.signupTournamentButton.setVisibility(View.VISIBLE);
+            }
+            holder.viewTournamentButton.setText("Manage");
         } else {
-            Log.v(TAG, "Not Owned " + mTournamentData.get(position).getName());
-            holder.signupTournamentButton.setText("Sign Up");
-            holder.signupTournamentButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View view) {
-                    final String uid = firebase.getAuth().getUid();
-                    Query query = firebase.child("users").orderByKey().startAt(uid).endAt(uid);
-                    query.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            final String displayName = dataSnapshot.child(uid).getValue().toString();
+            holder.viewTournamentButton.setText("View");
+            if (mTournamentData.get(position).isStarted()) {
+                holder.signupTournamentButton.setVisibility(View.GONE);
+            } else {
+                holder.signupTournamentButton.setVisibility(View.VISIBLE);
+                holder.signupTournamentButton.setText("Sign Up");
+                holder.signupTournamentButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View view) {
+                        Query query = mFirebase.child("users").orderByKey().startAt(mUID).endAt(mUID);
+                        query.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                final String displayName = dataSnapshot.child(mUID).getValue().toString();
 
-                            if (mTournamentData.get(position).getSignupList() != null && mTournamentData.get(position).getSignupList().contains(displayName)) {
-                                new AlertDialog.Builder(view.getContext())
-                                        .setTitle("Tournament Signup")
-                                        .setMessage("You have already signed up for this tournament.")
-                                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                            }
-                                        }).show();
-                            } else {
-                                new AlertDialog.Builder(view.getContext())
-                                        .setTitle("Tournament Signup")
-                                        .setMessage("Would you like to sign up for this tournament?")
-                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                final Tournament t = mTournamentData.get(position);
-                                                t.addSignup(displayName);
-                                                final Firebase ref = ((BracketMasterApplication) mContext.getApplicationContext()).myFirebaseRef;
-                                                Query queryRef = ref.child("tournaments").orderByChild("name").startAt(t.getName()).endAt(t.getName());
-                                                queryRef.addChildEventListener(new ChildEventListener() {
-                                                    @Override
-                                                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                                        String key = dataSnapshot.getKey();
-                                                        Firebase tournaments = ref.child("tournaments/" + key);
-                                                        tournaments.setValue(TournamentProperties.fromTournament(t));
-
-                                                        Firebase signups = ref.child("signups/" + uid);
-                                                        signups.child(key).setValue(true);
-                                                    }
-
-                                                    @Override
-                                                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                                                    }
-
-                                                    @Override
-                                                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                                                    }
-
-                                                    @Override
-                                                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                                                    }
-
-                                                    @Override
-                                                    public void onCancelled(FirebaseError firebaseError) {
-
-                                                    }
-                                                });
-                                                Notifier notifier = new Notifier((Activity) mContext, view);
-                                                if (mContext instanceof MainActivity) {
-                                                    //  If we are in the MainActivity, we need to disable the FAB Menu to prevent Animation bugginess.
-                                                    notifier.setOnVisibilityChangedListener(((MainActivity) mContext).OnNotifierVisibilityChangedListener);
+                                if (mTournamentData.get(position).getSignupList() != null && mTournamentData.get(position).getSignupList().contains(displayName)) {
+                                    new AlertDialog.Builder(view.getContext())
+                                            .setTitle("Tournament Signup")
+                                            .setMessage("You have already signed up for this tournament.")
+                                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i) {
                                                 }
-                                                notifier.alertWithConfirmation("Sign up successful!");
-                                            }
-                                        })
-                                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                            }
-                                        }).show();
+                                            }).show();
+                                } else {
+                                    new AlertDialog.Builder(view.getContext())
+                                            .setTitle("Tournament Signup")
+                                            .setMessage("Would you like to sign up for this tournament?")
+                                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    final Tournament t = mTournamentData.get(position);
+                                                    t.addSignup(displayName);
+                                                    final Firebase ref = ((BracketMasterApplication) mContext.getApplicationContext()).myFirebaseRef;
+                                                    Query queryRef = ref.child("tournaments").orderByChild("name").startAt(t.getName()).endAt(t.getName());
+                                                    queryRef.addChildEventListener(new ChildEventListener() {
+                                                        @Override
+                                                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                                            String key = dataSnapshot.getKey();
+                                                            Firebase tournaments = ref.child("tournaments/" + key);
+                                                            tournaments.setValue(TournamentProperties.fromTournament(t));
+
+                                                            Firebase signups = ref.child("signups/" + mUID);
+                                                            signups.child(key).setValue(true);
+                                                        }
+
+                                                        @Override
+                                                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(FirebaseError firebaseError) {
+
+                                                        }
+                                                    });
+                                                    Notifier notifier = new Notifier((Activity) mContext, view);
+                                                    if (mContext instanceof MainActivity) {
+                                                        //  If we are in the MainActivity, we need to disable the FAB Menu to prevent Animation bugginess.
+                                                        notifier.setOnVisibilityChangedListener(((MainActivity) mContext).OnNotifierVisibilityChangedListener);
+                                                    }
+                                                    notifier.alertWithConfirmation("Sign up successful!");
+                                                }
+                                            })
+                                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                }
+                                            }).show();
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onCancelled(FirebaseError firebaseError) {
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
 
-                        }
-                    });
-                }
-            });
+                            }
+                        });
+                    }
+
+                });
+            }
         }
     }
 

@@ -18,9 +18,29 @@ public class DataManager {
 
     private static List<Tournament> mTournamentList;
 
+    private static List<Tournament> populateData() {
+
+        List<Tournament> tournaments = new ArrayList<>();
+        List<Match> matches = new ArrayList<>();
+        matches.add(new Match("charliealbright", "aryamccarthy"));
+        matches.add(new Match("gavinpham", "johnwilson"));
+        Tournament tournament = new Tournament()
+                .setName("Rocket League Pro Finals")
+                .setDescription("Watch as these 4 pro players duke it out in an impressive show of skill for a cash prize of 500 dollars!")
+                .setOwner("0c18224e-7604-4147-b741-5aa6d300f311")
+                .setStartDateTime(2015, 12, 4, 12, 0)
+                .setEndDateTime(2015, 12, 4, 16, 0)
+                .setGameImageID(GameImageLoader.ROCKET_LEAGUE)
+                .setStarted(true)
+                .setMatchList(matches);
+        tournaments.add(tournament);
+
+        return tournaments;
+    }
+
     public static List<Tournament> getTournamentData() {
         if (mTournamentList == null) {
-            mTournamentList = new ArrayList<>();
+            mTournamentList = populateData();
         }
         return mTournamentList;
     }
