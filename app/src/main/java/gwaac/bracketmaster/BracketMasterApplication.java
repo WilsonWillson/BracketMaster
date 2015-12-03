@@ -26,5 +26,13 @@ public class BracketMasterApplication extends Application {
 
         Firebase.setAndroidContext(this);
         myFirebaseRef = new Firebase("https://scorching-inferno-5646.firebaseio.com/");
+
+        myFirebaseRef.addAuthStateListener(new Firebase.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(AuthData authData) {
+                if (authData != null)
+                    System.out.println(authData.getProviderData().get("email"));
+            }
+        });
     }
 }
