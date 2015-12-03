@@ -3,14 +3,18 @@ package gwaac.bracketmaster.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.firebase.client.Firebase;
 import com.google.gson.Gson;
 
+import gwaac.bracketmaster.BracketMasterApplication;
 import gwaac.bracketmaster.R;
 import gwaac.bracketmaster.data.model.Tournament;
 import gwaac.bracketmaster.data.adapter.BracketAdapter;
@@ -36,6 +40,9 @@ public class BracketActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         mTournament = new Gson().fromJson(intent.getSerializableExtra("tournamentData").toString(), Tournament.class);
+        String owner = mTournament.getOwner();
+        Firebase firebase = ((BracketMasterApplication)getApplication()).myFirebaseRef;
+        String uid = firebase.getAuth().getUid();
 
         if (mTournament.isStarted()) {
             if (mTournament.getMatchList() == null) {
@@ -43,9 +50,9 @@ public class BracketActivity extends AppCompatActivity {
             } else {
                 if (mTournament.getMatchList().size() > 0) {
                     RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.bracket_list);
-                    StaggeredGridLayoutManager mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+                    StaggeredGridLayoutManager mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
                     mRecyclerView.setLayoutManager(mStaggeredLayoutManager);
-                    BracketAdapter mAdapter = new BracketAdapter(this, mTournament.getMatchList());
+                    BracketAdapter mAdapter = new BracketAdapter(this, mTournament.getMatchList(), TextUtils.equals(owner, uid));
                     mRecyclerView.setAdapter(mAdapter);
                 } else {
                     displayNoResults();
