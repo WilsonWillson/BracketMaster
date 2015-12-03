@@ -228,6 +228,10 @@ public class CreationActivity extends AppCompatActivity implements DatePickerFra
             mNotifier.alertWithConfirmation("The end time is not set.");
             return false;
         }
+        if (start.after(Calendar.getInstance())) {
+            mNotifier.alertWithConfirmation("Your game can't start in the past, silly willy.");
+            return false;
+        }
         if (!end.after(start)) {
             mNotifier.alertWithConfirmation("The end time must be after the start time.");
             return false;
