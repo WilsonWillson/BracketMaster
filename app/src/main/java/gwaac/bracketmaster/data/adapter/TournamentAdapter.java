@@ -30,6 +30,7 @@ import gwaac.bracketmaster.BracketMasterApplication;
 import gwaac.bracketmaster.data.helper.CalendarHelper;
 import gwaac.bracketmaster.data.helper.GameImageLoader;
 import gwaac.bracketmaster.R;
+import gwaac.bracketmaster.data.helper.TournamentProperties;
 import gwaac.bracketmaster.data.model.Tournament;
 import gwaac.bracketmaster.ui.BracketActivity;
 import gwaac.bracketmaster.ui.MainActivity;
@@ -91,21 +92,55 @@ public class TournamentAdapter extends RecyclerView.Adapter<TournamentAdapter.To
 
                         if (mTournamentData.get(position).getSignupList() != null && mTournamentData.get(position).getSignupList().contains(displayName)) {
                             new AlertDialog.Builder(view.getContext())
-                                    .setTitle("Sign Up for Tournament")
+                                    .setTitle("Tournament Signup")
                                     .setMessage("You have already signed up for this tournament.")
-                                    .setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
                                         }
                                     }).show();
                         } else {
                             new AlertDialog.Builder(view.getContext())
-                                    .setTitle("Sign Up for Tournament")
+                                    .setTitle("Tournament Signup")
                                     .setMessage("Would you like to sign up for this tournament?")
-                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            mTournamentData.get(position).addSignup(displayName);
+                                            final Tournament t = mTournamentData.get(position);
+                                            t.addSignup(displayName);
+                                            final Firebase ref = ((BracketMasterApplication) mContext.getApplicationContext()).myFirebaseRef;
+                                            Query queryRef = ref.child("tournaments").orderByChild("name").startAt(t.getName()).endAt(t.getName());
+                                            queryRef.addChildEventListener(new ChildEventListener() {
+                                                @Override
+                                                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                                    String key = dataSnapshot.getKey();
+                                                    Firebase tournaments = ref.child("tournaments/" + key);
+                                                    tournaments.setValue(TournamentProperties.fromTournament(t));
+
+                                                    Firebase signups = ref.child("signups/" + uid);
+                                                    signups.child(key).setValue(true);
+                                                }
+
+                                                @Override
+                                                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                                                }
+
+                                                @Override
+                                                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                                                }
+
+                                                @Override
+                                                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                                                }
+
+                                                @Override
+                                                public void onCancelled(FirebaseError firebaseError) {
+
+                                                }
+                                            });
                                             Notifier notifier = new Notifier((Activity) mContext, view);
                                             if (mContext instanceof MainActivity) {
                                                 //  If we are in the MainActivity, we need to disable the FAB Menu to prevent Animation bugginess.
