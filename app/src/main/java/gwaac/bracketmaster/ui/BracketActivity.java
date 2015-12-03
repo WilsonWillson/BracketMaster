@@ -14,8 +14,12 @@ import android.widget.TextView;
 import com.firebase.client.Firebase;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import gwaac.bracketmaster.BracketMasterApplication;
 import gwaac.bracketmaster.R;
+import gwaac.bracketmaster.data.model.Match;
 import gwaac.bracketmaster.data.model.Tournament;
 import gwaac.bracketmaster.data.adapter.BracketAdapter;
 
@@ -28,8 +32,9 @@ public class BracketActivity extends AppCompatActivity {
     private static final String TAG = BracketActivity.class.getSimpleName();
 
     private Tournament mTournament;
-
+    private Match mMatch;
     private TextView mNoResultsLabel;
+    private RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +54,7 @@ public class BracketActivity extends AppCompatActivity {
                 displayNoResults();
             } else {
                 if (mTournament.getMatchList().size() > 0) {
-                    RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.bracket_list);
+                    mRecyclerView = (RecyclerView) findViewById(R.id.bracket_list);
                     StaggeredGridLayoutManager mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
                     mRecyclerView.setLayoutManager(mStaggeredLayoutManager);
                     BracketAdapter mAdapter = new BracketAdapter(this, mTournament.getMatchList(), TextUtils.equals(owner, uid));
@@ -71,5 +76,24 @@ public class BracketActivity extends AppCompatActivity {
     public void displayNotStarted() {
         mNoResultsLabel.setText("This tournament has not been started. Please check back at a later time.");
         mNoResultsLabel.setVisibility(View.VISIBLE);
+    }
+
+    public void handleMatchWinner(String username) {
+        Log.v(TAG, "Name = " + username);
+        if (mMatch == null) {
+            mMatch = new Match();
+            mMatch.setPlayer1(username);
+            return;
+        }
+        if (mMatch.getPlayer1() != null && mMatch.getPlayer2() == null) {
+            Log.v(TAG, "Setting player 2, recycling...");
+            mMatch.setPlayer2(username);
+            List<Match> matches = new ArrayList<>();
+            matches.add(mMatch);
+            BracketAdapter adapter = new BracketAdapter(this, matches, true);
+            mRecyclerView.swapAdapter(adapter, false);
+            return;
+        }
+
     }
 }

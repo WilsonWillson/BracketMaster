@@ -13,8 +13,8 @@ public class Match {
     private String mPlayer2;
 
     public Match() {
-        mPlayer1 = "";
-        mPlayer2 = "";
+        mPlayer1 = null;
+        mPlayer2 = null;
     }
 
     public Match(String player1, String player2) {

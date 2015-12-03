@@ -16,6 +16,7 @@ import java.util.List;
 
 import gwaac.bracketmaster.R;
 import gwaac.bracketmaster.data.model.Match;
+import gwaac.bracketmaster.ui.BracketActivity;
 
 /**
  * Created by Adrian on 11/14/2015.
@@ -63,6 +64,7 @@ public class BracketAdapter extends RecyclerView.Adapter<BracketAdapter.ViewHold
                                     holder.player2Button.setTextColor(mContext.getResources().getColor(R.color.colorGrey));
                                     holder.player1Button.setClickable(false);
                                     holder.player2Button.setClickable(false);
+                                    ((BracketActivity)mContext).handleMatchWinner(match.getPlayer1());
                                 }
                             })
                             .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -85,6 +87,7 @@ public class BracketAdapter extends RecyclerView.Adapter<BracketAdapter.ViewHold
                                     holder.player1Button.setTextColor(mContext.getResources().getColor(R.color.colorGrey));
                                     holder.player1Button.setClickable(false);
                                     holder.player2Button.setClickable(false);
+                                    ((BracketActivity)mContext).handleMatchWinner(match.getPlayer2());
                                 }
                             })
                             .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -101,6 +104,12 @@ public class BracketAdapter extends RecyclerView.Adapter<BracketAdapter.ViewHold
     @Override
     public int getItemCount() {
         return mMatchList.size();
+    }
+
+    @Override
+    public void onViewRecycled(ViewHolder holder) {
+        holder.player1Button.setTextColor(mContext.getResources().getColor(R.color.colorPrimary));
+        holder.player2Button.setTextColor(mContext.getResources().getColor(R.color.colorAccent));
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
